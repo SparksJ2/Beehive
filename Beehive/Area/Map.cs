@@ -270,6 +270,12 @@ namespace Beehive
 			return (p.X >= 0 && p.X < xLen && p.Y >= 0 && p.Y < yLen) ? true : false;
 		}
 
+		public bool IsEdge(Point p)
+		{
+			return (p.X == 0 || p.X == xLen - 1 ||
+				p.Y == 0 || p.Y == yLen - 1) ? true : false;
+		}
+
 		public bool IsSolid(Tile t)
 		{
 			return (t == null || t.clear == false);

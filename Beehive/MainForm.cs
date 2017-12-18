@@ -72,6 +72,7 @@ namespace Beehive
 
 			// update screen
 			MainBitmap.Image = map.AsBitmap(p, s);
+			map.HealWalls();
 			Refresh();
 			//this.PreviewKeyDown += eh;
 		}

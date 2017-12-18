@@ -4,7 +4,7 @@ escape flow map
 
 cubi jumping
 
-pillow manipulation
+needs held pillow counter control
 
 other todos (see window)
 
