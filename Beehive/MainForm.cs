@@ -33,9 +33,9 @@ namespace Beehive
 			// generate map
 			map = new MazeGenerator().Create(65, 25);
 
-			p = new Player(map);
+			p = new Player(this, map);
 			p.SetXY(1, 1);
-			s = new Cubi(map, p);
+			s = new Cubi(this, map, p);
 			//s.SetXY(65 - 2, 25 - 2);
 			s.SetXY(4, 3);
 

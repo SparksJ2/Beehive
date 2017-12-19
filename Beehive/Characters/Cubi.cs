@@ -12,7 +12,7 @@ namespace Beehive
 		public Random rng;
 		public Player p;
 
-		public Cubi(Map m, Player master) : base(m)
+		public Cubi(MainForm mf, Map m, Player master) : base(mf, m)
 		{
 			rng = new Random();
 			p = master;

@@ -28,33 +28,59 @@
 		/// </summary>
 		public void InitializeComponent()
 		{
-			this.BeginsLabel = new System.Windows.Forms.Label();
 			this.MainBitmap = new System.Windows.Forms.PictureBox();
+			this.feedbackBox = new System.Windows.Forms.RichTextBox();
+			this.inventoryLabel = new System.Windows.Forms.Label();
+			this.miniInventory = new System.Windows.Forms.RichTextBox();
 			((System.ComponentModel.ISupportInitialize)(this.MainBitmap)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// BeginsLabel
-			// 
-			this.BeginsLabel.AutoSize = true;
-			this.BeginsLabel.Location = new System.Drawing.Point(12, 9);
-			this.BeginsLabel.Name = "BeginsLabel";
-			this.BeginsLabel.Size = new System.Drawing.Size(130, 13);
-			this.BeginsLabel.TabIndex = 0;
-			this.BeginsLabel.Text = "Here is where it all begins.";
-			// 
 			// MainBitmap
 			// 
-			this.MainBitmap.Location = new System.Drawing.Point(15, 35);
+			this.MainBitmap.Location = new System.Drawing.Point(12, 12);
 			this.MainBitmap.Name = "MainBitmap";
 			this.MainBitmap.Size = new System.Drawing.Size(800, 400);
 			this.MainBitmap.TabIndex = 1;
 			this.MainBitmap.TabStop = false;
 			// 
+			// feedbackBox
+			// 
+			this.feedbackBox.Enabled = false;
+			this.feedbackBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.feedbackBox.Location = new System.Drawing.Point(12, 418);
+			this.feedbackBox.Name = "feedbackBox";
+			this.feedbackBox.ReadOnly = true;
+			this.feedbackBox.Size = new System.Drawing.Size(593, 60);
+			this.feedbackBox.TabIndex = 2;
+			this.feedbackBox.Text = "derp feedback box not initialized.";
+			// 
+			// inventoryLabel
+			// 
+			this.inventoryLabel.AutoSize = true;
+			this.inventoryLabel.Location = new System.Drawing.Point(611, 418);
+			this.inventoryLabel.Name = "inventoryLabel";
+			this.inventoryLabel.Size = new System.Drawing.Size(91, 13);
+			this.inventoryLabel.TabIndex = 4;
+			this.inventoryLabel.Text = "Currently carrying:";
+			// 
+			// miniInventory
+			// 
+			this.miniInventory.Enabled = false;
+			this.miniInventory.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.miniInventory.Location = new System.Drawing.Point(614, 435);
+			this.miniInventory.Name = "miniInventory";
+			this.miniInventory.ReadOnly = true;
+			this.miniInventory.Size = new System.Drawing.Size(198, 43);
+			this.miniInventory.TabIndex = 5;
+			this.miniInventory.Text = "derp mini inventory not set";
+			// 
 			// MainForm
 			// 
-			this.ClientSize = new System.Drawing.Size(828, 452);
+			this.ClientSize = new System.Drawing.Size(828, 489);
+			this.Controls.Add(this.miniInventory);
+			this.Controls.Add(this.inventoryLabel);
+			this.Controls.Add(this.feedbackBox);
 			this.Controls.Add(this.MainBitmap);
-			this.Controls.Add(this.BeginsLabel);
 			this.KeyPreview = true;
 			this.Name = "MainForm";
 			((System.ComponentModel.ISupportInitialize)(this.MainBitmap)).EndInit();
@@ -64,9 +90,10 @@
 		}
 
 		#endregion
-		
-		public System.Windows.Forms.Label BeginsLabel;
 		public System.Windows.Forms.PictureBox MainBitmap;
+		public System.Windows.Forms.RichTextBox feedbackBox;
+		public System.Windows.Forms.Label inventoryLabel;
+		public System.Windows.Forms.RichTextBox miniInventory;
 	}
 }
 

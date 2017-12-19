@@ -13,7 +13,7 @@ namespace Beehive
 		public bool pillowMode = false;
 		public int heldPillows = 0;
 
-		public Player(Map m) : base(m)
+		public Player(MainForm f, Map m) : base(f, m)
 		{
 		}
 
@@ -64,15 +64,22 @@ namespace Beehive
 			{
 				t.clear = false;
 				heldPillows--;
+				UpdateInventory();
 			}
 			else if (!t.clear)
 			{
 				t.clear = true;
 				heldPillows++;
+				UpdateInventory();
 			}
 			// update screen
 			// todo de-duplicate?
 			map.HealWalls();
+		}
+
+		private void UpdateInventory()
+		{
+			mf.miniInventory.Text = "pillows: " + heldPillows;
 		}
 
 		private void PillowNorth()

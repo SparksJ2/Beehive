@@ -11,10 +11,12 @@ namespace Beehive
 	{
 		internal Map map;
 		internal Point loc;
+		internal MainForm mf;
 
-		public Mobile(Map m)
+		public Mobile(MainForm f, Map m)
 		{
 			map = m;
+			mf = f;
 			loc = new Point();
 		}
 
