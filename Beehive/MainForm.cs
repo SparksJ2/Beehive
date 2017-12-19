@@ -62,8 +62,9 @@ namespace Beehive
 			if (sw.ElapsedMilliseconds < 300) return;
 			sw.Start();
 			Console.WriteLine(e.KeyCode);
-			p.HandlePlayerInput(e);
-			s.AiMove();
+
+			bool timePass = p.HandlePlayerInput(e);
+			if (timePass) s.AiMove();
 
 			if (map.Touching(p, s))
 			{

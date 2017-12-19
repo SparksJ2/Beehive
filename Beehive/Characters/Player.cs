@@ -17,7 +17,7 @@ namespace Beehive
 		{
 		}
 
-		public void HandlePlayerInput(PreviewKeyDownEventArgs e)
+		public bool HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
 			if (e.Shift)
 			{
@@ -49,6 +49,9 @@ namespace Beehive
 					case Keys.A: West(); break;
 				}
 			}
+
+			// time doesn't progress when moving pillows, for now
+			if (e.Shift) return false; else return true;
 		}
 
 		private void TogglePillowMode()
