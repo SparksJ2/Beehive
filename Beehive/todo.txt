@@ -1,11 +1,28 @@
 ﻿
+todo list:
+```````````
+escape flow map for cubi AI
 
-escape flow map
+cubi jumping AI
 
-cubi jumping
+remote spanking via thrown pillows
 
-needs held pillow counter control
+'puppet strings'
 
 other todos (see window)
 
-test commit!
+pacman nectar drops for powerup?
+
+carry cubi back to bed for 'win condition' ;)
+
+"oops... your lover escapes your grip, keep trying!"
+
+sexy lines / descriptions for feedback box
+
+low priority:
+``````````````
+config file settings
+weight allowance
+2 player mode
+learn javascript, lol
+line of sight stuff maybe, if it's fun
