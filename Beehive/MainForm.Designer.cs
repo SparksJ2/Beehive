@@ -46,7 +46,7 @@
 			// feedbackBox
 			// 
 			this.feedbackBox.Enabled = false;
-			this.feedbackBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.feedbackBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.feedbackBox.Location = new System.Drawing.Point(12, 418);
 			this.feedbackBox.Name = "feedbackBox";
 			this.feedbackBox.ReadOnly = true;
@@ -66,7 +66,7 @@
 			// miniInventory
 			// 
 			this.miniInventory.Enabled = false;
-			this.miniInventory.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.miniInventory.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.miniInventory.Location = new System.Drawing.Point(614, 435);
 			this.miniInventory.Name = "miniInventory";
 			this.miniInventory.ReadOnly = true;
