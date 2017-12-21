@@ -21,18 +21,24 @@ namespace Beehive
 
 		public void RemakeFlow(Point target)
 		{
+			// target tiles get a .flow of 0, tiles 1 square from target
+			//    get a .flow of 1, tiles 2 out get a .flow of 2, etc...
+			// So to navigate to a target tile, just pick a tile with less
+			//    flow value than where you currently are.
+
 			var sw = new Stopwatch();
 			int headsProcessed = 0;
 			sw.Start();
 
+			// tidy up values from previous runs
 			ClearFlow();
 
-			// add target tile as a starting point
-			Tile targetTile = m.TileByLoc(target);
-			targetTile.flow = 0;
-			List<Tile> heads = new List<Tile> { targetTile };
+			// get a list of starting tiles(s) as starting point(s)
+			List<Tile> heads = SetUpInitialRing();
 
-			// I call them heads because they 'snake' outwards from the initial point
+			foreach (Tile t in heads) { if (t.clear) { t.flow = 0; } }
+
+			// I call them heads because they 'snake' outwards from the initial point(s)
 			//    but you get splits into several heads at junctions so it's a bad metaphor...
 
 			// loop till we can't find anything more to do,
@@ -51,6 +57,9 @@ namespace Beehive
 					List<Tile> newTiles = new List<Tile>
 						{m.OneNorth(head), m.OneEast(head),
 						 m.OneSouth(head), m.OneWest(head) };
+
+					// ... (ignoring any nulls) ...
+					newTiles.RemoveAll(item => item == null);
 
 					// ... and for each one found ...
 					foreach (Tile newTile in newTiles)
@@ -76,6 +85,24 @@ namespace Beehive
 				"Finished flow in " + sw.ElapsedMilliseconds + "ms, " +
 				"heads = " + headsProcessed + ", " +
 				"failsafe reached = " + failsafe + ".");
+		}
+
+		private List<Tile> SetUpInitialRing()
+		{
+			// we'll try to flow to a set distance from the player by
+			//    making a ring of target squares and working from there
+			var allTiles = m.TileList();
+			var ring = new List<Tile>();
+			foreach (Tile t in allTiles)
+			{
+				// todo de-duplicate with other pythagorus
+				double a = Math.Pow(p.loc.X - t.loc.X, 2);
+				double b = Math.Pow(p.loc.Y - t.loc.Y, 2);
+				double c = Math.Sqrt(a + b);
+
+				if (c > 10 && c < 12) { ring.Add(t); }
+			}
+			return ring;
 		}
 
 		public void ClearFlow()

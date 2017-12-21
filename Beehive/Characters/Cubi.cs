@@ -41,7 +41,7 @@ namespace Beehive
 			// pick a possibility and go there.
 			if (maybe.Count > 0)
 			{
-				maybe = maybe.OrderBy(i => i.flow).ToList(); // linq ftw
+				maybe = maybe.OrderBy(i => -i.flow).ToList(); // linq ftw
 
 				Tile newplace;
 				if (maybe[0].flow < 10)
