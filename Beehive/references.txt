@@ -1,0 +1,4 @@
+﻿
+http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps
+
+http://www.roguebasin.com/index.php?title=Dijkstra_Maps_Visualized

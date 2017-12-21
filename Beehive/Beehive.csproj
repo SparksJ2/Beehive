@@ -100,6 +100,7 @@
     <Content Include="Area\walls.txt" />
     <Content Include="Notes\workspace.txt" />
     <Content Include="Notes\zodiac.txt" />
+    <Content Include="references.txt" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <ItemGroup />
