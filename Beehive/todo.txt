@@ -1,7 +1,8 @@
 ﻿
 todo list:
 ```````````
-escape flow map for cubi AI
+improve flow map for cubi AI
+	needs 'towards' as well as 'away from' to avoid getting stuck in corners etc.
 
 cubi jumping AI
 

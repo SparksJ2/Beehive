@@ -163,22 +163,25 @@ namespace Beehive
 			gr.DrawRectangle(new Pen(Color.White, 4), rc);
 
 			// add floor stuff
+			Flow fl = new Flow(this, p, s);
+			fl.RemakeFlow(p.loc);
+
 			for (int x = 0; x < xLen; x++)
 			{
 				for (int y = 0; y < yLen; y++)
 				{
 					var t = tiles[x, y];
-					if (!t.clear) AddChar(bmp, x, y, t.gly.ToString());
+					AddChar(bmp, x, y, t.gly.ToString(), t.flow);
 				}
 			}
 
-			AddChar(bmp, p.loc.X, p.loc.Y, "♂");
-			AddChar(bmp, s.loc.X, s.loc.Y, "☿");
+			AddChar(bmp, p.loc.X, p.loc.Y, "♂", 0);
+			AddChar(bmp, s.loc.X, s.loc.Y, "☿", 0);
 
 			return bmp;
 		}
 
-		public static void AddChar(Bitmap bmp, int x, int y, string s)
+		public void AddChar(Bitmap bmp, int x, int y, string s, int flow)
 		{
 			int multX = 12;
 			int multY = 15;
@@ -191,28 +194,25 @@ namespace Beehive
 			int y2 = multY;
 
 			// Create a rectangle for the entire bitmap
-			RectangleF rectf = new RectangleF(x1, y1, x2, y2);
+			RectangleF tileRect = new RectangleF(x1, y1, x2, y2);
 
 			// Create graphic object that will draw onto the bitmap
-			Graphics g = Graphics.FromImage(bmp);
-			Graphics g2 = Graphics.FromImage(bmp);
-			g2.FillRectangle(Brushes.DarkSlateGray, rectf);
-			g2.Flush();
+			Graphics gChar = Graphics.FromImage(bmp);
 
 			// ------------------------------------------
 			// Ensure the best possible quality rendering
 			// ------------------------------------------
 			// The smoothing mode specifies whether lines, curves, and the edges of filled areas use smoothing (also called antialiasing). One exception is that path gradient brushes do not obey the smoothing mode. Areas filled using a PathGradientBrush are rendered the same way (aliased) regardless of the SmoothingMode property.
-			g.SmoothingMode = SmoothingMode.HighQuality;
+			gChar.SmoothingMode = SmoothingMode.HighQuality;
 
 			// The interpolation mode determines how intermediate values between two endpoints are calculated.
-			g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			gChar.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
 			// Use this property to specify either higher quality, slower rendering, or lower quality, faster rendering of the contents of this Graphics object.
-			g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			gChar.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 			// This one is important
-			g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+			gChar.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
 			// Create string formatting options (used for alignment)
 			StringFormat format = new StringFormat()
@@ -221,24 +221,30 @@ namespace Beehive
 				LineAlignment = StringAlignment.Center
 			};
 
-			// Draw the text onto the image
-			//  ⌑  Unicode Character 'SQUARE LOZENGE'(U + 2311)
-
+			// set default font stuff
 			int gSize = 11;
 			string useFont = "Courier";
-			if (s == "♂")
+
+			// set flow as background
+			Tile t = tiles[x, y];
+			int flowInt = t.flow * 12;
+			if (flowInt > 96) flowInt = 96;
+
+			Graphics gFlow = Graphics.FromImage(bmp);
+			if (t.clear) gFlow.FillRectangle(new SolidBrush(Color.FromArgb(12, flowInt, 12)), tileRect);
+			gFlow.Flush();
+
+			// Draw the text onto the image
+			//  ⌑  Unicode Character 'SQUARE LOZENGE'(U + 2311)
+			if (s == "♂") { gSize = 8; useFont = "Symbola"; }
+			if (s == "☿") { gSize = 11; useFont = "Symbola"; }
+
+			if (!t.clear || s == "♂" || s == "☿") // todo find a better way
 			{
-				gSize = 8;
-				useFont = "Symbola";
-			}
-			if (s == "☿")
-			{
-				gSize = 11;
-				useFont = "Symbola";
+				gChar.DrawString(s, new Font(useFont, gSize), Brushes.White, tileRect, format);
 			}
 
-			g.DrawString(s, new Font(useFont, gSize), Brushes.White, rectf, format);
-			g.Flush();
+			gChar.Flush();
 		}
 
 		public void ConsoleDump()

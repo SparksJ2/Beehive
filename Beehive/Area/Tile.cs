@@ -12,5 +12,6 @@ namespace Beehive
 		public Point loc;
 		public bool clear = false;
 		public char gly = '#';
+		public int flow = 0;
 	}
 }

@@ -41,7 +41,19 @@ namespace Beehive
 			// pick a possibility and go there.
 			if (maybe.Count > 0)
 			{
-				Tile newplace = maybe[rng.Next(maybe.Count)];
+				maybe = maybe.OrderBy(i => i.flow).ToList(); // linq ftw
+
+				Tile newplace;
+				if (maybe[0].flow < 10)
+				{
+					newplace = maybe[maybe.Count - 1];
+					Console.WriteLine("Evading master!");
+				}
+				else
+				{
+					newplace = maybe[rng.Next(maybe.Count)];
+					Console.WriteLine("Too far to care.");
+				}
 				loc.X = newplace.loc.X;
 				loc.Y = newplace.loc.Y;
 			}
