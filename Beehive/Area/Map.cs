@@ -16,6 +16,8 @@ namespace Beehive
 		public int xLen;
 		public int yLen;
 		public Tile[,] tiles;
+		public Bitmap SansSerifBitmapFont;
+		public Bitmap SymbolaBitmapFont;
 
 		public Map(int xIn, int yIn)
 		{
@@ -33,6 +35,9 @@ namespace Beehive
 					tiles[x, y].loc.Y = y;
 				}
 			}
+
+			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_16px);
+			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_16px);
 		}
 
 		public List<Tile> TileList()
@@ -171,18 +176,19 @@ namespace Beehive
 				for (int y = 0; y < yLen; y++)
 				{
 					var t = tiles[x, y];
-					AddCharUnicode(bmp, x, y, t.gly.ToString(), t.flow);
+					AddCharTile(bmp, x, y, t.gly.ToString(), t.flow);
 				}
 			}
 
-			AddCharUnicode(bmp, p.loc.X, p.loc.Y, "♂", 0);
-			AddCharUnicode(bmp, s.loc.X, s.loc.Y, "☿", 0);
+			AddCharTile(bmp, p.loc.X, p.loc.Y, "♂", 0);
+			AddCharTile(bmp, s.loc.X, s.loc.Y, "☿", 0);
 
 			return bmp;
 		}
 
-		public void AddCharUnicode(Bitmap bmp, int x, int y, string s, int flow)
+		public void AddCharTile(Bitmap bmp, int x, int y, string s, int flow)
 		{
+			// todo this doesn't play well with 16x16 tiles, fix soon
 			int multX = 12;
 			int multY = 15;
 			int edgeX = 10;
@@ -193,58 +199,44 @@ namespace Beehive
 			int x2 = multX;
 			int y2 = multY;
 
-			// Create a rectangle for the entire bitmap
+			// Create a rectangle for the working area on the map
 			RectangleF tileRect = new RectangleF(x1, y1, x2, y2);
-
-			// Create graphic object that will draw onto the bitmap
-			Graphics gChar = Graphics.FromImage(bmp);
-
-			// ------------------------------------------
-			// Ensure the best possible quality rendering
-			// ------------------------------------------
-			// The smoothing mode specifies whether lines, curves, and the edges of filled areas use smoothing (also called antialiasing). One exception is that path gradient brushes do not obey the smoothing mode. Areas filled using a PathGradientBrush are rendered the same way (aliased) regardless of the SmoothingMode property.
-			gChar.SmoothingMode = SmoothingMode.HighQuality;
-
-			// The interpolation mode determines how intermediate values between two endpoints are calculated.
-			gChar.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-			// Use this property to specify either higher quality, slower rendering, or lower quality, faster rendering of the contents of this Graphics object.
-			gChar.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-			// This one is important
-			gChar.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-
-			// Create string formatting options (used for alignment)
-			StringFormat format = new StringFormat()
-			{
-				Alignment = StringAlignment.Center,
-				LineAlignment = StringAlignment.Center
-			};
-
-			// set default font stuff
-			int gSize = 11;
-			string useFont = "Courier";
 
 			// set flow as background
 			Tile t = tiles[x, y];
 			int flowInt = t.flow * 12;
 			if (flowInt > 96) flowInt = 96;
-
 			Graphics gFlow = Graphics.FromImage(bmp);
 			if (t.clear) gFlow.FillRectangle(new SolidBrush(Color.FromArgb(12, flowInt, 12)), tileRect);
 			gFlow.Flush();
 
-			// Draw the text onto the image
-			//  ⌑  Unicode Character 'SQUARE LOZENGE'(U + 2311)
-			if (s == "♂") { gSize = 8; useFont = "Symbola"; }
-			if (s == "☿") { gSize = 11; useFont = "Symbola"; }
-
 			if (!t.clear || s == "♂" || s == "☿") // todo find a better way
 			{
-				gChar.DrawString(s, new Font(useFont, gSize), Brushes.White, tileRect, format);
-			}
+				// find our symbol in this tileset
+				int codePoint = s[0];
+				int codeX = codePoint % 64;
+				int codeY = codePoint / 64;
 
-			gChar.Flush();
+				// we'll cut from this rectangle
+				// todo fix hardcoded values
+				Rectangle cloneRect = new Rectangle(codeX * 16, codeY * 16, 16, 16);
+
+				// because symbola gets nicer planet symbols
+				Bitmap useBitmapFont = SansSerifBitmapFont;
+				if (s == "♂" || s == "☿") { useBitmapFont = SymbolaBitmapFont; }
+
+				// extract this symbols as a tiny bitmap
+				System.Drawing.Imaging.PixelFormat format = useBitmapFont.PixelFormat;
+				Bitmap singleTileImage = useBitmapFont.Clone(cloneRect, format);
+
+				// paste symbol onto map
+				Graphics gChar = Graphics.FromImage(bmp);
+				gChar.DrawImage(singleTileImage, x1, y1);
+
+				// clean up
+				gChar.Flush();
+				singleTileImage.Dispose();
+			}
 		}
 
 		public void ConsoleDump()

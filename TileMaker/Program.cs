@@ -15,14 +15,15 @@ namespace ResourcesTest
 		private static void Main()
 		{
 			int limit = 0x3200; // 0x10ffff
-			int size = 32;
+			int size = 16;
 			int charsPerLine = 64;
+
 			string fontString = "Symbola";
-			int em = 20;
+			int em = 11;
 			MakeTileFile(limit, size, charsPerLine, fontString, em);
 
 			fontString = "Microsoft Sans Serif";
-			em = 20;
+			em = 11;
 			MakeTileFile(limit, size, charsPerLine, fontString, em);
 		}
 
@@ -74,7 +75,7 @@ namespace ResourcesTest
 				// forbidden range causes exceptions;
 				if (i < 0x00d800 || i > 0x00dfff) { s = char.ConvertFromUtf32(i).ToString(); }
 
-				gChar.DrawString(s, style, Brushes.Black, rect, stringFormat);
+				gChar.DrawString(s, style, Brushes.White, rect, stringFormat);
 				gChar.Flush();
 			}
 			return bm;
