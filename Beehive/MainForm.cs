@@ -65,15 +65,16 @@ namespace Beehive
 			Console.WriteLine(e.KeyCode);
 
 			bool timePass = p.HandlePlayerInput(e);
+			new Flow(map, p, s).RemakeFlow(p.loc);
 			if (timePass)
 			{
 				// run ai
-				
 				s.AiMove();
 
 				// win condition
 				if (map.Touching(p, s)) { MessageBox.Show("Winners you are!"); }
 			}
+
 			// update screen
 			MainBitmap.Image = map.AsBitmap(p, s);
 			map.HealWalls();
@@ -81,7 +82,6 @@ namespace Beehive
 		}
 	}
 }
-
 
 //private void KeyDownHandler(object sender, KeyEventArgs e)
 //{
