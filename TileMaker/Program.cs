@@ -17,9 +17,18 @@ namespace ResourcesTest
 			int limit = 0x3200; // 0x10ffff
 			int size = 32;
 			int charsPerLine = 64;
-
 			string fontString = "Symbola";
-			Font useFont = new Font(fontString, 20);
+			int em = 20;
+			MakeTileFile(limit, size, charsPerLine, fontString, em);
+
+			fontString = "Microsoft Sans Serif";
+			em = 20;
+			MakeTileFile(limit, size, charsPerLine, fontString, em);
+		}
+
+		private static void MakeTileFile(int limit, int size, int charsPerLine, string fontString, int em)
+		{
+			Font useFont = new Font(fontString, em);
 			if (useFont.Name != fontString)
 			{
 				Console.WriteLine("tried " + fontString + ", got " + useFont.Name);
@@ -27,8 +36,10 @@ namespace ResourcesTest
 				return;
 			}
 
+			string spacelessName = useFont.Name.Replace(" ", "");
+			string filename = spacelessName + "-" + em + "pt-" + size + "px";
 			Bitmap bm = CreateFontMap(limit, size, charsPerLine, useFont);
-			bm.Save("test-bitmap.png"); // type based off extension
+			bm.Save("..\\..\\..\\Beehive\\Resources\\" + filename + ".png"); // type based off extension
 		}
 
 		private static Bitmap CreateFontMap(int limit, int size, int charsPerLine, Font style)

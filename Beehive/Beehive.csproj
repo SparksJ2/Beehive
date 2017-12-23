@@ -74,14 +74,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -101,6 +95,8 @@
     <Content Include="Notes\workspace.txt" />
     <Content Include="Notes\zodiac.txt" />
     <Content Include="references.txt" />
+    <Content Include="Resources\MicrosoftSansSerif-20pt-32px.png" />
+    <Content Include="Resources\Symbola-20pt-32px.png" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <ItemGroup />
