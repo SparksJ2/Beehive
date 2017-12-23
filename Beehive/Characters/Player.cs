@@ -19,19 +19,23 @@ namespace Beehive
 
 		public bool HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
+			bool timepass = true;
 			if (e.Shift)
 			{
+				// time doesn't progress when moving pillows, for now
+				timepass = false;
 				switch (e.KeyCode)
 				{
 					case Keys.Down: PillowSouth(); break;
 					case Keys.Right: PillowEast(); break;
 					case Keys.Up: PillowNorth(); break;
 					case Keys.Left: PillowWest(); break;
-
 					case Keys.S: PillowSouth(); break;
 					case Keys.D: PillowEast(); break;
 					case Keys.W: PillowNorth(); break;
 					case Keys.A: PillowWest(); break;
+					case Keys.Space: break; // allow waiting
+					default: timepass = false; break;
 				}
 			}
 			else
@@ -42,16 +46,15 @@ namespace Beehive
 					case Keys.Right: East(); break;
 					case Keys.Up: North(); break;
 					case Keys.Left: West(); break;
-
 					case Keys.S: South(); break;
 					case Keys.D: East(); break;
 					case Keys.W: North(); break;
 					case Keys.A: West(); break;
+					case Keys.Space: break; // allow waiting
+					default: timepass = false; break;
 				}
 			}
-
-			// time doesn't progress when moving pillows, for now
-			if (e.Shift) return false; else return true;
+			return timepass;
 		}
 
 		private void TogglePillowMode()

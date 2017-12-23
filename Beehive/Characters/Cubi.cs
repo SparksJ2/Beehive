@@ -20,6 +20,8 @@ namespace Beehive
 
 		public void AiMove()
 		{
+			new Flow(map, p, this).RemakeFlow(p.loc);
+
 			var maybe = new List<Tile>();
 
 			Tile here = map.tiles[loc.X, loc.Y];

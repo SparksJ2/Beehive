@@ -167,10 +167,7 @@ namespace Beehive
 			Rectangle rc = new Rectangle(5, 5, bmp.Width - 10, bmp.Height - 10);
 			gr.DrawRectangle(new Pen(Color.White, 4), rc);
 
-			// add floor stuff
-			Flow fl = new Flow(this, p, s);
-			fl.RemakeFlow(p.loc);
-
+			// add floor stuff			
 			for (int x = 0; x < xLen; x++)
 			{
 				for (int y = 0; y < yLen; y++)

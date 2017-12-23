@@ -24,7 +24,7 @@ namespace Beehive
 		public KeyEventHandler kh;
 		public PreviewKeyDownEventHandler eh;
 
-		public Stopwatch sw;
+		public Stopwatch turnTimer;
 
 		public MainForm()
 		{
@@ -39,14 +39,15 @@ namespace Beehive
 			//s.SetXY(65 - 2, 25 - 2);
 			s.SetXY(4, 3);
 
-			// draw map
+			// draw initial map
+			new Flow(map, p, s).RemakeFlow(p.loc);
 			var bitMapMap = map.AsBitmap(p, s);
 
 			// add to window
 			MainBitmap.Image = bitMapMap;
 
 			// init key handlers
-			sw = new Stopwatch(); sw.Start();
+			turnTimer = new Stopwatch(); turnTimer.Start();
 
 			this.KeyPreview = true;
 
@@ -59,26 +60,28 @@ namespace Beehive
 
 		public void PreviewKeyDownHandler(object sender, PreviewKeyDownEventArgs e)
 		{
-			if (sw.ElapsedMilliseconds < 300) return;
-			sw.Start();
+			if (turnTimer.ElapsedMilliseconds < 300) return;
+			turnTimer.Start();
 			Console.WriteLine(e.KeyCode);
 
 			bool timePass = p.HandlePlayerInput(e);
-			if (timePass) s.AiMove();
-
-			if (map.Touching(p, s))
+			if (timePass)
 			{
-				MessageBox.Show("Winners you are!");
-			}
+				// run ai
+				
+				s.AiMove();
 
+				// win condition
+				if (map.Touching(p, s)) { MessageBox.Show("Winners you are!"); }
+			}
 			// update screen
 			MainBitmap.Image = map.AsBitmap(p, s);
 			map.HealWalls();
 			Refresh();
-			//this.PreviewKeyDown += eh;
 		}
 	}
 }
+
 
 //private void KeyDownHandler(object sender, KeyEventArgs e)
 //{
