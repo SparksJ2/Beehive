@@ -1,8 +1,6 @@
 ﻿
 issues:
 ````````
-'I do miss the antialiased player/cubi symbols'
-
 ': One nit: every keypress makes a turn pass, even if it's not a valid key. Mostly irrelevant except that it makes it impossible to close by keybind after winning (since you end up closing the win screen instead)'
 
 todo list:

@@ -62,7 +62,7 @@ namespace ResourcesTest
 				gChar.SmoothingMode = SmoothingMode.HighQuality;
 				gChar.InterpolationMode = InterpolationMode.HighQualityBicubic;
 				gChar.PixelOffsetMode = PixelOffsetMode.HighQuality;
-				gChar.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+				gChar.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
 				// try to center the character in the rectangle
 				StringFormat stringFormat = new StringFormat
