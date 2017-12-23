@@ -171,17 +171,17 @@ namespace Beehive
 				for (int y = 0; y < yLen; y++)
 				{
 					var t = tiles[x, y];
-					AddChar(bmp, x, y, t.gly.ToString(), t.flow);
+					AddCharUnicode(bmp, x, y, t.gly.ToString(), t.flow);
 				}
 			}
 
-			AddChar(bmp, p.loc.X, p.loc.Y, "♂", 0);
-			AddChar(bmp, s.loc.X, s.loc.Y, "☿", 0);
+			AddCharUnicode(bmp, p.loc.X, p.loc.Y, "♂", 0);
+			AddCharUnicode(bmp, s.loc.X, s.loc.Y, "☿", 0);
 
 			return bmp;
 		}
 
-		public void AddChar(Bitmap bmp, int x, int y, string s, int flow)
+		public void AddCharUnicode(Bitmap bmp, int x, int y, string s, int flow)
 		{
 			int multX = 12;
 			int multY = 15;
