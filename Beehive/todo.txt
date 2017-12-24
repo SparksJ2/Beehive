@@ -8,20 +8,11 @@ todo list:
 
 think of a better name than beehive
 
-player instructions!
-
-replace erratic unicode with proper bitmapped tiles
-
-improve flow map for cubi AI
-	needs 'towards' as well as 'away from' to avoid getting stuck in corners etc.
-
 cubi AI 
 	- jumping over player
 	- vary target distance
 
 navigation via mouse clicks
-
-remote spanking via thrown pillows
 
 'puppet strings'
 
