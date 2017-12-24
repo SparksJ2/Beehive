@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beehive
 {
-	internal class Refs
+	public class Refs
 	{
 		public static Player p;
 		public static Cubi c;

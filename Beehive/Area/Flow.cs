@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace Beehive
 {
-	internal class Flow
+	public class Flow
 	{
 		public void RemakeFlow(Point target)
 		{
@@ -97,9 +97,9 @@ namespace Beehive
 			return ring;
 		}
 
-		public void ClearFlow()
+		private void ClearFlow()
 		{
-			foreach (Tile t in Refs.m.tiles) { t.flow = 9999; }
+			foreach (Tile t in Refs.m.TileList()) { t.flow = 9999; }
 		}
 	}
 }

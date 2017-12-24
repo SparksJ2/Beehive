@@ -13,11 +13,21 @@ namespace Beehive
 {
 	public class Map
 	{
-		public int xLen;
-		public int yLen;
-		public Tile[,] tiles;
-		public Bitmap SansSerifBitmapFont;
-		public Bitmap SymbolaBitmapFont;
+		private int xLen;
+		private int yLen;
+		private Tile[,] tiles;
+		private Bitmap SansSerifBitmapFont;
+		private Bitmap SymbolaBitmapFont;
+
+		public int GetXLen()
+		{
+			return xLen;
+		}
+
+		public int GetYLen()
+		{
+			return yLen;
+		}
 
 		public Map(int xIn, int yIn)
 		{

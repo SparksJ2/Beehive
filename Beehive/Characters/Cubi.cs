@@ -9,12 +9,17 @@ namespace Beehive
 {
 	public class Cubi : Mobile
 	{
-		public Random rng;
-		public int spanked = 0;
+		private Random rng;
+		private int spanked = 0;
 
 		public Cubi() : base()
 		{
 			rng = new Random();
+		}
+
+		public void Spank(int i)
+		{
+			spanked += i;
 		}
 
 		public void AiMove()
@@ -23,7 +28,7 @@ namespace Beehive
 
 			var maybe = new List<Tile>();
 
-			Tile here = Refs.m.tiles[loc.X, loc.Y];
+			Tile here = Refs.m.TileByLoc(loc);
 
 			maybe.Add(here.OneEast());
 			maybe.Add(here.OneSouth());

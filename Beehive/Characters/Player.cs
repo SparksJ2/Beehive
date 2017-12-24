@@ -11,7 +11,6 @@ namespace Beehive
 {
 	public class Player : Mobile
 	{
-		public bool pillowMode = false;
 		public int heldPillows = 0;
 
 		public Player() : base()
@@ -85,7 +84,7 @@ namespace Beehive
 			// if the next tile now is our lover, extra spank stun!
 			string moveClear = CheckClearForThrown(vector, activeTile);
 			if (moveClear == "spank")
-			{ Refs.c.spanked += 5; Console.WriteLine("POINT BLANK PILLOW SPANK!"); }
+			{ Refs.c.Spank(5); Console.WriteLine("POINT BLANK PILLOW SPANK!"); }
 
 			while (moveClear == "clear")
 			{
@@ -97,7 +96,7 @@ namespace Beehive
 
 				// nope, it has your cubi in. spank!
 				if (moveClear == "spank")
-				{ Refs.c.spanked += 3; Console.WriteLine("PILLOW SPANK!"); }
+				{ Refs.c.Spank(5); Console.WriteLine("PILLOW SPANK!"); }
 
 				// just a wall. stop here.
 				if (moveClear == "wall")
@@ -157,11 +156,6 @@ namespace Beehive
 		{
 			Tile t = Refs.m.TileByLoc(this.loc).OneSouth();
 			if (t.clear) ThrowPillow(Dir.South);
-		}
-
-		private void TogglePillowMode()
-		{
-			pillowMode = !pillowMode;
 		}
 
 		private void ToggleClearTile(Tile t)
@@ -234,7 +228,5 @@ namespace Beehive
 			Tile t = Refs.m.TileByLoc(loc).OneWest();
 			if (t.clear) loc = t.loc;
 		}
-
-		// todo fix 'public'?
 	}
 }

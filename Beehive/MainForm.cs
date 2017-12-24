@@ -17,7 +17,6 @@ namespace Beehive
 {
 	public partial class MainForm : Form
 	{
-		public KeyEventHandler kh;
 		public PreviewKeyDownEventHandler eh;
 
 		public Stopwatch turnTimer;
@@ -59,9 +58,6 @@ namespace Beehive
 			this.PreviewKeyDown += eh;
 		}
 
-		//private bool isKeyPressed = false;
-		//private bool isKeyHeld = false;
-
 		public void UpdateMap()
 		{
 			Refs.mf.MainBitmap.Image = Refs.m.AsBitmap();
@@ -92,7 +88,7 @@ namespace Beehive
 	}
 }
 
-//private void KeyDownHandler(object sender, KeyEventArgs e)
+//public void KeyDownHandler(object sender, KeyEventArgs e)
 //{
 //	//e.SuppressKeyPress = isKeyPressed;
 //	//if (isKeyPressed) isKeyHeld = true;
@@ -104,7 +100,7 @@ namespace Beehive
 //	e.Handled = true;
 //}
 
-//private void KeyUpHandler(object sender, KeyEventArgs e)
+//public void KeyUpHandler(object sender, KeyEventArgs e)
 //{
 //	//isKeyPressed = false;
 //	//isKeyHeld = false;

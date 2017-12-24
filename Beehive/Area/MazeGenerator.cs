@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,17 @@ namespace Beehive
 {
 	public class MazeGenerator
 	{
-		public Random rng = new Random();
+		private Random rng = new Random();
 
 		public Map Create(int xlen, int ylen)
 		{
 			Map NewMap = new Map(xlen, ylen);
 
-			Tile initial = NewMap.tiles[1, 1];
+			Tile initial = NewMap.TileByLoc(new Point(1, 1));
 			initial.clear = true;
 
-			Tile final = NewMap.tiles[NewMap.xLen - 2, NewMap.yLen - 2];
+			Tile final = NewMap.TileByLoc(
+				new Point(NewMap.GetXLen() - 2, NewMap.GetYLen() - 2));
 
 			// todo maze generation
 			var options = NewMap.GetNextTo(initial);
@@ -30,7 +32,7 @@ namespace Beehive
 
 				// get tunnel options
 				var opts1 = NewMap.GetNextTo(clear);
-				var opts2 = NewMap.GetClosed5Sides(opts1);  
+				var opts2 = NewMap.GetClosed5Sides(opts1);
 
 				// tunnel in random direction
 				//NewMap.ConsoleDump();

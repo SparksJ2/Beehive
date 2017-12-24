@@ -9,7 +9,7 @@ namespace Beehive
 {
 	public class Mobile
 	{
-		internal Point loc;
+		public Point loc;
 
 		public Mobile()
 		{

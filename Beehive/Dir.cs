@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Beehive
 {
-	internal class Dir
+	public class Dir
 	{
 		public static Point North = new Point(0, -1);
 		public static Point East = new Point(1, 0);
@@ -21,7 +21,7 @@ namespace Beehive
 		public static Point SouthWest = AddPts(South, West);
 		public static Point NorthWest = AddPts(North, West);
 
-		private static Point AddPts(Point a, Point b)
+		public static Point AddPts(Point a, Point b)
 		{
 			return new Point(a.X + b.X, a.Y + b.Y);
 		}
