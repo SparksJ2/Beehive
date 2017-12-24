@@ -49,12 +49,7 @@ namespace Beehive
 
 		public List<Tile> ClearTiles()
 		{
-			var tList = new List<Tile>();
-			foreach (Tile t in tiles)
-			{
-				if (t.clear) tList.Add(t); // todo use Where
-			}
-			return tList;
+			return TileList().Where(t => t.clear).ToList();
 		}
 
 		public List<Tile> GetClosed3Sides(List<Tile> input)
@@ -95,25 +90,25 @@ namespace Beehive
 
 		public Tile OneNorthEast(Tile t)
 		{
-			var loc = new Point(t.loc.X + 1, t.loc.Y - 1);
+			var loc = AddPts(t.loc, Dir.NorthEast);
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
 		public Tile OneSouthEast(Tile t)
 		{
-			var loc = new Point(t.loc.X + 1, t.loc.Y + 1);
+			var loc = AddPts(t.loc, Dir.SouthEast);
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
 		public Tile OneNorthWest(Tile t)
 		{
-			var loc = new Point(t.loc.X - 1, t.loc.Y - 1);
+			var loc = AddPts(t.loc, Dir.NorthWest);
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
 		public Tile OneSouthWest(Tile t)
 		{
-			var loc = new Point(t.loc.X - 1, t.loc.Y + 1);
+			var loc = AddPts(t.loc, Dir.SouthWest);
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
@@ -131,25 +126,25 @@ namespace Beehive
 
 		public Tile OneNorth(Tile t)
 		{
-			var loc = new Point(t.loc.X, t.loc.Y - 1);
+			var loc = AddPts(t.loc, Dir.North);
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
 		public Tile OneSouth(Tile t)
 		{
-			var loc = new Point(t.loc.X, t.loc.Y + 1);
+			var loc = AddPts(t.loc, Dir.South);
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
 		public Tile OneEast(Tile t)
 		{
-			var loc = new Point(t.loc.X + 1, t.loc.Y);
+			var loc = AddPts(t.loc, Dir.East);
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
 		public Tile OneWest(Tile t)
 		{
-			var loc = new Point(t.loc.X - 1, t.loc.Y);
+			var loc = AddPts(t.loc, Dir.West);
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
@@ -326,6 +321,11 @@ namespace Beehive
 			double c = Math.Sqrt(a + b);
 			Console.WriteLine(c);
 			return (c < 1.01);
+		}
+
+		private Point AddPts(Point a, Point b)
+		{
+			return new Point(a.X + b.X, a.Y + b.Y);
 		}
 	}
 }

@@ -30,7 +30,7 @@ namespace Beehive
 
 				// get tunnel options
 				var opts1 = NewMap.GetNextTo(clear);
-				var opts2 = NewMap.GetClosed5Sides(opts1); // todo use where again?
+				var opts2 = NewMap.GetClosed5Sides(opts1);  
 
 				// tunnel in random direction
 				//NewMap.ConsoleDump();

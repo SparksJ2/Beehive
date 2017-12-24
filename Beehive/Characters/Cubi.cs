@@ -25,19 +25,16 @@ namespace Beehive
 
 			Tile here = Refs.m.tiles[loc.X, loc.Y];
 
-			if (Refs.m.OneEast(here).clear) { maybe.Add(Refs.m.OneEast(here)); }
-			if (Refs.m.OneSouth(here).clear) { maybe.Add(Refs.m.OneSouth(here)); }
-			if (Refs.m.OneNorth(here).clear) { maybe.Add(Refs.m.OneNorth(here)); }
-			if (Refs.m.OneWest(here).clear) { maybe.Add(Refs.m.OneWest(here)); }
+			maybe.Add(here.OneEast());
+			maybe.Add(here.OneSouth());
+			maybe.Add(here.OneNorth());
+			maybe.Add(here.OneWest());
+
+			// filter not clear maybes
+			maybe = maybe.Where(t => t.clear).ToList();
 
 			// don't move directly onto player
-			Tile oops = null;
-			foreach (Tile check in maybe) if (check.loc == Refs.p.loc) oops = check;
-			if (oops != null)
-			{
-				maybe.Remove(oops);
-				Console.WriteLine("oops!");
-			}
+			maybe = maybe.Where(t => t.loc != Refs.p.loc).ToList();
 
 			// pick a possibility and go there.
 			if (maybe.Count > 0)
@@ -46,8 +43,7 @@ namespace Beehive
 
 				// just follow the flow
 				Tile newplace = maybe[maybe.Count - 1];
-				loc.X = newplace.loc.X;
-				loc.Y = newplace.loc.Y;
+				loc = newplace.loc;
 			}
 			// todo add NorthIfClear, etc
 		}

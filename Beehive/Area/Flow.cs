@@ -28,7 +28,6 @@ namespace Beehive
 
 			// get a list of starting tiles(s) as starting point(s)
 			List<Tile> heads = SetUpInitialRing();
-
 			foreach (Tile t in heads) { if (t.clear) { t.flow = 0; } }
 
 			// I call them heads because they 'snake' outwards from the initial point(s)

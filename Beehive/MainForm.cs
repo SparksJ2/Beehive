@@ -62,6 +62,12 @@ namespace Beehive
 		//private bool isKeyPressed = false;
 		//private bool isKeyHeld = false;
 
+		public void UpdateMap()
+		{
+			Refs.mf.MainBitmap.Image = Refs.m.AsBitmap();
+			Refs.mf.Refresh();
+		}
+
 		public void PreviewKeyDownHandler(object sender, PreviewKeyDownEventArgs e)
 		{
 			if (turnTimer.ElapsedMilliseconds < 300) return;
@@ -81,8 +87,7 @@ namespace Beehive
 
 			// update screen
 			Refs.m.HealWalls();
-			MainBitmap.Image = Refs.m.AsBitmap();
-			Refresh();
+			UpdateMap();
 		}
 	}
 }

@@ -110,8 +110,7 @@ namespace Beehive
 			// leave pillow on ground to form new obstruction
 			activeTile.clear = false;
 			Refs.m.HealWalls();
-			Refs.mf.MainBitmap.Image = Refs.m.AsBitmap();
-			Refs.mf.Refresh();
+			Refs.mf.UpdateMap();
 		}
 
 		private string CheckClearForThrown(Point vector, Tile activeTile)
@@ -127,33 +126,37 @@ namespace Beehive
 			// todo animation code is a bit makeshift and needs to be cleaned up andmoved to Map.cs
 			activeTile.clear = false;
 			activeTile.gly = pillowGlyph;
-			Refs.mf.MainBitmap.Image = Refs.m.AsBitmap();
-			Refs.mf.Refresh();
+
+			Refs.mf.UpdateMap();
+
 			Thread.Sleep(75);
 			activeTile.clear = true;
 			activeTile.gly = ' ';
-			Refs.mf.MainBitmap.Image = Refs.m.AsBitmap();
-			Refs.mf.Refresh();
+			Refs.mf.UpdateMap();
 		}
 
 		private void ThrowPillowNorth()
 		{
-			if (Refs.m.OneNorth(Refs.m.TileByLoc(this.loc)).clear) ThrowPillow(new Point(0, -1));
+			Tile t = Refs.m.TileByLoc(this.loc).OneNorth();
+			if (t.clear) ThrowPillow(Dir.North);
 		}
 
 		private void ThrowPillowWest()
 		{
-			if (Refs.m.OneWest(Refs.m.TileByLoc(this.loc)).clear) ThrowPillow(new Point(-1, 0));
+			Tile t = Refs.m.TileByLoc(this.loc).OneWest();
+			if (t.clear) ThrowPillow(Dir.West);
 		}
 
 		private void ThrowPillowEast()
 		{
-			if (Refs.m.OneEast(Refs.m.TileByLoc(this.loc)).clear) ThrowPillow(new Point(1, 0));
+			Tile t = Refs.m.TileByLoc(this.loc).OneEast();
+			if (t.clear) ThrowPillow(Dir.East);
 		}
 
 		private void ThrowPillowSouth()
 		{
-			if (Refs.m.OneSouth(Refs.m.TileByLoc(this.loc)).clear) ThrowPillow(new Point(0, 1));
+			Tile t = Refs.m.TileByLoc(this.loc).OneSouth();
+			if (t.clear) ThrowPillow(Dir.South);
 		}
 
 		private void TogglePillowMode()
@@ -186,49 +189,49 @@ namespace Beehive
 
 		private void PlacePillowNorth()
 		{
-			Tile t = Refs.m.OneNorth(Refs.m.TileByLoc(loc));
+			Tile t = Refs.m.TileByLoc(loc).OneNorth();
 			ToggleClearTile(t);
 		}
 
 		private void PlacePillowEast()
 		{
-			Tile t = Refs.m.OneEast(Refs.m.TileByLoc(loc));
+			Tile t = Refs.m.TileByLoc(loc).OneEast();
 			ToggleClearTile(t);
 		}
 
 		private void PlacePillowSouth()
 		{
-			Tile t = Refs.m.OneSouth(Refs.m.TileByLoc(loc));
+			Tile t = Refs.m.TileByLoc(loc).OneSouth();
 			ToggleClearTile(t);
 		}
 
 		private void PlacePillowWest()
 		{
-			Tile t = Refs.m.OneWest(Refs.m.TileByLoc(loc));
+			Tile t = Refs.m.TileByLoc(loc).OneWest();
 			ToggleClearTile(t);
 		}
 
 		private void RunNorth()
 		{
-			Tile t = Refs.m.OneNorth(Refs.m.TileByLoc(loc));
+			Tile t = Refs.m.TileByLoc(loc).OneNorth();
 			if (t.clear) loc = t.loc;
 		}
 
 		private void RunEast()
 		{
-			Tile t = Refs.m.OneEast(Refs.m.TileByLoc(loc));
+			Tile t = Refs.m.TileByLoc(loc).OneEast();
 			if (t.clear) loc = t.loc;
 		}
 
 		private void RunSouth()
 		{
-			Tile t = Refs.m.OneSouth(Refs.m.TileByLoc(loc));
+			Tile t = Refs.m.TileByLoc(loc).OneSouth();
 			if (t.clear) loc = t.loc;
 		}
 
 		private void RunWest()
 		{
-			Tile t = Refs.m.OneWest(Refs.m.TileByLoc(loc));
+			Tile t = Refs.m.TileByLoc(loc).OneWest();
 			if (t.clear) loc = t.loc;
 		}
 
