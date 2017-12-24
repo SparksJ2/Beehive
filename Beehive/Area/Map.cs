@@ -18,6 +18,8 @@ namespace Beehive
 		public Tile[,] tiles;
 		public Bitmap SansSerifBitmapFont;
 		public Bitmap SymbolaBitmapFont;
+		public Player p;
+		public Cubi s;
 
 		public Map(int xIn, int yIn)
 		{
@@ -39,6 +41,9 @@ namespace Beehive
 			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
 			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
 		}
+
+		internal void SetMobiles(Player pl, Cubi su)
+		{ p = pl; s = su; }
 
 		public List<Tile> TileList()
 		{
@@ -153,7 +158,7 @@ namespace Beehive
 			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
 		}
 
-		public Bitmap AsBitmap(Player p, Cubi s)
+		public Bitmap AsBitmap()
 		{
 			Bitmap bmp = new Bitmap((int)(800), (int)(400));
 			Graphics gr = Graphics.FromImage(bmp);
@@ -167,7 +172,7 @@ namespace Beehive
 			Rectangle rc = new Rectangle(5, 5, bmp.Width - 10, bmp.Height - 10);
 			gr.DrawRectangle(new Pen(Color.White, 4), rc);
 
-			// add floor stuff			
+			// add floor stuff
 			for (int x = 0; x < xLen; x++)
 			{
 				for (int y = 0; y < yLen; y++)

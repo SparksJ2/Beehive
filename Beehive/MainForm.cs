@@ -38,10 +38,11 @@ namespace Beehive
 			s = new Cubi(this, map, p);
 			//s.SetXY(65 - 2, 25 - 2);
 			s.SetXY(4, 3);
+			map.SetMobiles(p, s);
 
 			// draw initial map
 			new Flow(map, p, s).RemakeFlow(p.loc);
-			var bitMapMap = map.AsBitmap(p, s);
+			var bitMapMap = map.AsBitmap();
 
 			// add to window
 			MainBitmap.Image = bitMapMap;
@@ -68,16 +69,16 @@ namespace Beehive
 			new Flow(map, p, s).RemakeFlow(p.loc);
 			if (timePass)
 			{
+				// check win condition first
+				if (map.Touching(p, s)) { MessageBox.Show("Winners you are!"); }
+
 				// run ai
 				s.AiMove();
-
-				// win condition
-				if (map.Touching(p, s)) { MessageBox.Show("Winners you are!"); }
 			}
 
 			// update screen
-			MainBitmap.Image = map.AsBitmap(p, s);
 			map.HealWalls();
+			MainBitmap.Image = map.AsBitmap();
 			Refresh();
 		}
 	}
