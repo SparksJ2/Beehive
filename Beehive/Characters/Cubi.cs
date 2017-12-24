@@ -12,6 +12,8 @@ namespace Beehive
 		public Random rng;
 		public Player p;
 
+		public int spanked =0;
+
 		public Cubi(MainForm mf, Map m, Player master) : base(mf, m)
 		{
 			rng = new Random();
@@ -20,6 +22,8 @@ namespace Beehive
 
 		public void AiMove()
 		{
+			if (spanked > 0) { spanked--; return; }
+
 			var maybe = new List<Tile>();
 
 			Tile here = map.tiles[loc.X, loc.Y];

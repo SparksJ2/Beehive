@@ -39,6 +39,7 @@ namespace Beehive
 			//s.SetXY(65 - 2, 25 - 2);
 			s.SetXY(4, 3);
 			map.SetMobiles(p, s);
+			p.SetCubi(s);
 
 			// draw initial map
 			new Flow(map, p, s).RemakeFlow(p.loc);

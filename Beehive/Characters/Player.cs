@@ -13,10 +13,14 @@ namespace Beehive
 	{
 		public bool pillowMode = false;
 		public int heldPillows = 0;
+		public Cubi c;
 
 		public Player(MainForm f, Map m) : base(f, m)
 		{
 		}
+
+		public void SetCubi(Cubi cu)
+		{ c = cu; }
 
 		public bool HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
@@ -71,28 +75,60 @@ namespace Beehive
 
 		private void ThrowPillow(Point vector)
 		{
+			// can't throw without pillow!
 			if (heldPillows <= 0)
 			{ return; }
 			else
 			{ heldPillows--; UpdateInventory(); }
 
+			// determine release point of throw
 			Point startloc = AddPts(this.loc, vector);
 			Tile activeTile = map.TileByLoc(startloc);
 			char pillowGlyph = 'O';
 
-			while (map.TileByLoc(AddPts(vector, activeTile.loc)).clear)
+			// if the next tile now is our lover, extra spank stun!
+			string moveClear = CheckClearForThrown(vector, activeTile);
+			if (moveClear == "spank")
+			{ c.spanked += 5; Console.WriteLine("POINT BLANK PILLOW SPANK!"); }
+
+			while (moveClear == "clear")
 			{
+				// blip activeTile with pillow symbol
 				Animate(activeTile, pillowGlyph);
-				activeTile = map.TileByLoc(AddPts(vector, activeTile.loc));
+
+				// is the next tile clear?
+				moveClear = CheckClearForThrown(vector, activeTile);
+
+				// nope, it has your cubi in. spank!
+				if (moveClear == "spank")
+				{ c.spanked += 3; Console.WriteLine("PILLOW SPANK!"); }
+
+				// just a wall. stop here.
+				if (moveClear == "wall")
+				{ Console.WriteLine("thump"); }
+
+				// it's clear, so move activeTile up and iterate
+				if (moveClear == "clear")
+				{ activeTile = map.TileByLoc(AddPts(vector, activeTile.loc)); }
 			}
+			// leave pillow on ground to form new obstruction
 			activeTile.clear = false;
 			map.HealWalls();
 			mf.MainBitmap.Image = map.AsBitmap();
 			mf.Refresh();
 		}
 
+		private string CheckClearForThrown(Point vector, Tile activeTile)
+		{
+			Point newloc = AddPts(vector, activeTile.loc);
+			if (!map.TileByLoc(newloc).clear) return "wall";
+			if (map.TileByLoc(newloc).loc == c.loc) return "spank";
+			return "clear";
+		}
+
 		private void Animate(Tile activeTile, char pillowGlyph)
 		{
+			// todo animation code is a bit makeshift and needs to be cleaned up andmoved to Map.cs
 			activeTile.clear = false;
 			activeTile.gly = pillowGlyph;
 			mf.MainBitmap.Image = map.AsBitmap();
