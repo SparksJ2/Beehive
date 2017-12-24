@@ -12,13 +12,6 @@ namespace Beehive
 {
 	internal class Flow
 	{
-		public Map m;
-		public Player p;
-		public Cubi c;
-
-		public Flow(Map mp, Player pl, Cubi cu)
-		{ m = mp; p = pl; c = cu; }
-
 		public void RemakeFlow(Point target)
 		{
 			// target tiles get a .flow of 0, tiles 1 square from target
@@ -55,8 +48,8 @@ namespace Beehive
 				{
 					// ...find the tiles next to it...
 					List<Tile> newTiles = new List<Tile>
-						{m.OneNorth(head), m.OneEast(head),
-						 m.OneSouth(head), m.OneWest(head) };
+						{Refs.m.OneNorth(head), Refs.m.OneEast(head),
+						 Refs.m.OneSouth(head), Refs.m.OneWest(head) };
 
 					// ... (ignoring any nulls) ...
 					newTiles.RemoveAll(item => item == null);
@@ -91,13 +84,13 @@ namespace Beehive
 		{
 			// we'll try to flow to a set distance from the player by
 			//    making a ring of target squares and working from there
-			var allTiles = m.TileList();
+			var allTiles = Refs.m.TileList();
 			var ring = new List<Tile>();
 			foreach (Tile t in allTiles)
 			{
 				// todo de-duplicate with other pythagorus
-				double a = Math.Pow(p.loc.X - t.loc.X, 2);
-				double b = Math.Pow(p.loc.Y - t.loc.Y, 2);
+				double a = Math.Pow(Refs.p.loc.X - t.loc.X, 2);
+				double b = Math.Pow(Refs.p.loc.Y - t.loc.Y, 2);
 				double c = Math.Sqrt(a + b);
 
 				if (c > 10 && c < 12) { ring.Add(t); }
@@ -107,7 +100,7 @@ namespace Beehive
 
 		public void ClearFlow()
 		{
-			foreach (Tile t in m.tiles) { t.flow = 9999; }
+			foreach (Tile t in Refs.m.tiles) { t.flow = 9999; }
 		}
 	}
 }

@@ -17,10 +17,6 @@ namespace Beehive
 {
 	public partial class MainForm : Form
 	{
-		public Map map;
-		public Player p;
-		public Cubi s;
-
 		public KeyEventHandler kh;
 		public PreviewKeyDownEventHandler eh;
 
@@ -31,19 +27,16 @@ namespace Beehive
 			InitializeComponent();
 
 			// generate map
-			map = new MazeGenerator().Create(65, 25);
-
-			p = new Player(this, map);
-			p.SetXY(1, 1);
-			s = new Cubi(this, map, p);
-			//s.SetXY(65 - 2, 25 - 2);
-			s.SetXY(4, 3);
-			map.SetMobiles(p, s);
-			p.SetCubi(s);
+			Refs.m = new MazeGenerator().Create(65, 25);
+			Refs.p = new Player();
+			Refs.p.SetXY(1, 1);
+			Refs.c = new Cubi();
+			Refs.c.SetXY(4, 3);     //s.SetXY(65 - 2, 25 - 2);
+			Refs.mf = this;
 
 			// draw initial map
-			new Flow(map, p, s).RemakeFlow(p.loc);
-			var bitMapMap = map.AsBitmap();
+			new Flow().RemakeFlow(Refs.p.loc);
+			var bitMapMap = Refs.m.AsBitmap();
 
 			// add to window
 			MainBitmap.Image = bitMapMap;
@@ -75,20 +68,20 @@ namespace Beehive
 			turnTimer.Start();
 			Console.WriteLine(e.KeyCode);
 
-			bool timePass = p.HandlePlayerInput(e);
-			new Flow(map, p, s).RemakeFlow(p.loc);
+			bool timePass = Refs.p.HandlePlayerInput(e);
+			new Flow().RemakeFlow(Refs.p.loc);
 			if (timePass)
 			{
 				// check win condition first
-				if (map.Touching(p, s)) { MessageBox.Show("Winners you are!"); }
+				if (Refs.m.Touching(Refs.p, Refs.c)) { MessageBox.Show("Winners you are!"); }
 
 				// run ai
-				s.AiMove();
+				Refs.c.AiMove();
 			}
 
 			// update screen
-			map.HealWalls();
-			MainBitmap.Image = map.AsBitmap();
+			Refs.m.HealWalls();
+			MainBitmap.Image = Refs.m.AsBitmap();
 			Refresh();
 		}
 	}

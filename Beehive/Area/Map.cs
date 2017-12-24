@@ -18,8 +18,6 @@ namespace Beehive
 		public Tile[,] tiles;
 		public Bitmap SansSerifBitmapFont;
 		public Bitmap SymbolaBitmapFont;
-		public Player p;
-		public Cubi s;
 
 		public Map(int xIn, int yIn)
 		{
@@ -41,9 +39,6 @@ namespace Beehive
 			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
 			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
 		}
-
-		internal void SetMobiles(Player pl, Cubi su)
-		{ p = pl; s = su; }
 
 		public List<Tile> TileList()
 		{
@@ -182,8 +177,8 @@ namespace Beehive
 				}
 			}
 
-			AddCharTile(bmp, p.loc.X, p.loc.Y, "♂", 0);
-			AddCharTile(bmp, s.loc.X, s.loc.Y, "☿", 0);
+			AddCharTile(bmp, Refs.p.loc.X, Refs.p.loc.Y, "♂", 0);
+			AddCharTile(bmp, Refs.c.loc.X, Refs.c.loc.Y, "☿", 0);
 
 			return bmp;
 		}

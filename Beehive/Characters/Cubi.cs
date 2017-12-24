@@ -10,14 +10,11 @@ namespace Beehive
 	public class Cubi : Mobile
 	{
 		public Random rng;
-		public Player p;
+		public int spanked = 0;
 
-		public int spanked =0;
-
-		public Cubi(MainForm mf, Map m, Player master) : base(mf, m)
+		public Cubi() : base()
 		{
 			rng = new Random();
-			p = master;
 		}
 
 		public void AiMove()
@@ -26,16 +23,16 @@ namespace Beehive
 
 			var maybe = new List<Tile>();
 
-			Tile here = map.tiles[loc.X, loc.Y];
+			Tile here = Refs.m.tiles[loc.X, loc.Y];
 
-			if (map.OneEast(here).clear) { maybe.Add(map.OneEast(here)); }
-			if (map.OneSouth(here).clear) { maybe.Add(map.OneSouth(here)); }
-			if (map.OneNorth(here).clear) { maybe.Add(map.OneNorth(here)); }
-			if (map.OneWest(here).clear) { maybe.Add(map.OneWest(here)); }
+			if (Refs.m.OneEast(here).clear) { maybe.Add(Refs.m.OneEast(here)); }
+			if (Refs.m.OneSouth(here).clear) { maybe.Add(Refs.m.OneSouth(here)); }
+			if (Refs.m.OneNorth(here).clear) { maybe.Add(Refs.m.OneNorth(here)); }
+			if (Refs.m.OneWest(here).clear) { maybe.Add(Refs.m.OneWest(here)); }
 
 			// don't move directly onto player
 			Tile oops = null;
-			foreach (Tile check in maybe) if (check.loc == p.loc) oops = check;
+			foreach (Tile check in maybe) if (check.loc == Refs.p.loc) oops = check;
 			if (oops != null)
 			{
 				maybe.Remove(oops);
