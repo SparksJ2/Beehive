@@ -39,8 +39,7 @@ namespace Beehive
 			// pick a possibility and go there.
 			if (maybe.Count > 0)
 			{
-				maybe = maybe.OrderBy(i => i.flow).ToList(); // linq ftw
-				int bestflow = maybe[0].flow;
+				int bestflow = maybe.Min(t => t.flow); // linq ftw
 
 				// is the tile that we're currently on already one of the best tiles?
 				if (here.flow != bestflow)
