@@ -17,8 +17,6 @@ improve flow map for cubi AI
 
 cubi AI 
 	- jumping over player
-	- not moving as an option
-	- randomly choose between best options
 	- vary target distance
 
 navigation via mouse clicks

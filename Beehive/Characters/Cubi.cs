@@ -29,6 +29,7 @@ namespace Beehive
 			maybe.Add(here.OneSouth());
 			maybe.Add(here.OneNorth());
 			maybe.Add(here.OneWest());
+			maybe.Add(here); // not moving is now an option
 
 			// filter not clear maybes
 			maybe = maybe.Where(t => t.clear).ToList();
@@ -39,13 +40,16 @@ namespace Beehive
 			// pick a possibility and go there.
 			if (maybe.Count > 0)
 			{
-				maybe = maybe.OrderBy(i => -i.flow).ToList(); // linq ftw
+				maybe = maybe.OrderBy(i => i.flow).ToList(); // linq ftw
 
-				// just follow the flow
-				Tile newplace = maybe[maybe.Count - 1];
+				// make a list of best tiles
+				int bestflow = maybe[0].flow;
+				List<Tile> bests = maybe.Where(t => t.flow == bestflow).ToList();
+
+				// choose randomly between best tiles
+				Tile newplace = bests[rng.Next(bests.Count)];
 				loc = newplace.loc;
 			}
-			// todo add NorthIfClear, etc
 		}
 	}
 }
