@@ -29,7 +29,6 @@ namespace Beehive
 			maybe.Add(here.OneSouth());
 			maybe.Add(here.OneNorth());
 			maybe.Add(here.OneWest());
-			maybe.Add(here); // not moving is now an option
 
 			// filter not clear maybes
 			maybe = maybe.Where(t => t.clear).ToList();
@@ -41,14 +40,24 @@ namespace Beehive
 			if (maybe.Count > 0)
 			{
 				maybe = maybe.OrderBy(i => i.flow).ToList(); // linq ftw
-
-				// make a list of best tiles
 				int bestflow = maybe[0].flow;
-				List<Tile> bests = maybe.Where(t => t.flow == bestflow).ToList();
 
-				// choose randomly between best tiles
-				Tile newplace = bests[rng.Next(bests.Count)];
-				loc = newplace.loc;
+				// is the tile that we're currently on already one of the best tiles?
+				if (here.flow != bestflow)
+				{
+					// make a list of best tiles
+					List<Tile> bests = maybe.Where(t => t.flow == bestflow).ToList();
+
+					// choose randomly between best tiles
+					Tile newplace = bests[rng.Next(bests.Count)];
+					loc = newplace.loc;
+				}
+				else
+				{
+					// not moving is a viable option
+					// don't vibrate between good tiles
+					//    (at least not in this way)
+				}
 			}
 		}
 	}
