@@ -15,7 +15,7 @@ namespace ResourcesTest
 		private static void Main()
 		{
 			int limit = 0x3200; // 0x10ffff
-			int size = 16;
+			Size size = new Size(12, 15); // as (width, height)
 			int charsPerLine = 64;
 
 			string fontString = "Symbola";
@@ -27,7 +27,7 @@ namespace ResourcesTest
 			MakeTileFile(limit, size, charsPerLine, fontString, em);
 		}
 
-		private static void MakeTileFile(int limit, int size, int charsPerLine, string fontString, int em)
+		private static void MakeTileFile(int limit, Size size, int charsPerLine, string fontString, int em)
 		{
 			Font useFont = new Font(fontString, em);
 			if (useFont.Name != fontString)
@@ -38,24 +38,30 @@ namespace ResourcesTest
 			}
 
 			string spacelessName = useFont.Name.Replace(" ", "");
-			string filename = spacelessName + "-" + em + "pt-" + size + "px";
+			string filename = spacelessName + "-" + em +
+				"pt-" + size.Width + "x" + size.Height + "px";
+
 			Bitmap bm = CreateFontMap(limit, size, charsPerLine, useFont);
 			bm.Save("..\\..\\..\\Beehive\\Resources\\" + filename + ".png"); // type based off extension
 		}
 
-		private static Bitmap CreateFontMap(int limit, int size, int charsPerLine, Font style)
+		private static Bitmap CreateFontMap(int limit, Size size, int charsPerRow, Font style)
 		{
-			Bitmap bm = new Bitmap(size * charsPerLine, limit * size / charsPerLine);
+			Bitmap bm = new Bitmap(size.Width * charsPerRow, limit * size.Height / charsPerRow);
 
 			for (int i = 0; i < limit; i++)
 			{
-				int xLoc = i * size;
+				int xLoc = i * size.Width;
 				int yLoc = 0;
 
 				// overflow onto new lines
-				while (xLoc >= size * charsPerLine) { yLoc += size; xLoc -= size * charsPerLine; }
+				while (xLoc >= size.Width * charsPerRow)
+				{
+					yLoc += size.Height;
+					xLoc -= size.Width * charsPerRow;
+				}
 
-				Rectangle rect = new Rectangle(xLoc, yLoc, size, size);
+				Rectangle rect = new Rectangle(xLoc, yLoc, size.Width, size.Height);
 
 				// attempt a decent look
 				Graphics gChar = Graphics.FromImage(bm);

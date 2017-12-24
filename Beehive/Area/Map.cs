@@ -36,8 +36,8 @@ namespace Beehive
 				}
 			}
 
-			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_16px);
-			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_16px);
+			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
+			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
 		}
 
 		public List<Tile> TileList()
@@ -215,8 +215,7 @@ namespace Beehive
 				int codeY = codePoint / 64;
 
 				// we'll cut from this rectangle
-				// todo fix hardcoded values
-				Rectangle cloneRect = new Rectangle(codeX * 16, codeY * 16, 16, 16);
+				Rectangle cloneRect = new Rectangle(codeX * multX, codeY * multY, multX, multY);
 
 				// because symbola gets nicer planet symbols
 				Bitmap useBitmapFont = SansSerifBitmapFont;

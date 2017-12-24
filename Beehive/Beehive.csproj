@@ -102,8 +102,8 @@
     <Content Include="Notes\workspace.txt" />
     <Content Include="Notes\zodiac.txt" />
     <Content Include="references.txt" />
-    <Content Include="Resources\MicrosoftSansSerif-11pt-16px.png" />
-    <None Include="Resources\Symbola-11pt-16px.png" />
+    <None Include="Resources\MicrosoftSansSerif-11pt-12x15px.png" />
+    <None Include="Resources\Symbola-11pt-12x15px.png" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <ItemGroup />
