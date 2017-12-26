@@ -37,6 +37,11 @@ namespace Beehive
 			new Flow().RemakeFlow(Refs.p.loc);
 			var bitMapMap = Refs.m.AsBitmap();
 
+			this.Announce("Welcome to the underworld. Look out, she's getting away!", Dir.Left);
+			this.Announce("You'll never catch meeee!", Dir.Right);
+			this.Announce("We'll see about that!", Dir.Left);
+			this.Announce("Whee! *giggle*", Dir.Right);
+
 			// add to window
 			MainBitmap.Image = bitMapMap;
 
@@ -84,6 +89,41 @@ namespace Beehive
 			// update screen
 			Refs.m.HealWalls();
 			UpdateMap();
+		}
+
+		private List<string> feedbacks;
+		private List<bool> aligns;
+
+		internal void Announce(string v, bool a)
+		{
+			if (feedbacks == null)
+			{
+				feedbacks = new List<string>();
+				aligns = new List<bool>();
+			}
+
+			feedbacks.Add(v);
+			aligns.Add(a);
+
+			if (feedbacks.Count > 6)
+			{
+				feedbacks.RemoveAt(0);
+				aligns.RemoveAt(0);
+			}
+
+			feedbackBox.Text = "";
+
+			int max = feedbacks.Count;
+			for (int i = 0; i < max; i++)
+			{
+				if (aligns[i] == Dir.Right)
+				{ feedbackBox.SelectionAlignment = HorizontalAlignment.Right; }
+				else
+				{ feedbackBox.SelectionAlignment = HorizontalAlignment.Left; }
+				feedbackBox.AppendText(feedbacks[i] + "\n");
+			}
+
+			Refresh();
 		}
 	}
 }

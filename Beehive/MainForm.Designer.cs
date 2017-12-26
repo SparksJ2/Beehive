@@ -50,7 +50,8 @@
 			this.feedbackBox.Location = new System.Drawing.Point(12, 418);
 			this.feedbackBox.Name = "feedbackBox";
 			this.feedbackBox.ReadOnly = true;
-			this.feedbackBox.Size = new System.Drawing.Size(593, 60);
+			this.feedbackBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+			this.feedbackBox.Size = new System.Drawing.Size(593, 95);
 			this.feedbackBox.TabIndex = 2;
 			this.feedbackBox.Text = "derp feedback box not initialized.";
 			// 
@@ -70,13 +71,13 @@
 			this.miniInventory.Location = new System.Drawing.Point(614, 435);
 			this.miniInventory.Name = "miniInventory";
 			this.miniInventory.ReadOnly = true;
-			this.miniInventory.Size = new System.Drawing.Size(198, 43);
+			this.miniInventory.Size = new System.Drawing.Size(198, 69);
 			this.miniInventory.TabIndex = 5;
 			this.miniInventory.Text = "derp mini inventory not set";
 			// 
 			// MainForm
 			// 
-			this.ClientSize = new System.Drawing.Size(828, 489);
+			this.ClientSize = new System.Drawing.Size(828, 540);
 			this.Controls.Add(this.miniInventory);
 			this.Controls.Add(this.inventoryLabel);
 			this.Controls.Add(this.feedbackBox);

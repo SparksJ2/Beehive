@@ -25,5 +25,8 @@ namespace Beehive
 		{
 			return new Point(a.X + b.X, a.Y + b.Y);
 		}
+
+		public static bool Left = false;
+		public static bool Right = true;
 	}
 }

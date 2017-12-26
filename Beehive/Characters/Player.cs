@@ -70,6 +70,7 @@ namespace Beehive
 
 		private void ThrowPillow(Point vector)
 		{
+			Refs.mf.Announce("You throw a pillow!", Dir.Left);
 			// can't throw without pillow!
 			if (heldPillows <= 0)
 			{ return; }
@@ -84,7 +85,10 @@ namespace Beehive
 			// if the next tile now is our lover, extra spank stun!
 			string moveClear = CheckClearForThrown(vector, activeTile);
 			if (moveClear == "spank")
-			{ Refs.c.Spank(5); Console.WriteLine("POINT BLANK PILLOW SPANK!"); }
+			{
+				Refs.c.Spank(5);
+				Refs.mf.Announce("POINT BLANK PILLOW SPANK! owwie!", Dir.Left);
+			}
 
 			while (moveClear == "clear")
 			{
@@ -96,11 +100,14 @@ namespace Beehive
 
 				// nope, it has your cubi in. spank!
 				if (moveClear == "spank")
-				{ Refs.c.Spank(5); Console.WriteLine("PILLOW SPANK!"); }
+				{
+					Refs.c.Spank(5);
+					Refs.mf.Announce("PILLOW SPANK!", Dir.Left);
+				}
 
 				// just a wall. stop here.
 				if (moveClear == "wall")
-				{ Console.WriteLine("thump"); }
+				{ Refs.mf.Announce("You didn't hit anything interesting.", Dir.Left); }
 
 				// it's clear, so move activeTile up and iterate
 				if (moveClear == "clear")
@@ -167,12 +174,16 @@ namespace Beehive
 				t.clear = false;
 				heldPillows--;
 				UpdateInventory();
+				Refs.mf.Announce("You place the pillow to make a wall." +
+					" You have " + heldPillows + " left.", Dir.Left);
 			}
 			else if (!t.clear)
 			{
 				t.clear = true;
 				heldPillows++;
 				UpdateInventory();
+				Refs.mf.Announce("You pick up a pillow." +
+					" You now have " + heldPillows + ".", Dir.Left);
 			}
 		}
 
