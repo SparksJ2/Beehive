@@ -5,6 +5,9 @@ issues:
 
 todo list:
 ```````````
+show instructions *after* main window opens
+
+central room area with holding pentagram
 
 think of a better name than beehive
 
