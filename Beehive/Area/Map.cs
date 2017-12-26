@@ -50,16 +50,16 @@ namespace Beehive
 			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
 		}
 
+		public List<Tile> cachedTileList;
+
 		public List<Tile> TileList()
 		{
-			var tList = new List<Tile>();
-			foreach (Tile t in tiles) { tList.Add(t); }
-			return tList;
-		}
-
-		public List<Tile> ClearTiles()
-		{
-			return TileList().Where(t => t.clear).ToList();
+			if (cachedTileList == null)
+			{
+				cachedTileList = new List<Tile>();
+				foreach (Tile t in tiles) { cachedTileList.Add(t); }
+			}
+			return cachedTileList;
 		}
 
 		public List<Tile> GetClosed3Sides(List<Tile> input)
@@ -96,6 +96,11 @@ namespace Beehive
 				if (sum >= 5) r.Add(t);
 			}
 			return r;
+		}
+
+		public List<Tile> AndAreWalls(List<Tile> ts)
+		{
+			return ts.Where(t => !t.clear).ToList();
 		}
 
 		public Tile OneNorthEast(Tile t)
@@ -336,6 +341,30 @@ namespace Beehive
 		private Point AddPts(Point a, Point b)
 		{
 			return new Point(a.X + b.X, a.Y + b.Y);
+		}
+
+		public List<Tile> GetClearTilesNormal()
+		{
+			return TileList().Where(t => t.clear).ToList();
+		}
+
+		// cached clear tiles list for maze generator. not for general use.
+		private List<Tile> clearCache;
+
+		public void AddToClearTileCache(Tile t)
+		{
+			clearCache.Add(t);
+		}
+
+		public void InitClearTilesCache()
+		{
+			clearCache = TileList().Where(t => t.clear).ToList();
+		}
+
+		public List<Tile> GetClearTilesCache()
+		{
+			return clearCache;
+			//return TileList().Where(t => t.clear).ToList();
 		}
 	}
 }

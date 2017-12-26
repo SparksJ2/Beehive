@@ -15,31 +15,35 @@ namespace Beehive
 		{
 			Map NewMap = new Map(xlen, ylen);
 
-			Tile initial = NewMap.TileByLoc(new Point(1, 1));
-			initial.clear = true;
+			int xmax = NewMap.GetXLen() - 2;
+			int ymax = NewMap.GetYLen() - 2;
 
-			Tile final = NewMap.TileByLoc(
-				new Point(NewMap.GetXLen() - 2, NewMap.GetYLen() - 2));
+			// seed the corners and middle
+			NewMap.TileByLoc(new Point(1, 1)).clear = true;
+			NewMap.TileByLoc(new Point(1, ymax)).clear = true;
+			NewMap.TileByLoc(new Point(xmax, 1)).clear = true;
+			NewMap.TileByLoc(new Point(xmax, ymax)).clear = true;
+			NewMap.TileByLoc(new Point(xmax / 2, ymax / 2)).clear = true;
+			NewMap.InitClearTilesCache();
 
-			// todo maze generation
-			var options = NewMap.GetNextTo(initial);
-
-			for (int i = 0; i < 100000; i++)
+			// maze generation
+			for (int i = 0; i < 20000; i++)
 			{
 				// pick random clear tile
-				var clears = NewMap.ClearTiles();
+				var clears = NewMap.GetClearTilesCache();
 				var clear = clears[rng.Next(clears.Count)];
 
 				// get tunnel options
-				var opts1 = NewMap.GetNextTo(clear);
-				var opts2 = NewMap.GetClosed5Sides(opts1);
+				var nextTo = NewMap.GetNextTo(clear);
+				var closed5 = NewMap.GetClosed5Sides(nextTo);
+				var andWalls = NewMap.AndAreWalls(closed5);
 
 				// tunnel in random direction
-				//NewMap.ConsoleDump();
-				if (opts2.Count > 0)
+				if (andWalls.Count > 0)
 				{
-					var opt = opts2[rng.Next(opts2.Count)];
-					opt.clear = true;
+					var picked = andWalls[rng.Next(andWalls.Count)];
+					picked.clear = true;
+					NewMap.AddToClearTileCache(picked);
 				}
 			}
 			NewMap.ConsoleDump();
