@@ -13,7 +13,7 @@ namespace Beehive
 	{
 		public int heldPillows = 0;
 
-		public Player() : base()
+		public Player(string name) : base(name)
 		{
 		}
 

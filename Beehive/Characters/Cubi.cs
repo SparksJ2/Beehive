@@ -12,7 +12,7 @@ namespace Beehive
 		private Random rng;
 		private int spanked = 0;
 
-		public Cubi() : base()
+		public Cubi(string name) : base(name)
 		{
 			rng = new Random();
 		}

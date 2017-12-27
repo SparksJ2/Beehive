@@ -27,9 +27,9 @@ namespace Beehive
 
 			// generate map		
 			Refs.m = new MazeGenerator().Create(65, 25);
-			Refs.p = new Player();
+			Refs.p = new Player("The Protagonist");
 			Refs.p.SetXY(1, 1);
-			Refs.c = new Cubi();
+			Refs.c = new Cubi("Ai'nana");
 			Refs.c.SetXY(4, 3);     //s.SetXY(65 - 2, 25 - 2);
 			Refs.mf = this;
 
