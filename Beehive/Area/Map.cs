@@ -127,7 +127,7 @@ namespace Beehive
 			return TileByLoc(p).clear == true;
 		}
 
-		public bool IsEdge(Point p)
+		public bool EdgeLoc(Point p)
 		{
 			return (p.X == 0 || p.X == xLen - 1 ||
 				p.Y == 0 || p.Y == yLen - 1) ? true : false;

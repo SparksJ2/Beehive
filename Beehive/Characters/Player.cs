@@ -167,7 +167,7 @@ namespace Beehive
 
 		private void ToggleClearTile(Tile t)
 		{
-			if (Refs.m.IsEdge(t.loc)) return;
+			if (Refs.m.EdgeLoc(t.loc)) return;
 
 			if (t.clear && heldPillows > 0)
 			{
