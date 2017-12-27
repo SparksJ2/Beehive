@@ -47,8 +47,8 @@ namespace Beehive
 				{
 					// ...find the tiles next to it...
 					List<Tile> newTiles = new List<Tile>
-						{Refs.m.OneNorth(head), Refs.m.OneEast(head),
-						 Refs.m.OneSouth(head), Refs.m.OneWest(head) };
+						{head.OneNorth(), head.OneEast(),
+						 head.OneSouth(), head.OneWest() };
 
 					// ... (ignoring any nulls) ...
 					newTiles.RemoveAll(item => item == null);

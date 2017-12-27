@@ -22,19 +22,43 @@ namespace Beehive
 
 		public Tile OneSouth()
 		{
-			var newLoc = AddPts(this.loc, Dir.South);
+			var newLoc = AddPts(loc, Dir.South);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneEast()
 		{
-			var newLoc = AddPts(this.loc, Dir.East);
+			var newLoc = AddPts(loc, Dir.East);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneWest()
 		{
-			var newLoc = AddPts(this.loc, Dir.West);
+			var newLoc = AddPts(loc, Dir.West);
+			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
+		}
+
+		public Tile OneNorthEast()
+		{
+			var newLoc = AddPts(loc, Dir.NorthEast);
+			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
+		}
+
+		public Tile OneSouthEast()
+		{
+			var newLoc = AddPts(loc, Dir.SouthEast);
+			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
+		}
+
+		public Tile OneNorthWest()
+		{
+			var newLoc = AddPts(loc, Dir.NorthWest);
+			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
+		}
+
+		public Tile OneSouthWest()
+		{
+			var newLoc = AddPts(loc, Dir.SouthWest);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 

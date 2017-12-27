@@ -64,62 +64,6 @@ namespace Beehive
 			return ts.Where(t => !t.clear).ToList();
 		}
 
-		[System.Obsolete]
-		public Tile OneNorthEast(Tile t)
-		{
-			var loc = AddPts(t.loc, Dir.NorthEast);
-			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
-		}
-
-		[System.Obsolete]
-		public Tile OneSouthEast(Tile t)
-		{
-			var loc = AddPts(t.loc, Dir.SouthEast);
-			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
-		}
-
-		[System.Obsolete]
-		public Tile OneNorthWest(Tile t)
-		{
-			var loc = AddPts(t.loc, Dir.NorthWest);
-			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
-		}
-
-		[System.Obsolete]
-		public Tile OneSouthWest(Tile t)
-		{
-			var loc = AddPts(t.loc, Dir.SouthWest);
-			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
-		}
-
-		[System.Obsolete]
-		public Tile OneNorth(Tile t)
-		{
-			var loc = AddPts(t.loc, Dir.North);
-			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
-		}
-
-		[System.Obsolete]
-		public Tile OneSouth(Tile t)
-		{
-			var loc = AddPts(t.loc, Dir.South);
-			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
-		}
-
-		[System.Obsolete]
-		public Tile OneEast(Tile t)
-		{
-			var loc = AddPts(t.loc, Dir.East);
-			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
-		}
-
-		[System.Obsolete]
-		public Tile OneWest(Tile t)
-		{
-			var loc = AddPts(t.loc, Dir.West);
-			return (ValidLoc(loc)) ? TileByLoc(loc) : null;
-		}
-
 		public Tile TileByLoc(Point p)
 		{
 			return tiles[p.X, p.Y];
@@ -185,10 +129,10 @@ namespace Beehive
 		{
 			foreach (Tile t in tiles)
 			{
-				var n = IsSolid(OneNorth(t));
-				var s = IsSolid(OneSouth(t));
-				var e = IsSolid(OneEast(t));
-				var w = IsSolid(OneWest(t));
+				var n = IsSolid(t.OneNorth());
+				var s = IsSolid(t.OneSouth());
+				var e = IsSolid(t.OneEast());
+				var w = IsSolid(t.OneWest());
 
 				// ┌─┬┐  ╔═╦╗  ╓─╥╖  ╒═╤╕
 				// │ ││  ║ ║║  ║ ║║  │ ││
