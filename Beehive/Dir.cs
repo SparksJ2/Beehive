@@ -46,6 +46,16 @@ namespace Beehive
 			return new List<Point> { North, East, South, West };
 		}
 
+		public static List<Point> DodgeHorizontal()
+		{
+			return new List<Point> { North, South };
+		}
+
+		public static List<Point> DodgeVertical()
+		{
+			return new List<Point> { East, West };
+		}
+
 		public static List<Point> LeapMoves()
 		{
 			return new List<Point>

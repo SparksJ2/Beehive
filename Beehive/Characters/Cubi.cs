@@ -9,7 +9,9 @@ namespace Beehive
 {
 	public class Cubi : Mobile
 	{
-		private Random rng;
+		// todo needs a general rng singleton or something
+		public Random rng;
+
 		private int spanked = 0;
 
 		public Cubi(string name) : base(name)
@@ -53,6 +55,7 @@ namespace Beehive
 					List<Tile> bests = maybe.Where(t => t.flow == bestflow).ToList();
 
 					// choose randomly between best tiles
+					// todo there is a method for rng tiles now
 					Tile newplace = bests[rng.Next(bests.Count)];
 					loc = newplace.loc;
 				}

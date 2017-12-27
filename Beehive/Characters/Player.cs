@@ -98,11 +98,32 @@ namespace Beehive
 				// is the next tile clear?
 				moveClear = CheckClearForThrown(vector, activeTile);
 
-				// nope, it has your cubi in. spank!
+				// nope, it has your cubi in.
 				if (moveClear == "spank")
 				{
-					Refs.c.Spank(5);
-					Refs.mf.Announce("PILLOW SPANK!", Dir.Left);
+					Tile victimTile = Refs.m.TileByLoc(Refs.c.loc);
+					List<Tile> escapes = new List<Tile>();
+
+					if (IsVertical(vector))
+					{
+						escapes = victimTile.GetPossibleMoves(Dir.DodgeVertical());
+					}
+					else
+					{
+						escapes = victimTile.GetPossibleMoves(Dir.DodgeHorizontal());
+					}
+
+					if (escapes.Count > 0)
+					{
+						Refs.c.loc = Tile.RandomFromList(escapes).loc;
+						Refs.mf.Announce("Nyahhh missed me!", Dir.Right);
+						moveClear = "clear";
+					}
+					else
+					{
+						Refs.c.Spank(5);
+						Refs.mf.Announce("Owwwww!", Dir.Right);
+					}
 				}
 
 				// just a wall. stop here.
@@ -238,6 +259,11 @@ namespace Beehive
 		{
 			Tile t = Refs.m.TileByLoc(loc).OneWest();
 			if (t.clear) loc = t.loc;
+		}
+
+		private bool IsVertical(Point v)
+		{
+			return v.Y != 0;
 		}
 	}
 }

@@ -35,6 +35,12 @@ namespace Beehive
 			return ts.Where(t => !t.clear).ToList();
 		}
 
+		public static Tile RandomFromList(List<Tile> tileList)
+		{
+			var rng = Refs.c.rng;
+			return tileList[rng.Next(tileList.Count)];
+		}
+
 		public Tile OneNorth()
 		{
 			var newLoc = AddPts(loc, Dir.North);
