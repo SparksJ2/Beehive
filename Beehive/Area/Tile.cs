@@ -15,13 +15,13 @@ namespace Beehive
 		public int flow = 0;
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
-		public List<Tile> GetPossibleMoves(Tile t, List<Point> options)
+		public List<Tile> GetPossibleMoves(List<Point> options)
 		{
 			var result = new List<Tile>();
 
 			foreach (Point p in options)
 			{
-				Point newloc = AddPts(t.loc, p);
+				Point newloc = AddPts(loc, p);
 				if (Refs.m.ValidLoc(newloc) && Refs.m.ClearLoc(newloc))
 				{
 					result.Add(Refs.m.TileByLoc(newloc));
