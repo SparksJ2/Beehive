@@ -101,6 +101,7 @@ namespace Beehive
 				// nope, it has your cubi in.
 				if (moveClear == "spank")
 				{
+					// todo only one possible target?
 					Tile victimTile = Refs.m.TileByLoc(Refs.c.loc);
 					List<Tile> escapes = new List<Tile>();
 
