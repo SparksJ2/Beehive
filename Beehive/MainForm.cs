@@ -106,39 +106,47 @@ namespace Beehive
 
 		internal void Announce(string v, bool a)
 		{
-			if (feedbacks == null)
+			try
 			{
-				feedbacks = new List<string>();
-				aligns = new List<bool>();
-			}
-
-			feedbacks.Add(v);
-			aligns.Add(a);
-
-			if (feedbacks.Count > 6)
-			{
-				feedbacks.RemoveAt(0);
-				aligns.RemoveAt(0);
-			}
-
-			feedbackBox.Text = "";
-
-			int max = feedbacks.Count;
-			for (int i = 0; i < max; i++)
-			{
-				if (aligns[i] == Dir.Right)
+				if (feedbacks == null)
 				{
-					feedbackBox.SelectionAlignment = HorizontalAlignment.Right;
-					feedbackBox.SelectionColor = Color.HotPink;
+					feedbacks = new List<string>();
+					aligns = new List<bool>();
 				}
-				else
+
+				feedbacks.Add(v);
+				aligns.Add(a);
+
+				if (feedbacks.Count > 6)
 				{
-					feedbackBox.SelectionAlignment = HorizontalAlignment.Left;
-					feedbackBox.SelectionColor = Color.Cyan;
+					feedbacks.RemoveAt(0);
+					aligns.RemoveAt(0);
 				}
-				feedbackBox.AppendText(feedbacks[i] + "\n");
+
+				feedbackBox.Text = "";
+
+				int max = feedbacks.Count;
+				for (int i = 0; i < max; i++)
+				{
+					if (aligns[i] == Dir.Right)
+					{
+						feedbackBox.SelectionAlignment = HorizontalAlignment.Right;
+						feedbackBox.SelectionColor = Color.HotPink;
+					}
+					else
+					{
+						feedbackBox.SelectionAlignment = HorizontalAlignment.Left;
+						feedbackBox.SelectionColor = Color.Cyan;
+					}
+					feedbackBox.AppendText(feedbacks[i] + "\n");
+				}
+				Refresh();
 			}
-			Refresh();
+			catch (Exception ex)
+			{
+				Console.WriteLine("Caught exception " + ex.ToString() +
+					" with message " + ex.Message);
+			}
 		}
 	}
 }
