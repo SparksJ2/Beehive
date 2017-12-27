@@ -16,26 +16,26 @@ namespace Beehive
 
 		public Tile OneNorth()
 		{
-			var loc = AddPts(this.loc, Dir.North);
-			return (Refs.m.ValidLoc(loc)) ? Refs.m.TileByLoc(loc) : null;
+			var newLoc = AddPts(loc, Dir.North);
+			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneSouth()
 		{
-			var loc = AddPts(this.loc, Dir.South);
-			return (Refs.m.ValidLoc(loc)) ? Refs.m.TileByLoc(loc) : null;
+			var newLoc = AddPts(this.loc, Dir.South);
+			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneEast()
 		{
-			var loc = AddPts(this.loc, Dir.East);
-			return (Refs.m.ValidLoc(loc)) ? Refs.m.TileByLoc(loc) : null;
+			var newLoc = AddPts(this.loc, Dir.East);
+			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneWest()
 		{
-			var loc = AddPts(this.loc, Dir.West);
-			return (Refs.m.ValidLoc(loc)) ? Refs.m.TileByLoc(loc) : null;
+			var newLoc = AddPts(this.loc, Dir.West);
+			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		private Point AddPts(Point a, Point b)
