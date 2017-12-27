@@ -35,19 +35,28 @@ namespace Beehive
 
 			// draw initial map
 			new Flow().RemakeFlow(Refs.p.loc);
-			var bitMapMap = Refs.m.AsBitmap();
-
-			this.Announce("Welcome to the underworld. Look out, she's getting away!", Dir.Left);
-			this.Announce("You'll never catch meeee!", Dir.Right);
-			this.Announce("We'll see about that!", Dir.Left);
-			this.Announce("Whee! *giggle*", Dir.Right);
-
-			// add to window
-			MainBitmap.Image = bitMapMap;
+			UpdateMap();
 
 			// init key handlers
 			turnTimer = new Stopwatch(); turnTimer.Start();
 
+			this.KeyPreview = true;
+
+			eh = new PreviewKeyDownEventHandler(PreviewKeyDownHandler);
+			this.PreviewKeyDown += eh;
+
+			// don't let the feedback / inventory windows become selected
+			feedbackBox.Enter += DenyFocus;
+			miniInventory.Enter += DenyFocus;
+		}
+
+		private void DenyFocus(object sender, EventArgs e)
+		{
+			this.ActiveControl = null;
+		}
+
+		private void MainForm_Shown(object sender, EventArgs e)
+		{
 			MessageBox.Show(
 				"In your vast bed, tucked deep in a dreamworld, far outside time and space,\n" +
 				"you play in eternal bliss with your horned lover.\n\n" +
@@ -57,10 +66,10 @@ namespace Beehive
 				"\tShift+Direction to pick up or put down pillows.\n" +
 				"\tCtrl+Direction to throw pillows!\n");
 
-			this.KeyPreview = true;
-
-			eh = new PreviewKeyDownEventHandler(PreviewKeyDownHandler);
-			this.PreviewKeyDown += eh;
+			this.Announce("Welcome to the underworld. Look out, she's getting away!", Dir.Left);
+			this.Announce("You'll never catch meeee!", Dir.Right);
+			this.Announce("We'll see about that!", Dir.Left);
+			this.Announce("Whee! *giggle*", Dir.Right);
 		}
 
 		public void UpdateMap()
@@ -117,12 +126,17 @@ namespace Beehive
 			for (int i = 0; i < max; i++)
 			{
 				if (aligns[i] == Dir.Right)
-				{ feedbackBox.SelectionAlignment = HorizontalAlignment.Right; }
+				{
+					feedbackBox.SelectionAlignment = HorizontalAlignment.Right;
+					feedbackBox.SelectionColor = Color.HotPink;
+				}
 				else
-				{ feedbackBox.SelectionAlignment = HorizontalAlignment.Left; }
+				{
+					feedbackBox.SelectionAlignment = HorizontalAlignment.Left;
+					feedbackBox.SelectionColor = Color.Cyan;
+				}
 				feedbackBox.AppendText(feedbacks[i] + "\n");
 			}
-
 			Refresh();
 		}
 	}
