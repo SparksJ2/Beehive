@@ -25,7 +25,7 @@ namespace Beehive
 		{
 			InitializeComponent();
 
-			// generate map		
+			// generate map
 			Refs.m = new MazeGenerator().Create(65, 25);
 			Refs.p = new Player("The Protagonist");
 			Refs.p.SetXY(1, 1);
@@ -127,6 +127,9 @@ namespace Beehive
 				int max = feedbacks.Count;
 				for (int i = 0; i < max; i++)
 				{
+					// AppendText was causing exception in linux?
+					//feedbackBox.AppendText(feedbacks[i] + "\n");
+
 					if (aligns[i] == Dir.Right)
 					{
 						feedbackBox.SelectionAlignment = HorizontalAlignment.Right;
@@ -137,7 +140,10 @@ namespace Beehive
 						feedbackBox.SelectionAlignment = HorizontalAlignment.Left;
 						feedbackBox.SelectionColor = Color.Cyan;
 					}
-					feedbackBox.AppendText(feedbacks[i] + "\n");
+
+					// usage as in https://msdn.microsoft.com/en-us/library/system.windows.forms.richtextbox.selectionalignment(v=vs.110).aspx
+					// so it really should work
+					feedbackBox.SelectedText = (feedbacks[i] + "\n");
 				}
 				Refresh();
 			}
