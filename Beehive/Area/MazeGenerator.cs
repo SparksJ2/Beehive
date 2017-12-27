@@ -37,7 +37,7 @@ namespace Beehive
 				// get tunnel options
 				var nextTo = NewMap.GetNextTo(clear);
 				var closed5 = NewMap.GetClosed5Sides(nextTo);
-				var andWalls = NewMap.AndAreWalls(closed5);
+				var andWalls = Tile.FilterOutNotClear(closed5);
 
 				// tunnel in random direction
 				if (andWalls.Count > 0)

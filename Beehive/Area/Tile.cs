@@ -14,6 +14,27 @@ namespace Beehive
 		public char gly = '#';
 		public int flow = 0;
 
+		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
+		public List<Tile> GetPossibleMoves(Tile t, List<Point> options)
+		{
+			var result = new List<Tile>();
+
+			foreach (Point p in options)
+			{
+				Point newloc = AddPts(t.loc, p);
+				if (Refs.m.ValidLoc(newloc) && Refs.m.ClearLoc(newloc))
+				{
+					result.Add(Refs.m.TileByLoc(newloc));
+				}
+			}
+			return result;
+		}
+
+		public static List<Tile> FilterOutNotClear(List<Tile> ts)
+		{
+			return ts.Where(t => !t.clear).ToList();
+		}
+
 		public Tile OneNorth()
 		{
 			var newLoc = AddPts(loc, Dir.North);

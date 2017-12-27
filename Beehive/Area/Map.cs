@@ -47,6 +47,7 @@ namespace Beehive
 			return yLen;
 		}
 
+		// list of all tiles, never changes.
 		public List<Tile> cachedTileList;
 
 		public List<Tile> TileList()
@@ -57,11 +58,6 @@ namespace Beehive
 				foreach (Tile t in tiles) { cachedTileList.Add(t); }
 			}
 			return cachedTileList;
-		}
-
-		public List<Tile> AndAreWalls(List<Tile> ts)
-		{
-			return ts.Where(t => !t.clear).ToList();
 		}
 
 		public Tile TileByLoc(Point p)
@@ -99,28 +95,7 @@ namespace Beehive
 			return (c < 1.01);
 		}
 
-		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
-		public List<Tile> GetPossibleMoves(Tile t, List<Point> options)
-		{
-			var result = new List<Tile>();
-
-			foreach (Point p in options)
-			{
-				Point newloc = AddPts(t.loc, p);
-				if (ValidLoc(newloc) && ClearLoc(newloc))
-				{
-					result.Add(TileByLoc(newloc));
-				}
-			}
-			return result;
-		}
-
-		private Point AddPts(Point a, Point b)
-		{
-			return new Point(a.X + b.X, a.Y + b.Y);
-		}
-
-		public List<Tile> GetClearTilesNormal()
+		public List<Tile> GetClearTilesListNormal()
 		{
 			return TileList().Where(t => t.clear).ToList();
 		}
@@ -168,5 +143,10 @@ namespace Beehive
 				if (!n && !s && !e && !w) t.gly = 'X';
 			}
 		} // end healwalls
+
+		private Point AddPts(Point a, Point b)
+		{
+			return new Point(a.X + b.X, a.Y + b.Y);
+		}
 	}
 }
