@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Area\Flow.cs" />
     <Compile Include="Area\Map.cs" />
+    <Compile Include="Area\MapDraw.cs" />
     <Compile Include="Area\Tile.cs" />
     <Compile Include="Characters\Mobile.cs" />
     <Compile Include="Dir.cs" />
@@ -68,6 +69,7 @@
     </Compile>
     <Compile Include="Area\MazeGenerator.cs" />
     <Compile Include="Characters\Player.cs" />
+    <Compile Include="Area\MapGenUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Characters\Cubi.cs" />
