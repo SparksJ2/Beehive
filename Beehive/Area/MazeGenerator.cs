@@ -14,6 +14,7 @@ namespace Beehive
 		public Map Create(int xlen, int ylen)
 		{
 			Map NewMap = new Map(xlen, ylen);
+			Refs.m = NewMap; // needed for utils
 
 			int xmax = NewMap.GetXLen() - 2;
 			int ymax = NewMap.GetYLen() - 2;

@@ -25,8 +25,7 @@ namespace Beehive
 		{
 			InitializeComponent();
 
-			// generate map
-			Refs.m = new Map(65, 25); // hacky tmp map for utils access
+			// generate map		
 			Refs.m = new MazeGenerator().Create(65, 25);
 			Refs.p = new Player();
 			Refs.p.SetXY(1, 1);
