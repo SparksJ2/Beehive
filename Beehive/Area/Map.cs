@@ -274,6 +274,11 @@ namespace Beehive
 			return (p.X >= 0 && p.X < xLen && p.Y >= 0 && p.Y < yLen) ? true : false;
 		}
 
+		public bool ClearLoc(Point p)
+		{
+			return TileByLoc(p).clear == true;
+		}
+
 		public bool IsEdge(Point p)
 		{
 			return (p.X == 0 || p.X == xLen - 1 ||
@@ -336,6 +341,22 @@ namespace Beehive
 			double c = Math.Sqrt(a + b);
 			Console.WriteLine(c);
 			return (c < 1.01);
+		}
+
+		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
+		public List<Tile> GetPossibleMoves(Tile t, List<Point> options)
+		{
+			var result = new List<Tile>();
+
+			foreach (Point p in options)
+			{
+				Point newloc = AddPts(t.loc, p);
+				if (ValidLoc(newloc) && ClearLoc(newloc))
+				{
+					result.Add(TileByLoc(newloc));
+				}
+			}
+			return result;
 		}
 
 		private Point AddPts(Point a, Point b)
