@@ -128,18 +128,17 @@ namespace Beehive
 				int max = feedbacks.Count;
 				for (int i = 0; i < max; i++)
 				{
-					// something here was causing an exception in linux?
 					if (aligns[i] == Dir.Right)
 					{
-						feedbackBox.SelectionAlignment = HorizontalAlignment.Right;
-						// apparently the problem happens on the line below,
-						//    but Color.Cyan is fine... how strange!
+						// putting the color change first fixes exception in Mono
+						//    ¯\_(ツ)_/¯
 						feedbackBox.SelectionColor = Color.HotPink;
+						feedbackBox.SelectionAlignment = HorizontalAlignment.Right;
 					}
 					else
 					{
-						feedbackBox.SelectionAlignment = HorizontalAlignment.Left;
 						feedbackBox.SelectionColor = Color.Cyan;
+						feedbackBox.SelectionAlignment = HorizontalAlignment.Left;
 					}
 
 					// usage as in https://msdn.microsoft.com/en-us/library/system.windows.forms.richtextbox.selectionalignment(v=vs.110).aspx
