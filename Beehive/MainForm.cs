@@ -100,6 +100,7 @@ namespace Beehive
 			UpdateMap();
 		}
 
+		// todo combine these into a data struct.
 		private List<string> feedbacks;
 		private List<bool> aligns;
 
@@ -127,12 +128,12 @@ namespace Beehive
 				int max = feedbacks.Count;
 				for (int i = 0; i < max; i++)
 				{
-					// AppendText was causing exception in linux?
-					//feedbackBox.AppendText(feedbacks[i] + "\n");
-
+					// something here was causing an exception in linux?
 					if (aligns[i] == Dir.Right)
 					{
 						feedbackBox.SelectionAlignment = HorizontalAlignment.Right;
+						// apparently the problem happens on the line below,
+						//    but Color.Cyan is fine... how strange!
 						feedbackBox.SelectionColor = Color.HotPink;
 					}
 					else

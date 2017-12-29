@@ -27,6 +27,8 @@ carry cubi back to bed for 'win condition' ;)
 
 sexy lines / descriptions for feedback box
 
+add a stopwatch for how long the current 'frame' took
+
 low priority:
 ``````````````
 config file settings
