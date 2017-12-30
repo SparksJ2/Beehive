@@ -42,6 +42,8 @@ namespace Beehive
 				for (int y = 0; y < yLen; y++)
 				{
 					var t = tiles[x, y];
+					// note we're disposing of 3252 Drawing.Graphics objects per turn,
+					//    might want to cache some if it becomes slow.
 					AddCharTile(bmp, x, y, t.gly.ToString(), t.flow);
 				}
 			}
@@ -54,7 +56,6 @@ namespace Beehive
 
 		public void AddCharTile(Bitmap bmp, int x, int y, string s, int flow)
 		{
-			// todo this doesn't play well with 16x16 tiles, fix soon
 			int multX = 12;
 			int multY = 15;
 			int edgeX = 10;
