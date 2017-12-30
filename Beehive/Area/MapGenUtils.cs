@@ -53,7 +53,7 @@ namespace Beehive
 
 				if (t.OneNorthEast() == null || t.OneNorthEast().clear == false) sum++;
 				if (t.OneSouthEast() == null || t.OneSouthEast().clear == false) sum++;
-				if (t.OneNorthWest() == null ||  t.OneNorthWest().clear == false) sum++;
+				if (t.OneNorthWest() == null || t.OneNorthWest().clear == false) sum++;
 				if (t.OneSouthWest() == null || t.OneSouthWest().clear == false) sum++;
 
 				if (sum >= 5) r.Add(t);

@@ -5,6 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+using System.ComponentModel;
+using System.Data;
+
+using System.IO;
+
+using System.Reflection;
+using System.Resources;
+
+using System.Threading;
+using System.Windows.Forms;
+using System.Diagnostics;
+
 namespace Beehive
 {
 	public class Cubi : Mobile
@@ -15,7 +27,9 @@ namespace Beehive
 		private int spanked = 0;
 		private int horny = 0;
 
-		public Cubi(string name) : base(name)
+		public HorizontalAlignment myAlign = HorizontalAlignment.Right;
+
+		public Cubi(string name, Color useColor) : base(name, useColor)
 		{
 			rng = new Random();
 		}

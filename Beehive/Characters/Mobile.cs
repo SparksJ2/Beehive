@@ -11,11 +11,13 @@ namespace Beehive
 	{
 		public Point loc;
 		public string name;
+		public Color myColor;
 
-		public Mobile(string nameIn)
+		public Mobile(string nameIn, Color useColor)
 		{
 			loc = new Point();
 			name = nameIn;
+			myColor = useColor;
 		}
 
 		public void SetXY(int x, int y)

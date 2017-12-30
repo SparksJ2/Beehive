@@ -27,9 +27,9 @@ namespace Beehive
 
 			// generate map
 			Refs.m = new MazeGenerator().Create(65, 25);
-			Refs.p = new Player("The Protagonist");
+			Refs.p = new Player("The Protagonist", Color.Cyan);
 			Refs.p.SetXY(1, 1);
-			Refs.c = new Cubi("Ai'nana");
+			Refs.c = new Cubi("Ai'nana", Color.HotPink);
 			Refs.c.SetXY(4, 3);     //s.SetXY(65 - 2, 25 - 2);
 			Refs.mf = this;
 
@@ -66,10 +66,13 @@ namespace Beehive
 				"\tShift+Direction to pick up or put down pillows.\n" +
 				"\tCtrl+Direction to throw pillows!\n");
 
-			this.Announce("Welcome to the underworld. Look out, she's getting away!", Dir.Left);
-			this.Announce("You'll never catch meeee!", Dir.Right);
-			this.Announce("We'll see about that!", Dir.Left);
-			this.Announce("Whee! *giggle*", Dir.Right);
+			Player p = Refs.p;
+			Cubi c = Refs.c;
+
+			Announce("Welcome to the underworld. Look out, she's getting away!", p.myAlign, p.myColor);
+			Announce("You'll never catch meeee!", c.myAlign, c.myColor);
+			Announce("We'll see about that!", p.myAlign, p.myColor);
+			Announce("Whee! *giggle*", c.myAlign, c.myColor);
 		}
 
 		public void UpdateMap()
@@ -100,50 +103,30 @@ namespace Beehive
 			UpdateMap();
 		}
 
-		// todo combine these into a data struct.
-		private List<string> feedbacks;
-		private List<bool> aligns;
+		private List<AnnounceLine> annLines;
 
-		internal void Announce(string v, bool a)
+		internal void Announce(string say, HorizontalAlignment align, Color col)
 		{
 			try
 			{
-				if (feedbacks == null)
-				{
-					feedbacks = new List<string>();
-					aligns = new List<bool>();
-				}
+				if (annLines == null) annLines = new List<AnnounceLine>();
 
-				feedbacks.Add(v);
-				aligns.Add(a);
-
-				if (feedbacks.Count > 6)
-				{
-					feedbacks.RemoveAt(0);
-					aligns.RemoveAt(0);
-				}
+				annLines.Add(new AnnounceLine(say, align, col));
+				if (annLines.Count > 6) annLines.RemoveAt(0);
 
 				feedbackBox.Text = "";
 
-				int max = feedbacks.Count;
+				int max = annLines.Count;
 				for (int i = 0; i < max; i++)
 				{
-					if (aligns[i] == Dir.Right)
-					{
-						// putting the color change first fixes exception in Mono
-						//    ¯\_(ツ)_/¯
-						feedbackBox.SelectionColor = Color.HotPink;
-						feedbackBox.SelectionAlignment = HorizontalAlignment.Right;
-					}
-					else
-					{
-						feedbackBox.SelectionColor = Color.Cyan;
-						feedbackBox.SelectionAlignment = HorizontalAlignment.Left;
-					}
+					// putting the color change first fixes exception in Mono
+					//    ¯\_(ツ)_/¯
+					feedbackBox.SelectionColor = annLines[i].color;
+					feedbackBox.SelectionAlignment = annLines[i].align;
 
 					// usage as in https://msdn.microsoft.com/en-us/library/system.windows.forms.richtextbox.selectionalignment(v=vs.110).aspx
 					// so it really should work
-					feedbackBox.SelectedText = (feedbacks[i] + "\n");
+					feedbackBox.SelectedText = (annLines[i].say + "\n");
 				}
 				Refresh();
 			}

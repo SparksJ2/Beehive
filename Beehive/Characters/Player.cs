@@ -12,8 +12,9 @@ namespace Beehive
 	public class Player : Mobile
 	{
 		public int heldPillows = 0;
+		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
-		public Player(string name) : base(name)
+		public Player(string name, Color useColor) : base(name, useColor)
 		{
 		}
 
@@ -70,7 +71,7 @@ namespace Beehive
 
 		private void ThrowPillow(Point vector)
 		{
-			Refs.mf.Announce("You throw a pillow!", Dir.Left);
+			Refs.mf.Announce("You throw a pillow!", myAlign, myColor);
 			// can't throw without pillow!
 			if (heldPillows <= 0)
 			{ return; }
@@ -86,8 +87,9 @@ namespace Beehive
 			string moveClear = CheckClearForThrown(vector, activeTile);
 			if (moveClear == "spank")
 			{
+				Refs.mf.Announce("POINT BLANK PILLOW SPANK!", myAlign, myColor);
 				Refs.c.Spank(5);
-				Refs.mf.Announce("POINT BLANK PILLOW SPANK! owwie!", Dir.Left);
+				Refs.mf.Announce("oww! *moan*", Refs.c.myAlign, Refs.c.myColor);
 			}
 
 			while (moveClear == "clear")
@@ -117,19 +119,19 @@ namespace Beehive
 					if (escapes.Count > 0)
 					{
 						Refs.c.loc = Tile.RandomFromList(escapes).loc;
-						Refs.mf.Announce("Nyahhh missed me!", Dir.Right);
+						Refs.mf.Announce("Nyahhh missed me!", Refs.c.myAlign, Refs.c.myColor);
 						moveClear = "clear";
 					}
 					else
 					{
 						Refs.c.Spank(5);
-						Refs.mf.Announce("Owwwww!", Dir.Right);
+						Refs.mf.Announce("Owwwww!", Refs.c.myAlign, Refs.c.myColor);
 					}
 				}
 
 				// just a wall. stop here.
 				if (moveClear == "wall")
-				{ Refs.mf.Announce("You didn't hit anything interesting.", Dir.Left); }
+				{ Refs.mf.Announce("You didn't hit anything interesting.", myAlign, myColor); }
 
 				// it's clear, so move activeTile up and iterate
 				if (moveClear == "clear")
@@ -196,16 +198,14 @@ namespace Beehive
 				t.clear = false;
 				heldPillows--;
 				UpdateInventory();
-				Refs.mf.Announce("You place the pillow to make a wall." +
-					" You have " + heldPillows + " left.", Dir.Left);
+				Refs.mf.Announce("You place the pillow to make a wall. You have " + heldPillows + " left.", myAlign, myColor);
 			}
 			else if (!t.clear)
 			{
 				t.clear = true;
 				heldPillows++;
 				UpdateInventory();
-				Refs.mf.Announce("You pick up a pillow." +
-					" You now have " + heldPillows + ".", Dir.Left);
+				Refs.mf.Announce("You pick up a pillow. You now have " + heldPillows + ".", myAlign, myColor);
 			}
 		}
 

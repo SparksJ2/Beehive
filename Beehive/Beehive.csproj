@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnnounceLine.cs" />
     <Compile Include="Area\Flow.cs" />
     <Compile Include="Area\Map.cs" />
     <Compile Include="Area\MapDraw.cs" />

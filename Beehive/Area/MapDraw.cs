@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -116,8 +118,19 @@ namespace Beehive
 
 			// because symbola gets nicer planet symbols
 			Bitmap useBitmapFont = SansSerifBitmapFont;
-			if (s == "♂" || s == "☿") { useBitmapFont = SymbolaBitmapFont; }
-			if (s == nectarChar) { useBitmapFont = SymbolaBitmapFont; }
+			Color useColour = Color.White;
+
+			if (s == "♂")
+			{
+				useBitmapFont = SymbolaBitmapFont;
+				useColour = Refs.p.myColor;
+			}
+
+			if (s == "☿" || s == nectarChar)
+			{
+				useBitmapFont = SymbolaBitmapFont;
+				useColour = Refs.c.myColor;
+			}
 
 			// we'll cut from this rectangle
 			Rectangle cloneRect = new Rectangle(codeX * multX, codeY * multY, multX, multY);
@@ -126,8 +139,53 @@ namespace Beehive
 			System.Drawing.Imaging.PixelFormat format = useBitmapFont.PixelFormat;
 			Bitmap singleTileImage = useBitmapFont.Clone(cloneRect, format);
 
+			// change color
+			singleTileImage = ColorTint(singleTileImage, useColour);
+
 			// todo we should probably cache these bitmaps
 			return singleTileImage;
+		}
+
+		public Bitmap ColorTint(Bitmap source, Color col)
+		{
+			double colBlue = col.B / 256.0;
+			double colGreen = col.G / 256.0;
+			double colRed = col.R / 256.0;
+
+			BitmapData sourceData = source.LockBits(
+				new Rectangle(0, 0, source.Width, source.Height),
+				ImageLockMode.ReadOnly,
+				PixelFormat.Format32bppArgb);
+
+			byte[] buffer = new byte[sourceData.Stride * sourceData.Height];
+			Marshal.Copy(sourceData.Scan0, buffer, 0, buffer.Length);
+			source.UnlockBits(sourceData);
+
+			double red = 0; double green = 0; double blue = 0;
+			for (int k = 0; k + 4 < buffer.Length; k += 4)
+			{
+				blue = buffer[k + 0] * colBlue;
+				green = buffer[k + 1] * colGreen;
+				red = buffer[k + 2] * colRed;
+
+				if (blue < 0) { blue = 0; }
+				if (green < 0) { green = 0; }
+				if (red < 0) { red = 0; }
+
+				buffer[k + 0] = (byte)blue;
+				buffer[k + 1] = (byte)green;
+				buffer[k + 2] = (byte)red;
+			}
+
+			Bitmap result = new Bitmap(source.Width, source.Height);
+
+			BitmapData resultData = result.LockBits(
+				new Rectangle(0, 0, result.Width, result.Height),
+				ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+			Marshal.Copy(buffer, 0, resultData.Scan0, buffer.Length);
+			result.UnlockBits(resultData);
+			return result;
 		}
 
 		public void ConsoleDump()
