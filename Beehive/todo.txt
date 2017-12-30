@@ -29,6 +29,8 @@ sexy lines / descriptions for feedback box
 
 add a stopwatch for how long the current 'frame' took
 
+always use Dir rather than adding groups of dimensions manually
+
 low priority:
 ``````````````
 config file settings
