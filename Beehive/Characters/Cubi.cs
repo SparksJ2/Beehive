@@ -13,6 +13,7 @@ namespace Beehive
 		public Random rng;
 
 		private int spanked = 0;
+		private int horny = 0;
 
 		public Cubi(string name) : base(name)
 		{
@@ -26,46 +27,73 @@ namespace Beehive
 
 		public void AiMove()
 		{
-			if (spanked > 0) { spanked--; return; }
-
-			var maybe = new List<Tile>();
-
 			Tile here = Refs.m.TileByLoc(loc);
 
-			maybe.Add(here.OneEast());
-			maybe.Add(here.OneSouth());
-			maybe.Add(here.OneNorth());
-			maybe.Add(here.OneWest());
-
-			// filter not clear maybes
-			maybe = maybe.Where(t => t.clear).ToList();
-
-			// don't move directly onto player
-			maybe = maybe.Where(t => t.loc != Refs.p.loc).ToList();
-
-			// pick a possibility and go there.
-			if (maybe.Count > 0)
+			// being close to player makes for horny cubi
+			if (DistToPlayer() < 5.0)
 			{
-				int bestflow = maybe.Min(t => t.flow); // linq ftw
+				horny++;
+			}
 
-				// is the tile that we're currently on already one of the best tiles?
-				if (here.flow != bestflow)
-				{
-					// make a list of best tiles
-					List<Tile> bests = maybe.Where(t => t.flow == bestflow).ToList();
+			// leave nectar trail
+			if (horny > 0 && here.Cnectar == false)
+			{
+				here.Cnectar = true;
+				horny--;
+			}
 
-					// choose randomly between best tiles
-					// todo there is a method for rng tiles now
-					Tile newplace = bests[rng.Next(bests.Count)];
-					loc = newplace.loc;
-				}
-				else
+			if (spanked > 0)
+			{
+				spanked--;
+				// pain ==> pleasure
+				horny++;
+			}
+			else
+			{
+				var maybe = new List<Tile>();
+
+				maybe.Add(here.OneEast());
+				maybe.Add(here.OneSouth());
+				maybe.Add(here.OneNorth());
+				maybe.Add(here.OneWest());
+
+				// filter not clear maybes
+				maybe = maybe.Where(t => t.clear).ToList();
+
+				// don't move directly onto player
+				maybe = maybe.Where(t => t.loc != Refs.p.loc).ToList();
+
+				// pick a possibility and go there.
+				if (maybe.Count > 0)
 				{
-					// not moving is a viable option
-					// don't vibrate between good tiles
-					//    (at least not in this way)
+					int bestflow = maybe.Min(t => t.flow); // linq ftw
+
+					// is the tile that we're currently on already one of the best tiles?
+					if (here.flow != bestflow)
+					{
+						// make a list of best tiles
+						List<Tile> bests = maybe.Where(t => t.flow == bestflow).ToList();
+
+						// choose randomly between best tiles
+						// todo there is a method for rng tiles now
+						Tile newplace = bests[rng.Next(bests.Count)];
+						loc = newplace.loc;
+					}
+					else
+					{
+						// not moving is a viable option
+						// don't vibrate between good tiles
+						//    (at least not in this way)
+					}
 				}
 			}
+		}
+
+		private double DistToPlayer()
+		{
+			double a = Math.Pow(Refs.p.loc.X - loc.X, 2);
+			double b = Math.Pow(Refs.p.loc.Y - loc.Y, 2);
+			return Math.Sqrt(a + b);
 		}
 	}
 }

@@ -13,6 +13,7 @@ namespace Beehive
 		public bool clear = false;
 		public char gly = '#';
 		public int flow = 0;
+		public bool Cnectar = false;
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
 		public List<Tile> GetPossibleMoves(List<Point> options)

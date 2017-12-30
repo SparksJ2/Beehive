@@ -16,6 +16,9 @@ namespace Beehive
 		private Bitmap SansSerifBitmapFont;
 		private Bitmap SymbolaBitmapFont;
 
+		private string nectarChar = "・"; // katakana middle dot
+										 //private string nectarChar = "•"; // list bullet point
+
 		private void LoadBitmapFonts()
 		{
 			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
@@ -54,46 +57,45 @@ namespace Beehive
 			return bmp;
 		}
 
+		private int multX = 12;
+		private int multY = 15;
+		private int edgeX = 10;
+		private int edgeY = 12;
+
 		public void AddCharTile(Bitmap bmp, int x, int y, string s, int flow)
 		{
-			int multX = 12;
-			int multY = 15;
-			int edgeX = 10;
-			int edgeY = 12;
-
 			int x1 = (x * multX) + edgeX;
 			int y1 = (y * multY) + edgeY;
 			int x2 = multX;
 			int y2 = multY;
+			Tile t = tiles[x, y];
 
 			// Create a rectangle for the working area on the map
 			RectangleF tileRect = new RectangleF(x1, y1, x2, y2);
 
 			// set flow as background
-			Tile t = tiles[x, y];
-			int flowInt = t.flow * 12;
-			if (flowInt > 96) flowInt = 96;
-			Graphics gFlow = Graphics.FromImage(bmp);
-			if (t.clear) gFlow.FillRectangle(new SolidBrush(Color.FromArgb(12, flowInt, 12)), tileRect);
-			gFlow.Flush();
+			if (t.clear)
+			{
+				int flowInt = t.flow * 12;
+				if (flowInt > 96) flowInt = 96;
+				Graphics gFlow = Graphics.FromImage(bmp);
+				gFlow.FillRectangle(new SolidBrush(Color.FromArgb(12, flowInt, 12)), tileRect);
+				gFlow.Flush();
 
+				// add   nectar drops
+				if (t.Cnectar)
+				{
+					Graphics gNectar = Graphics.FromImage(bmp);
+					gNectar.DrawImage(GetTileBitmap(nectarChar), x1, y1);
+					gNectar.Flush();
+				}
+			}
+			// end background
+
+			// begin foreground
 			if (!t.clear || s == "♂" || s == "☿") // todo find a better way
 			{
-				// find our symbol in this tileset
-				int codePoint = s[0];
-				int codeX = codePoint % 64;
-				int codeY = codePoint / 64;
-
-				// we'll cut from this rectangle
-				Rectangle cloneRect = new Rectangle(codeX * multX, codeY * multY, multX, multY);
-
-				// because symbola gets nicer planet symbols
-				Bitmap useBitmapFont = SansSerifBitmapFont;
-				if (s == "♂" || s == "☿") { useBitmapFont = SymbolaBitmapFont; }
-
-				// extract this symbols as a tiny bitmap
-				System.Drawing.Imaging.PixelFormat format = useBitmapFont.PixelFormat;
-				Bitmap singleTileImage = useBitmapFont.Clone(cloneRect, format);
+				Bitmap singleTileImage = GetTileBitmap(s);
 
 				// paste symbol onto map
 				Graphics gChar = Graphics.FromImage(bmp);
@@ -103,6 +105,29 @@ namespace Beehive
 				gChar.Flush();
 				singleTileImage.Dispose();
 			}
+		}
+
+		private Bitmap GetTileBitmap(string s)
+		{
+			// find our symbol in this tileset
+			int codePoint = s[0];
+			int codeX = codePoint % 64;
+			int codeY = codePoint / 64;
+
+			// because symbola gets nicer planet symbols
+			Bitmap useBitmapFont = SansSerifBitmapFont;
+			if (s == "♂" || s == "☿") { useBitmapFont = SymbolaBitmapFont; }
+			if (s == nectarChar) { useBitmapFont = SymbolaBitmapFont; }
+
+			// we'll cut from this rectangle
+			Rectangle cloneRect = new Rectangle(codeX * multX, codeY * multY, multX, multY);
+
+			// extract this symbols as a tiny bitmap
+			System.Drawing.Imaging.PixelFormat format = useBitmapFont.PixelFormat;
+			Bitmap singleTileImage = useBitmapFont.Clone(cloneRect, format);
+
+			// todo we should probably cache these bitmaps
+			return singleTileImage;
 		}
 
 		public void ConsoleDump()
