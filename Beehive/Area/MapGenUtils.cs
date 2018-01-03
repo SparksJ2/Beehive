@@ -13,21 +13,23 @@ namespace Beehive
 {
 	public partial class Map
 	{
-		public List<Tile> GetNextTo(Tile t)
+		public HashSet<Tile> GetNextTo(Tile t)
 		{
-			var x = new List<Tile> { t.OneNorth(), t.OneSouth(), t.OneEast(), t.OneWest() };
-			x.RemoveAll(i => i == null);
+			var x = new HashSet<Tile>(new TileComp())
+			{ t.OneNorth(), t.OneSouth(), t.OneEast(), t.OneWest() };
+
+			x.RemoveWhere(i => i == null);
 			// leave border intact
-			x.RemoveAll(i => i.loc.X == 0);
-			x.RemoveAll(i => i.loc.Y == 0);
-			x.RemoveAll(i => i.loc.X == xLen - 1);
-			x.RemoveAll(i => i.loc.Y == yLen - 1);
+			x.RemoveWhere(i => i.loc.X == 0);
+			x.RemoveWhere(i => i.loc.Y == 0);
+			x.RemoveWhere(i => i.loc.X == xLen - 1);
+			x.RemoveWhere(i => i.loc.Y == yLen - 1);
 			return x;
 		}
 
-		public List<Tile> GetClosed3Sides(List<Tile> input)
+		public HashSet<Tile> GetClosed3Sides(HashSet<Tile> input)
 		{
-			var r = new List<Tile>();
+			var r = new HashSet<Tile>(new TileComp());
 			foreach (Tile t in input)
 			{
 				int sum = 0;
@@ -40,9 +42,9 @@ namespace Beehive
 			return r;
 		}
 
-		public List<Tile> GetClosed5Sides(List<Tile> input)
+		public HashSet<Tile> GetClosed5Sides(HashSet<Tile> input)
 		{
-			var r = new List<Tile>();
+			var r = new HashSet<Tile>(new TileComp());
 			foreach (Tile t in input)
 			{
 				int sum = 0;
@@ -62,7 +64,7 @@ namespace Beehive
 		}
 
 		// cached clear tiles list for maze generator. not for general use.
-		private List<Tile> clearCache;
+		private HashSet<Tile> clearCache;
 
 		public void AddToClearTileCache(Tile t)
 		{
@@ -76,10 +78,10 @@ namespace Beehive
 
 		public void InitClearTilesCache()
 		{
-			clearCache = TileList().Where(t => t.clear).ToList();
+			clearCache = HashSetExt.ToHashSet(TileList().Where(t => t.clear), new TileComp());
 		}
 
-		public List<Tile> GetClearTilesCache()
+		public HashSet<Tile> GetClearTilesCache()
 		{
 			return clearCache;
 			//return TileList().Where(t => t.clear).ToList();

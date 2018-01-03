@@ -60,7 +60,7 @@ namespace Beehive
 			}
 			else
 			{
-				var maybe = new List<Tile>();
+				var maybe = new HashSet<Tile>(new TileComp());
 
 				maybe.Add(here.OneEast());
 				maybe.Add(here.OneSouth());
@@ -68,10 +68,10 @@ namespace Beehive
 				maybe.Add(here.OneWest());
 
 				// filter not clear maybes
-				maybe = maybe.Where(t => t.clear).ToList();
+				maybe = HashSetExt.ToHashSet(maybe.Where(t => t.clear), new TileComp());
 
 				// don't move directly onto player
-				maybe = maybe.Where(t => t.loc != Refs.p.loc).ToList();
+				maybe = HashSetExt.ToHashSet(maybe.Where(t => t.loc != Refs.p.loc), new TileComp());
 
 				// pick a possibility and go there.
 				if (maybe.Count > 0)
@@ -82,11 +82,11 @@ namespace Beehive
 					if (here.flow != bestflow)
 					{
 						// make a list of best tiles
-						List<Tile> bests = maybe.Where(t => t.flow == bestflow).ToList();
+						HashSet<Tile> bests = HashSetExt.ToHashSet(maybe.Where(t => t.flow == bestflow), new TileComp());
 
 						// choose randomly between best tiles
 						// todo there is a method for rng tiles now
-						Tile newplace = bests[rng.Next(bests.Count)];
+						Tile newplace = bests.ElementAt(rng.Next(bests.Count));
 						loc = newplace.loc;
 					}
 					else

@@ -27,7 +27,7 @@ namespace Beehive
 			ClearFlow();
 
 			// get a list of starting tiles(s) as starting point(s)
-			List<Tile> heads = SetUpInitialRing();
+			HashSet<Tile> heads = SetUpInitialRing();
 			foreach (Tile t in heads) { if (t.clear) { t.flow = 0; } }
 
 			// I call them heads because they 'snake' outwards from the initial point(s)
@@ -41,17 +41,20 @@ namespace Beehive
 			{
 				changes = false; failsafe++;
 
-				List<Tile> newHeads = new List<Tile>();
+				HashSet<Tile> newHeads = new HashSet<Tile>(new TileComp());
 				// for each active head tile...
 				foreach (Tile head in heads)
 				{
 					// ...find the tiles next to it...
-					List<Tile> newTiles = new List<Tile>
-						{head.OneNorth(), head.OneEast(),
-						 head.OneSouth(), head.OneWest() };
+					HashSet<Tile> newTiles = new HashSet<Tile>(new TileComp())
+					{
+						head.OneNorth(), head.OneEast(),
+						head.OneSouth(), head.OneWest()
+					};
 
 					// ... (ignoring any nulls) ...
-					newTiles.RemoveAll(item => item == null);
+
+					newTiles.RemoveWhere(item => item == null);
 
 					// ... and for each one found ...
 					foreach (Tile newTile in newTiles)
@@ -79,12 +82,12 @@ namespace Beehive
 				"failsafe reached = " + failsafe + ".");
 		}
 
-		private List<Tile> SetUpInitialRing()
+		private HashSet<Tile> SetUpInitialRing()
 		{
 			// we'll try to flow to a set distance from the player by
 			//    making a ring of target squares and working from there
 			var allTiles = Refs.m.TileList();
-			var ring = new List<Tile>();
+			var ring = new HashSet<Tile>(new TileComp());
 			foreach (Tile t in allTiles)
 			{
 				// todo de-duplicate with other pythagorus

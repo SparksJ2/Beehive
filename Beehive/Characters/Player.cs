@@ -105,7 +105,7 @@ namespace Beehive
 				{
 					// todo only one possible target?
 					Tile victimTile = Refs.m.TileByLoc(Refs.c.loc);
-					List<Tile> escapes = new List<Tile>();
+					HashSet<Tile> escapes = new HashSet<Tile>(new TileComp());
 
 					if (IsVertical(vector))
 					{

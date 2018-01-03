@@ -48,13 +48,13 @@ namespace Beehive
 		}
 
 		// list of all tiles, never changes.
-		public List<Tile> cachedTileList;
+		public HashSet<Tile> cachedTileList;
 
-		public List<Tile> TileList()
+		public HashSet<Tile> TileList()
 		{
 			if (cachedTileList == null)
 			{
-				cachedTileList = new List<Tile>();
+				cachedTileList = new HashSet<Tile>(new TileComp());
 				foreach (Tile t in tiles) { cachedTileList.Add(t); }
 			}
 			return cachedTileList;
@@ -95,9 +95,9 @@ namespace Beehive
 			return (c < 1.01);
 		}
 
-		public List<Tile> GetClearTilesListNormal()
+		public HashSet<Tile> GetClearTilesListNormal()
 		{
-			return TileList().Where(t => t.clear).ToList();
+			return HashSetExt.ToHashSet(TileList().Where(t => t.clear), new TileComp());
 		}
 
 		public void HealWalls()

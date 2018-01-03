@@ -38,7 +38,7 @@ namespace Beehive
 			{
 				// pick a random clear tile
 				clears = NewMap.GetClearTilesCache();
-				var clear = clears[rng.Next(clears.Count)];
+				var clear = clears.ElementAt(rng.Next(clears.Count));
 
 				// which ways can we dig from it?
 				var nextTo = NewMap.GetNextTo(clear);
@@ -49,7 +49,7 @@ namespace Beehive
 				if (andWalls.Count > 0)
 				{
 					// ... dig in one of them randomly
-					var picked = andWalls[rng.Next(andWalls.Count)];
+					var picked = andWalls.ElementAt(rng.Next(andWalls.Count));
 					picked.clear = true;
 					NewMap.AddToClearTileCache(picked);
 				}

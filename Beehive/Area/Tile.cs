@@ -16,9 +16,9 @@ namespace Beehive
 		public bool Cnectar = false;
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
-		public List<Tile> GetPossibleMoves(List<Point> options)
+		public HashSet<Tile> GetPossibleMoves(HashSet<Point> options)
 		{
-			var result = new List<Tile>();
+			var result = new HashSet<Tile>(new TileComp());
 
 			foreach (Point p in options)
 			{
@@ -31,15 +31,15 @@ namespace Beehive
 			return result;
 		}
 
-		public static List<Tile> FilterOutNotClear(List<Tile> ts)
+		public static HashSet<Tile> FilterOutNotClear(HashSet<Tile> ts)
 		{
-			return ts.Where(t => !t.clear).ToList();
+			return HashSetExt.ToHashSet(ts.Where(t => !t.clear), new TileComp());
 		}
 
-		public static Tile RandomFromList(List<Tile> tileList)
+		public static Tile RandomFromList(HashSet<Tile> tileList)
 		{
 			var rng = Refs.c.rng;
-			return tileList[rng.Next(tileList.Count)];
+			return tileList.ElementAt(rng.Next(tileList.Count));
 		}
 
 		public Tile OneNorth()

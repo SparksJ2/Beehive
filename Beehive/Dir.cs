@@ -25,9 +25,9 @@ namespace Beehive
 		public static bool Left = false;
 		public static bool Right = true;
 
-		public static List<Point> KnightMoves()
+		public static HashSet<Point> KnightMoves()
 		{
-			var r = new List<Point>
+			var r = new HashSet<Point>
 			{
 				AddPts(North, NorthEast),
 				AddPts(North, NorthWest),
@@ -41,24 +41,24 @@ namespace Beehive
 			return r;
 		}
 
-		public static List<Point> DodgeMoves()
+		public static HashSet<Point> DodgeMoves()
 		{
-			return new List<Point> { North, East, South, West };
+			return new HashSet<Point> { North, East, South, West };
 		}
 
-		public static List<Point> DodgeHorizontal()
+		public static HashSet<Point> DodgeHorizontal()
 		{
-			return new List<Point> { North, South };
+			return new HashSet<Point> { North, South };
 		}
 
-		public static List<Point> DodgeVertical()
+		public static HashSet<Point> DodgeVertical()
 		{
-			return new List<Point> { East, West };
+			return new HashSet<Point> { East, West };
 		}
 
-		public static List<Point> LeapMoves()
+		public static HashSet<Point> LeapMoves()
 		{
-			return new List<Point>
+			return new HashSet<Point>
 			{ AddPts(North, North),
 				AddPts(East, East),
 				AddPts(South, South),
