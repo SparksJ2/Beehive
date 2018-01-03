@@ -9,11 +9,15 @@ namespace Beehive
 	public static class HashSetExt
 	{
 		// really could be better looking...
-		public static HashSet<T> ToHashSet<T>(
-			this IEnumerable<T> source,
-			IEqualityComparer<T> comparer)
+		public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer)
 		{
 			return new HashSet<T>(source, comparer);
+		}
+
+		public static HashSet<Tile> ToTileHashSet<Tile>(this IEnumerable<Tile> source)
+		{
+			return new HashSet<Tile>(source,
+				(IEqualityComparer<Tile>)new TileComp());
 		}
 	}
 }

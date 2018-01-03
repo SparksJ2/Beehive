@@ -97,7 +97,7 @@ namespace Beehive
 
 		public HashSet<Tile> GetClearTilesListNormal()
 		{
-			return HashSetExt.ToHashSet(TileList().Where(t => t.clear), new TileComp());
+			return TileList().Where(t => t.clear).ToTileHashSet();
 		}
 
 		public void HealWalls()

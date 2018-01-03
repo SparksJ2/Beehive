@@ -68,10 +68,10 @@ namespace Beehive
 				maybe.Add(here.OneWest());
 
 				// filter not clear maybes
-				maybe = HashSetExt.ToHashSet(maybe.Where(t => t.clear), new TileComp());
+				maybe = maybe.Where(t => t.clear).ToTileHashSet();
 
 				// don't move directly onto player
-				maybe = HashSetExt.ToHashSet(maybe.Where(t => t.loc != Refs.p.loc), new TileComp());
+				maybe = maybe.Where(t => t.loc != Refs.p.loc).ToTileHashSet();
 
 				// pick a possibility and go there.
 				if (maybe.Count > 0)
@@ -82,7 +82,7 @@ namespace Beehive
 					if (here.flow != bestflow)
 					{
 						// make a list of best tiles
-						HashSet<Tile> bests = HashSetExt.ToHashSet(maybe.Where(t => t.flow == bestflow), new TileComp());
+						HashSet<Tile> bests = maybe.Where(t => t.flow == bestflow).ToTileHashSet();
 
 						// choose randomly between best tiles
 						// todo there is a method for rng tiles now

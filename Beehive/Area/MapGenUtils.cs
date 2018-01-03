@@ -78,7 +78,7 @@ namespace Beehive
 
 		public void InitClearTilesCache()
 		{
-			clearCache = HashSetExt.ToHashSet(TileList().Where(t => t.clear), new TileComp());
+			clearCache = TileList().Where(t => t.clear).ToHashSet(new TileComp());
 		}
 
 		public HashSet<Tile> GetClearTilesCache()

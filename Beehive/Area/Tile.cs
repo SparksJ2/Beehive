@@ -33,7 +33,7 @@ namespace Beehive
 
 		public static HashSet<Tile> FilterOutNotClear(HashSet<Tile> ts)
 		{
-			return HashSetExt.ToHashSet(ts.Where(t => !t.clear), new TileComp());
+			return ts.Where(t => !t.clear).ToTileHashSet();
 		}
 
 		public static Tile RandomFromList(HashSet<Tile> tileList)
