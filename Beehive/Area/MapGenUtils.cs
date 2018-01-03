@@ -42,6 +42,34 @@ namespace Beehive
 			return r;
 		}
 
+		internal void MakeClearArea(Point point1, Point point2)
+		{
+			var workingList = TileList();
+			workingList = workingList.Where(t =>
+				t.loc.X > point1.X &&
+				t.loc.X < point2.X).ToTileHashSet();
+
+			workingList = workingList.Where(t =>
+				t.loc.Y > point1.Y &&
+				t.loc.Y < point2.Y).ToTileHashSet();
+
+			foreach (Tile t in workingList) { t.clear = true; }
+		}
+
+		internal void MarkNoTunnel(Point point1, Point point2)
+		{
+			var workingList = TileList();
+			workingList = workingList.Where(t =>
+				t.loc.X > point1.X &&
+				t.loc.X < point2.X).ToTileHashSet();
+
+			workingList = workingList.Where(t =>
+				t.loc.Y > point1.Y &&
+				t.loc.Y < point2.Y).ToTileHashSet();
+
+			foreach (Tile t in workingList) { t.noTunnel = true; }
+		}
+
 		public HashSet<Tile> GetClosed5Sides(HashSet<Tile> input)
 		{
 			var r = new HashSet<Tile>(new TileComp());

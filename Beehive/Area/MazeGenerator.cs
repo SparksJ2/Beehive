@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
@@ -23,12 +24,26 @@ namespace Beehive
 			int xmax = NewMap.GetXLen() - 2;
 			int ymax = NewMap.GetYLen() - 2;
 
-			// seed the corners and middle
+			// seed the corners
 			NewMap.TileByLoc(new Point(1, 1)).clear = true;
 			NewMap.TileByLoc(new Point(1, ymax)).clear = true;
 			NewMap.TileByLoc(new Point(xmax, 1)).clear = true;
 			NewMap.TileByLoc(new Point(xmax, ymax)).clear = true;
-			NewMap.TileByLoc(new Point(xmax / 2, ymax / 2)).clear = true;
+
+			// set up central area
+			var homeStartClear = new Point(29, 10);
+			var homeEndClear = new Point(36, 14);
+			NewMap.MakeClearArea(homeStartClear, homeEndClear);
+
+			var homeStartWall = new Point(homeStartClear.X - 1, homeStartClear.Y - 1);
+			var homeEndWall = new Point(homeEndClear.X + 1, homeEndClear.Y + 1);
+			NewMap.MarkNoTunnel(homeStartWall, homeEndWall);
+
+			// todo hardcoded doorway
+			NewMap.TileByLoc(new Point(33, homeStartClear.Y)).clear = true;
+			NewMap.TileByLoc(new Point(32, homeStartClear.Y)).clear = true;
+
+			// cache startup
 			NewMap.InitClearTilesCache();
 
 			// maze generation
@@ -41,15 +56,20 @@ namespace Beehive
 				var clear = clears.ElementAt(rng.Next(clears.Count));
 
 				// which ways can we dig from it?
+
 				var nextTo = NewMap.GetNextTo(clear);
-				var closed5 = NewMap.GetClosed5Sides(nextTo);
-				var andWalls = Tile.FilterOutNotClear(closed5);
+				var isClosed5sides = NewMap.GetClosed5Sides(nextTo);
+
+				var andWalls = Tile.FilterOutClear(isClosed5sides);
+				var andTunnelable = Tile.Tunnelable(andWalls);
+
+				var candidates = andTunnelable;
 
 				// if there are digging options...
-				if (andWalls.Count > 0)
+				if (candidates.Count > 0)
 				{
 					// ... dig in one of them randomly
-					var picked = andWalls.ElementAt(rng.Next(andWalls.Count));
+					var picked = candidates.ElementAt(rng.Next(candidates.Count));
 					picked.clear = true;
 					NewMap.AddToClearTileCache(picked);
 				}
@@ -60,6 +80,7 @@ namespace Beehive
 					NewMap.DelFromClearTileCache(clear);
 				}
 
+				//Refs.mf.UpdateMap(); // for debugging visualization
 				rounds++;
 			}
 			NewMap.ConsoleDump();

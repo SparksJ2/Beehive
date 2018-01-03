@@ -14,6 +14,7 @@ namespace Beehive
 		public char gly = '#';
 		public int flow = 0;
 		public bool Cnectar = false;
+		public bool noTunnel = false; // only for maze gen
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
 		public HashSet<Tile> GetPossibleMoves(HashSet<Point> options)
@@ -31,9 +32,14 @@ namespace Beehive
 			return result;
 		}
 
-		public static HashSet<Tile> FilterOutNotClear(HashSet<Tile> ts)
+		public static HashSet<Tile> FilterOutClear(HashSet<Tile> ts)
 		{
 			return ts.Where(t => !t.clear).ToTileHashSet();
+		}
+
+		public static HashSet<Tile> Tunnelable(HashSet<Tile> ts)
+		{
+			return ts.Where(t => t.noTunnel == false).ToTileHashSet();
 		}
 
 		public static Tile RandomFromList(HashSet<Tile> tileList)

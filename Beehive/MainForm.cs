@@ -25,18 +25,6 @@ namespace Beehive
 		{
 			InitializeComponent();
 
-			// generate map
-			Refs.m = new MazeGenerator().Create(65, 25);
-			Refs.p = new Player("The Protagonist", Color.Cyan);
-			Refs.p.SetXY(1, 1);
-			Refs.c = new Cubi("Ai'nana", Color.HotPink);
-			Refs.c.SetXY(4, 3);     //s.SetXY(65 - 2, 25 - 2);
-			Refs.mf = this;
-
-			// draw initial map
-			new Flow().RemakeFlow(Refs.p.loc);
-			UpdateMap();
-
 			// init key handlers
 			turnTimer = new Stopwatch(); turnTimer.Start();
 
@@ -48,6 +36,8 @@ namespace Beehive
 			// don't let the feedback / inventory windows become selected
 			feedbackBox.Enter += DenyFocus;
 			miniInventory.Enter += DenyFocus;
+
+			Refs.mf = this;
 		}
 
 		private void DenyFocus(object sender, EventArgs e)
@@ -57,6 +47,18 @@ namespace Beehive
 
 		private void MainForm_Shown(object sender, EventArgs e)
 		{
+			// generate map
+			Refs.p = new Player("The Protagonist", Color.Cyan);
+			Refs.p.SetXY(32, 12); // todo fix hardcoded numbers
+			Refs.c = new Cubi("Ai'nana", Color.HotPink);
+			Refs.c.SetXY(33, 9);    // todo fix hardcoded numbers
+
+			Refs.m = new MazeGenerator().Create(65, 25);
+
+			// draw initial map
+			new Flow().RemakeFlow(Refs.p.loc);
+			UpdateMap();
+
 			MessageBox.Show(
 				"In your vast bed, tucked deep in a dreamworld, far outside time and space,\n" +
 				"you play in eternal bliss with your horned lover.\n\n" +
@@ -68,7 +70,6 @@ namespace Beehive
 
 			Player p = Refs.p;
 			Cubi c = Refs.c;
-
 			Announce("Welcome to the underworld. Look out, she's getting away!", p.myAlign, p.myColor);
 			Announce("You'll never catch meeee!", c.myAlign, c.myColor);
 			Announce("We'll see about that!", p.myAlign, p.myColor);
