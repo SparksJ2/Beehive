@@ -42,7 +42,7 @@ namespace Beehive
 			return r;
 		}
 
-		internal void MakeClearArea(Point point1, Point point2)
+		internal void MakeClearArea(Loc point1, Loc point2)
 		{
 			var workingList = TileList();
 			workingList = workingList.Where(t =>
@@ -56,7 +56,7 @@ namespace Beehive
 			foreach (Tile t in workingList) { t.clear = true; }
 		}
 
-		internal void MarkNoTunnel(Point point1, Point point2)
+		internal void MarkNoTunnel(Loc point1, Loc point2)
 		{
 			var workingList = TileList();
 			workingList = workingList.Where(t =>

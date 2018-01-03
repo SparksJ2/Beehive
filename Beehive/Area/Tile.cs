@@ -9,7 +9,7 @@ namespace Beehive
 {
 	public class Tile
 	{
-		public Point loc;
+		public Loc loc;
 		public bool clear = false;
 		public char gly = '#';
 		public int flow = 0;
@@ -17,13 +17,13 @@ namespace Beehive
 		public bool noTunnel = false; // only for maze gen
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
-		public HashSet<Tile> GetPossibleMoves(HashSet<Point> options)
+		public HashSet<Tile> GetPossibleMoves(HashSet<Loc> options)
 		{
 			var result = new HashSet<Tile>(new TileComp());
 
-			foreach (Point p in options)
+			foreach (Loc p in options)
 			{
-				Point newloc = AddPts(loc, p);
+				Loc newloc = Loc.AddPts(loc, p);
 				if (Refs.m.ValidLoc(newloc) && Refs.m.ClearLoc(newloc))
 				{
 					result.Add(Refs.m.TileByLoc(newloc));
@@ -50,55 +50,50 @@ namespace Beehive
 
 		public Tile OneNorth()
 		{
-			var newLoc = AddPts(loc, Dir.North);
+			var newLoc = Loc.AddPts(loc, Dir.North);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneSouth()
 		{
-			var newLoc = AddPts(loc, Dir.South);
+			var newLoc = Loc.AddPts(loc, Dir.South);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneEast()
 		{
-			var newLoc = AddPts(loc, Dir.East);
+			var newLoc = Loc.AddPts(loc, Dir.East);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneWest()
 		{
-			var newLoc = AddPts(loc, Dir.West);
+			var newLoc = Loc.AddPts(loc, Dir.West);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneNorthEast()
 		{
-			var newLoc = AddPts(loc, Dir.NorthEast);
+			var newLoc = Loc.AddPts(loc, Dir.NorthEast);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneSouthEast()
 		{
-			var newLoc = AddPts(loc, Dir.SouthEast);
+			var newLoc = Loc.AddPts(loc, Dir.SouthEast);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneNorthWest()
 		{
-			var newLoc = AddPts(loc, Dir.NorthWest);
+			var newLoc = Loc.AddPts(loc, Dir.NorthWest);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
 		public Tile OneSouthWest()
 		{
-			var newLoc = AddPts(loc, Dir.SouthWest);
+			var newLoc = Loc.AddPts(loc, Dir.SouthWest);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
-		}
-
-		private Point AddPts(Point a, Point b)
-		{
-			return new Point(a.X + b.X, a.Y + b.Y);
 		}
 	}
 }

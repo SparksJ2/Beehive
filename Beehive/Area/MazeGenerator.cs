@@ -25,23 +25,23 @@ namespace Beehive
 			int ymax = NewMap.GetYLen() - 2;
 
 			// seed the corners
-			NewMap.TileByLoc(new Point(1, 1)).clear = true;
-			NewMap.TileByLoc(new Point(1, ymax)).clear = true;
-			NewMap.TileByLoc(new Point(xmax, 1)).clear = true;
-			NewMap.TileByLoc(new Point(xmax, ymax)).clear = true;
+			NewMap.TileByLoc(new Loc(1, 1)).clear = true;
+			NewMap.TileByLoc(new Loc(1, ymax)).clear = true;
+			NewMap.TileByLoc(new Loc(xmax, 1)).clear = true;
+			NewMap.TileByLoc(new Loc(xmax, ymax)).clear = true;
 
 			// set up central area
-			var homeStartClear = new Point(29, 10);
-			var homeEndClear = new Point(36, 14);
+			var homeStartClear = new Loc(29, 10);
+			var homeEndClear = new Loc(36, 14);
 			NewMap.MakeClearArea(homeStartClear, homeEndClear);
 
-			var homeStartWall = new Point(homeStartClear.X - 1, homeStartClear.Y - 1);
-			var homeEndWall = new Point(homeEndClear.X + 1, homeEndClear.Y + 1);
+			var homeStartWall = new Loc(homeStartClear.X - 1, homeStartClear.Y - 1);
+			var homeEndWall = new Loc(homeEndClear.X + 1, homeEndClear.Y + 1);
 			NewMap.MarkNoTunnel(homeStartWall, homeEndWall);
 
 			// todo hardcoded doorway
-			NewMap.TileByLoc(new Point(33, homeStartClear.Y)).clear = true;
-			NewMap.TileByLoc(new Point(32, homeStartClear.Y)).clear = true;
+			NewMap.TileByLoc(new Loc(33, homeStartClear.Y)).clear = true;
+			NewMap.TileByLoc(new Loc(32, homeStartClear.Y)).clear = true;
 
 			// cache startup
 			NewMap.InitClearTilesCache();

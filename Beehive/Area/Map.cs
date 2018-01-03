@@ -60,22 +60,22 @@ namespace Beehive
 			return cachedTileList;
 		}
 
-		public Tile TileByLoc(Point p)
+		public Tile TileByLoc(Loc p)
 		{
 			return tiles[p.X, p.Y];
 		}
 
-		public bool ValidLoc(Point p)
+		public bool ValidLoc(Loc p)
 		{
 			return (p.X >= 0 && p.X < xLen && p.Y >= 0 && p.Y < yLen) ? true : false;
 		}
 
-		public bool ClearLoc(Point p)
+		public bool ClearLoc(Loc p)
 		{
 			return TileByLoc(p).clear == true;
 		}
 
-		public bool EdgeLoc(Point p)
+		public bool EdgeLoc(Loc p)
 		{
 			return (p.X == 0 || p.X == xLen - 1 ||
 				p.Y == 0 || p.Y == yLen - 1) ? true : false;
@@ -143,10 +143,5 @@ namespace Beehive
 				if (!n && !s && !e && !w) t.gly = 'X';
 			}
 		} // end healwalls
-
-		private Point AddPts(Point a, Point b)
-		{
-			return new Point(a.X + b.X, a.Y + b.Y);
-		}
 	}
 }

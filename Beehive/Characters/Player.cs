@@ -64,12 +64,7 @@ namespace Beehive
 			return timepass;
 		}
 
-		private Point AddPts(Point a, Point b)
-		{
-			return new Point(a.X + b.X, a.Y + b.Y);
-		}
-
-		private void ThrowPillow(Point vector)
+		private void ThrowPillow(Loc vector)
 		{
 			Refs.mf.Announce("You throw a pillow!", myAlign, myColor);
 			// can't throw without pillow!
@@ -79,7 +74,7 @@ namespace Beehive
 			{ heldPillows--; UpdateInventory(); }
 
 			// determine release point of throw
-			Point startloc = AddPts(this.loc, vector);
+			Loc startloc = Loc.AddPts(this.loc, vector);
 			Tile activeTile = Refs.m.TileByLoc(startloc);
 			char pillowGlyph = 'O';
 
@@ -135,7 +130,7 @@ namespace Beehive
 
 				// it's clear, so move activeTile up and iterate
 				if (moveClear == "clear")
-				{ activeTile = Refs.m.TileByLoc(AddPts(vector, activeTile.loc)); }
+				{ activeTile = Refs.m.TileByLoc(Loc.AddPts(vector, activeTile.loc)); }
 			}
 			// leave pillow on ground to form new obstruction
 			activeTile.clear = false;
@@ -143,9 +138,9 @@ namespace Beehive
 			Refs.mf.UpdateMap();
 		}
 
-		private string CheckClearForThrown(Point vector, Tile activeTile)
+		private string CheckClearForThrown(Loc vector, Tile activeTile)
 		{
-			Point newloc = AddPts(vector, activeTile.loc);
+			Loc newloc = Loc.AddPts(vector, activeTile.loc);
 			if (!Refs.m.TileByLoc(newloc).clear) return "wall";
 			if (Refs.m.TileByLoc(newloc).loc == Refs.c.loc) return "spank";
 			return "clear";
@@ -262,7 +257,7 @@ namespace Beehive
 			if (t.clear) loc = t.loc;
 		}
 
-		private bool IsVertical(Point v)
+		private bool IsVertical(Loc v)
 		{
 			return v.Y != 0;
 		}

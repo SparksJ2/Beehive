@@ -9,20 +9,20 @@ namespace Beehive
 {
 	public class Mobile
 	{
-		public Point loc;
+		public Loc loc;
 		public string name;
 		public Color myColor;
 
 		public Mobile(string nameIn, Color useColor)
 		{
-			loc = new Point();
+			loc = new Loc();
 			name = nameIn;
 			myColor = useColor;
 		}
 
 		public void SetXY(int x, int y)
 		{
-			loc = new Point(x, y);
+			loc = new Loc(x, y);
 		}
 	}
 }

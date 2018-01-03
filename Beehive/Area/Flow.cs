@@ -12,7 +12,7 @@ namespace Beehive
 {
 	public class Flow
 	{
-		public void RemakeFlow(Point target)
+		public void RemakeFlow(Loc target)
 		{
 			// target tiles get a .flow of 0, tiles 1 square from target
 			//    get a .flow of 1, tiles 2 out get a .flow of 2, etc...
@@ -26,7 +26,7 @@ namespace Beehive
 			// tidy up values from previous runs
 			ClearFlow();
 
-			// get a list of starting tiles(s) as starting point(s)
+			// get a list of starting tiles(s) as starting loc(s)
 			HashSet<Tile> heads = SetUpInitialRing();
 			foreach (Tile t in heads) { if (t.clear) { t.flow = 0; } }
 

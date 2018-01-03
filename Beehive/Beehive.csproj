@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="AnnounceLine.cs" />
     <Compile Include="Area\Flow.cs" />
+    <Compile Include="Area\Loc.cs" />
     <Compile Include="Area\Map.cs" />
     <Compile Include="Area\MapDraw.cs" />
     <Compile Include="Area\Tile.cs" />
