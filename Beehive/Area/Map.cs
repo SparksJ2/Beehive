@@ -28,9 +28,7 @@ namespace Beehive
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					this.tiles[x, y] = new Tile();
-					tiles[x, y].loc.X = x;
-					tiles[x, y].loc.Y = y;
+					tiles[x, y] = new Tile { loc = new Loc(x, y) };
 				}
 			}
 
