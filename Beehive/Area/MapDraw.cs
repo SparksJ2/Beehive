@@ -109,45 +109,60 @@ namespace Beehive
 
 				// clean up
 				gChar.Flush();
-				singleTileImage.Dispose();
+				//singleTileImage.Dispose(); // no! we'll re-use this bitmap from the cache
 			}
 		}
 
+		private Dictionary<string, Bitmap> TileBitmapCache;
+
 		private Bitmap GetTileBitmap(string s)
 		{
-			// find our symbol in this tileset
-			int codePoint = s[0];
-			int codeX = codePoint % 64;
-			int codeY = codePoint / 64;
-
-			// because symbola gets nicer planet symbols
-			Bitmap useBitmapFont = SansSerifBitmapFont;
-			Color useColour = Color.White;
-
-			if (s == "♂")
+			if (TileBitmapCache == null)
 			{
-				useBitmapFont = SymbolaBitmapFont;
-				useColour = Refs.p.myColor;
+				TileBitmapCache = new Dictionary<string, Bitmap>(); // todo add comparer
 			}
 
-			if (s == "☿" || s == nectarChar)
+			if (TileBitmapCache.ContainsKey(s))
 			{
-				useBitmapFont = SymbolaBitmapFont;
-				useColour = Refs.c.myColor;
+				return TileBitmapCache[s];
 			}
+			else
+			{
+				// find our symbol in this tileset
+				int codePoint = s[0];
+				int codeX = codePoint % 64;
+				int codeY = codePoint / 64;
 
-			// we'll cut from this rectangle
-			Rectangle cloneRect = new Rectangle(codeX * multX, codeY * multY, multX, multY);
+				// because symbola gets nicer planet symbols
+				Bitmap useBitmapFont = SansSerifBitmapFont;
+				Color useColour = Color.White;
 
-			// extract this symbols as a tiny bitmap
-			System.Drawing.Imaging.PixelFormat format = useBitmapFont.PixelFormat;
-			Bitmap singleTileImage = useBitmapFont.Clone(cloneRect, format);
+				if (s == "♂")
+				{
+					useBitmapFont = SymbolaBitmapFont;
+					useColour = Refs.p.myColor;
+				}
 
-			// change color
-			singleTileImage = ColorTint(singleTileImage, useColour);
+				if (s == "☿" || s == nectarChar)
+				{
+					useBitmapFont = SymbolaBitmapFont;
+					useColour = Refs.c.myColor;
+				}
 
-			// todo we should probably cache these bitmaps
-			return singleTileImage;
+				// we'll cut from this rectangle
+				Rectangle cloneRect = new Rectangle(codeX * multX, codeY * multY, multX, multY);
+
+				// extract this symbols as a tiny bitmap
+				System.Drawing.Imaging.PixelFormat format = useBitmapFont.PixelFormat;
+				Bitmap singleTileImage = useBitmapFont.Clone(cloneRect, format);
+
+				// change color
+				singleTileImage = ColorTint(singleTileImage, useColour);
+
+				// we cache these bitmaps
+				TileBitmapCache.Add(s, singleTileImage);
+				return singleTileImage;
+			}
 		}
 
 		public Bitmap ColorTint(Bitmap source, Color col)
