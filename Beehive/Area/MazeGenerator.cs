@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Beehive
 {
@@ -13,6 +14,9 @@ namespace Beehive
 
 		public Map Create(int xlen, int ylen)
 		{
+			var sw = new Stopwatch();
+			sw.Start();
+
 			Map NewMap = new Map(xlen, ylen);
 			Refs.m = NewMap; // needed for utils
 
@@ -28,28 +32,44 @@ namespace Beehive
 			NewMap.InitClearTilesCache();
 
 			// maze generation
-			for (int i = 0; i < 20000; i++)
+			int rounds = 0;
+			var clears = NewMap.GetClearTilesCache();
+			while (clears.Count > 0)
 			{
-				// pick random clear tile
-				var clears = NewMap.GetClearTilesCache();
+				// pick a random clear tile
+				clears = NewMap.GetClearTilesCache();
 				var clear = clears[rng.Next(clears.Count)];
 
-				// get tunnel options
+				// which ways can we dig from it?
 				var nextTo = NewMap.GetNextTo(clear);
 				var closed5 = NewMap.GetClosed5Sides(nextTo);
 				var andWalls = Tile.FilterOutNotClear(closed5);
 
-				// tunnel in random direction
+				// if there are digging options...
 				if (andWalls.Count > 0)
 				{
+					// ... dig in one of them randomly
 					var picked = andWalls[rng.Next(andWalls.Count)];
 					picked.clear = true;
 					NewMap.AddToClearTileCache(picked);
 				}
+				else
+				{
+					// ... if not, this tile will never be mined from,
+					//    so remove it from the clear tiles cache
+					NewMap.DelFromClearTileCache(clear);
+				}
+
+				rounds++;
 			}
 			NewMap.ConsoleDump();
 			NewMap.HealWalls();
 			NewMap.ConsoleDump();
+
+			// typ old time 230ms, new time 110ms
+			Console.WriteLine("Finished mapgen in " + sw.ElapsedMilliseconds + "ms, at "
+				+ rounds + " rounds");
+
 			return NewMap;
 		}
 	}

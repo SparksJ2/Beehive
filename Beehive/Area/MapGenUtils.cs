@@ -69,6 +69,11 @@ namespace Beehive
 			clearCache.Add(t);
 		}
 
+		public void DelFromClearTileCache(Tile t)
+		{
+			clearCache.Remove(t);
+		}
+
 		public void InitClearTilesCache()
 		{
 			clearCache = TileList().Where(t => t.clear).ToList();
