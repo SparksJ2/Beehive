@@ -29,6 +29,9 @@ namespace Beehive
 
 		public Bitmap AsBitmap()
 		{
+			var sw = new Stopwatch();
+			sw.Start();
+
 			Bitmap bmp = new Bitmap((int)(800), (int)(400));
 			Graphics gr = Graphics.FromImage(bmp);
 
@@ -56,6 +59,7 @@ namespace Beehive
 			AddCharTile(bmp, Refs.p.loc.X, Refs.p.loc.Y, "♂", 0);
 			AddCharTile(bmp, Refs.c.loc.X, Refs.c.loc.Y, "☿", 0);
 
+			Console.WriteLine("Finished map drawing in " + sw.ElapsedMilliseconds + "ms");
 			return bmp;
 		}
 
