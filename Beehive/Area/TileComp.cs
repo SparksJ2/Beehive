@@ -18,7 +18,9 @@ namespace Beehive
 
 		public int GetHashCode(Tile n)
 		{
-			return base.GetHashCode();
+			return n.loc.X + (n.loc.Y << 8);
 		}
+
+		//return base.GetHashCode();
 	}
 }
