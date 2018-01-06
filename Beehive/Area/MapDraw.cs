@@ -54,49 +54,36 @@ namespace Beehive
 			Rectangle rc = new Rectangle(5, 5, bmp.Width - 10, bmp.Height - 10);
 			gr.DrawRectangle(new Pen(Color.White, 4), rc);
 
-			// add floor stuff
-			for (int x = 0; x < xLen; x++)
-			{
-				for (int y = 0; y < yLen; y++)
-				{
-					var t = tiles[x, y];
-					// note we're disposing of 3252 Drawing.Graphics objects per turn,
-					//    might want to cache some if it becomes slow.
-					AddCharTile(bmp, x, y, t.gly.ToString(), t.flow);
-				}
-			}
+			// add flow and walls stuff
+			foreach (Tile t in tiles) { AddCharFlow(bmp, t); }
 
-			// todo alpha isn't working correctly due to flow being placed over the furniture.
-			AddCharTile(bmp, 0, 0, "⛤", 0);
-			AddCharTile(bmp, Refs.p.loc.X, Refs.p.loc.Y, "♂", 0);
-			AddCharTile(bmp, Refs.c.loc.X, Refs.c.loc.Y, "☿", 0);
+			// specials and mobiles
+			AddCharSpecial(bmp, "⛤");
+			AddCharMobile(bmp, Refs.p, "♂");
+			AddCharMobile(bmp, Refs.c, "☿");
 
 			Console.WriteLine("Finished map drawing in " + sw.ElapsedMilliseconds + "ms");
 			return bmp;
 		}
 
-		public void AddCharTile(Bitmap bmp, int x, int y, string s, int flow)
+		// todo could use some de-duplication work here
+		public void AddCharFlow(Bitmap bmp, Tile t)
 		{
-			int x1 = (x * multX) + edgeX;
-			int y1 = (y * multY) + edgeY;
-			int x2 = multX;
-			int y2 = multY;
-			Tile t = tiles[x, y];
+			int x1 = (t.loc.X * multX) + edgeX;
+			int y1 = (t.loc.Y * multY) + edgeY;
 
-			// Create a rectangle for the working area on the map
-			RectangleF tileRect = new RectangleF(x1, y1, x2, y2);
-
-			// set flow as background
-			if (t.clear)
+			if (t.clear) // set flow as background
 			{
 				int flowInt = t.flow * 12;
 				if (flowInt > 96) flowInt = 96;
 				using (var gFlow = Graphics.FromImage(bmp))
 				{
+					// Create a rectangle for the working area on the map
+					RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
 					gFlow.FillRectangle(new SolidBrush(Color.FromArgb(12, flowInt, 12)), tileRect);
 				}
 
-				// add   nectar drops
+				// add nectar drops
 				if (t.Cnectar)
 				{
 					using (var gNectar = Graphics.FromImage(bmp))
@@ -105,14 +92,22 @@ namespace Beehive
 					}
 				}
 			}
+			else // or add walls
+			{
+				Bitmap singleTileImage = GetTileBitmap(t.gly, stdSize);
+				using (var gChar = Graphics.FromImage(bmp))
+				{
+					gChar.DrawImage(singleTileImage, x1, y1);
+				}
+			}
+		}
 
-			// start bed
-			// set up bed rectangle
-			if (s == "⛤")
+		public void AddCharSpecial(Bitmap bmp, string s)
+		{
+			if (s == "⛤") // set up bed
 			{
 				using (var gBed = Graphics.FromImage(bmp))
 				{
-					
 					int bedx1 = (30 * multX) + edgeX;
 					int bedy1 = (11 * multY) + edgeY;
 					int bedx2 = multX * 3;
@@ -120,20 +115,23 @@ namespace Beehive
 					RectangleF tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
 					Bitmap bedBitmap = GetTileBitmap("⛤", tripSize);
 					gBed.DrawImage(bedBitmap, bedx1, bedy1);
-				}// end bed
+				}
 			}
+		}
 
-			// end background
+		public void AddCharMobile(Bitmap bmp, Mobile m, string s)
+		{
+			int x1 = (m.loc.X * multX) + edgeX;
+			int y1 = (m.loc.Y * multY) + edgeY;
 
 			// begin foreground
-			if (!t.clear || s == "♂" || s == "☿") // todo find a better way
+			if (s == "♂" || s == "☿")
 			{
 				Bitmap singleTileImage = GetTileBitmap(s, stdSize);
 
 				// paste symbol onto map
 				using (var gChar = Graphics.FromImage(bmp))
 				{
-				 
 					gChar.DrawImage(singleTileImage, x1, y1);
 				}
 			}

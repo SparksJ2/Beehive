@@ -112,33 +112,33 @@ namespace Beehive
 				// ├─┼┤  ╠═╬╣  ╟─╫╢  ╞═╪╡
 				// └─┴┘  ╚═╩╝  ╙─╨╜  ╘═╧╛
 
-				if (n && s && e && w) t.gly = '╬';
+				if (n && s && e && w) t.gly = "╬";
 
-				if (!n && s && e && w) t.gly = '╦';
-				if (n && !s && e && w) t.gly = '╩';
-				if (n && s && !e && w) t.gly = '╣';
-				if (n && s && e && !w) t.gly = '╠';
+				if (!n && s && e && w) t.gly = "╦";
+				if (n && !s && e && w) t.gly = "╩";
+				if (n && s && !e && w) t.gly = "╣";
+				if (n && s && e && !w) t.gly = "╠";
 
-				if (n && s && !e && !w) t.gly = '║';
-				if (!n && !s && e && w) t.gly = '═';
+				if (n && s && !e && !w) t.gly = "║";
+				if (!n && !s && e && w) t.gly = "═";
 
-				if (!n && s && e && !w) t.gly = '╔';
-				if (!n && s && !e && w) t.gly = '╗';
-				if (n && !s && !e && w) t.gly = '╝';
-				if (n && !s && e && !w) t.gly = '╚';
+				if (!n && s && e && !w) t.gly = "╔";
+				if (!n && s && !e && w) t.gly = "╗";
+				if (n && !s && !e && w) t.gly = "╝";
+				if (n && !s && e && !w) t.gly = "╚";
 
-				if (!n && s && !e && !w) t.gly = '║';
-				if (n && !s && !e && !w) t.gly = '║';
-				if (!n && !s && e && !w) t.gly = '═';
-				if (!n && !s && !e && w) t.gly = '═';
+				if (!n && s && !e && !w) t.gly = "║";
+				if (n && !s && !e && !w) t.gly = "║";
+				if (!n && !s && e && !w) t.gly = "═";
+				if (!n && !s && !e && w) t.gly = "═";
 
-				//if (!n && s && !e && !w) t.gly = '╥';
-				//if (n && !s && !e && !w) t.gly = '╨';
-				//if (!n && !s && e && !w) t.gly = '╞';
-				//if (!n && !s && !e && w) t.gly = '╡';
+				//if (!n && s && !e && !w) t.gly = "╥";
+				//if (n && !s && !e && !w) t.gly = "╨";
+				//if (!n && !s && e && !w) t.gly = "╞";
+				//if (!n && !s && !e && w) t.gly = "╡";
 
-				//if (!n && !s && !e && !w) t.gly = '╳';
-				if (!n && !s && !e && !w) t.gly = 'X';
+				//if (!n && !s && !e && !w) t.gly = "╳";
+				if (!n && !s && !e && !w) t.gly = "X";
 			}
 		} // end healwalls
 	}

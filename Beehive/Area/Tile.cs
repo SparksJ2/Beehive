@@ -11,7 +11,7 @@ namespace Beehive
 	{
 		public Loc loc;
 		public bool clear = false;
-		public char gly = '#';
+		public string gly = "#";
 		public int flow = 0;
 		public bool Cnectar = false;
 		public bool noTunnel = false; // only for maze gen

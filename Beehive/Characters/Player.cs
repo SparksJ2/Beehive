@@ -76,7 +76,7 @@ namespace Beehive
 			// determine release point of throw
 			Loc startloc = Loc.AddPts(this.loc, vector);
 			Tile activeTile = Refs.m.TileByLoc(startloc);
-			char pillowGlyph = 'O';
+			string pillowGlyph = "O";
 
 			// if the next tile now is our lover, extra spank stun!
 			string moveClear = CheckClearForThrown(vector, activeTile);
@@ -146,7 +146,7 @@ namespace Beehive
 			return "clear";
 		}
 
-		private void Animate(Tile activeTile, char pillowGlyph)
+		private void Animate(Tile activeTile, string pillowGlyph)
 		{
 			// todo animation code is a bit makeshift and needs to be cleaned up andmoved to Map.cs
 			activeTile.clear = false;
@@ -156,7 +156,7 @@ namespace Beehive
 
 			Thread.Sleep(75);
 			activeTile.clear = true;
-			activeTile.gly = ' ';
+			activeTile.gly = " ";
 			Refs.mf.UpdateMap();
 		}
 
