@@ -18,17 +18,31 @@ namespace ResourcesTest
 			int minCodePoint = 0;
 			Size size = new Size(12, 15); // as (width, height)
 			int charsPerLine = 64;
-
 			string fontString = "Symbola";
 			int em = 11;
-			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em);
+			string description = "";
+			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
 
 			fontString = "Microsoft Sans Serif";
 			em = 11;
-			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em);
+			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
+
+			minCodePoint = 0x2600;
+			maxCodePoint = 0x26ff; // 0x10ffff
+			size = new Size(12*3, 15*3); // as (width, height)
+			charsPerLine = 16;
+			fontString = "Symbola";
+			description = "MiscSyms";
+			em = 20;
+			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
+
+			//minCodePoint = 0x2500;
+			//maxCodePoint = 0x257f;
+			//description = "BoxDraw";
+			//MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
 		}
 
-		private static void MakeTileFile(int minCodePoint, int maxCodePoint, Size size, int charsPerLine, string fontString, int em)
+		private static void MakeTileFile(int minCodePoint, int maxCodePoint, Size size, int charsPerLine, string fontString, int em, string description)
 		{
 			Font useFont = new Font(fontString, em);
 			if (useFont.Name != fontString)
@@ -39,8 +53,8 @@ namespace ResourcesTest
 			}
 
 			string spacelessName = useFont.Name.Replace(" ", "");
-			string filename = spacelessName + "-" + em +
-				"pt-" + size.Width + "x" + size.Height + "px";
+			string filename = spacelessName + "-" + em + "pt-" + size.Width + "x" + size.Height + "px";
+			if (description != "") { filename += "-" + description; }
 
 			Bitmap bm = CreateFontMap(minCodePoint, maxCodePoint, size, charsPerLine, useFont);
 			bm.Save("..\\..\\..\\Beehive\\Resources\\" + filename + ".png"); // type based off extension
@@ -48,12 +62,16 @@ namespace ResourcesTest
 
 		private static Bitmap CreateFontMap(int minCodePoint, int maxCodePoint, Size size, int charsPerRow, Font style)
 		{
-			Bitmap bm = new Bitmap(size.Width * charsPerRow, maxCodePoint * size.Height / charsPerRow);
+			int bitmapWidth = size.Width * charsPerRow;
+			int bitmapHeight = (maxCodePoint - minCodePoint) * size.Height / charsPerRow;
+			int lostRows = minCodePoint / charsPerRow;
 
-			for (int i = 0; i < maxCodePoint; i++)
+			Bitmap bm = new Bitmap(bitmapWidth, bitmapHeight);
+
+			for (int i = minCodePoint; i < maxCodePoint + 1; i++)
 			{
 				int xLoc = (i % charsPerRow) * size.Width;
-				int yLoc = (i / charsPerRow) * size.Height;
+				int yLoc = ((i / charsPerRow) - lostRows) * size.Height;
 
 				Rectangle rect = new Rectangle(xLoc, yLoc, size.Width, size.Height);
 
