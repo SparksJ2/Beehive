@@ -31,6 +31,8 @@ add a stopwatch for how long the current 'frame' took
 
 always use Dir rather than adding groups of dimensions manually
 
+find a RichTextBox substitute if possible
+
 low priority:
 ``````````````
 config file settings
