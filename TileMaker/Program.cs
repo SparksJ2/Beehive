@@ -15,19 +15,20 @@ namespace ResourcesTest
 		private static void Main()
 		{
 			int maxCodePoint = 0x3200; // 0x10ffff
+			int minCodePoint = 0;
 			Size size = new Size(12, 15); // as (width, height)
 			int charsPerLine = 64;
 
 			string fontString = "Symbola";
 			int em = 11;
-			MakeTileFile(maxCodePoint, size, charsPerLine, fontString, em);
+			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em);
 
 			fontString = "Microsoft Sans Serif";
 			em = 11;
-			MakeTileFile(maxCodePoint, size, charsPerLine, fontString, em);
+			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em);
 		}
 
-		private static void MakeTileFile(int maxCodePoint, Size size, int charsPerLine, string fontString, int em)
+		private static void MakeTileFile(int minCodePoint, int maxCodePoint, Size size, int charsPerLine, string fontString, int em)
 		{
 			Font useFont = new Font(fontString, em);
 			if (useFont.Name != fontString)
@@ -41,11 +42,11 @@ namespace ResourcesTest
 			string filename = spacelessName + "-" + em +
 				"pt-" + size.Width + "x" + size.Height + "px";
 
-			Bitmap bm = CreateFontMap(maxCodePoint, size, charsPerLine, useFont);
+			Bitmap bm = CreateFontMap(minCodePoint, maxCodePoint, size, charsPerLine, useFont);
 			bm.Save("..\\..\\..\\Beehive\\Resources\\" + filename + ".png"); // type based off extension
 		}
 
-		private static Bitmap CreateFontMap(int maxCodePoint, Size size, int charsPerRow, Font style)
+		private static Bitmap CreateFontMap(int minCodePoint, int maxCodePoint, Size size, int charsPerRow, Font style)
 		{
 			Bitmap bm = new Bitmap(size.Width * charsPerRow, maxCodePoint * size.Height / charsPerRow);
 
