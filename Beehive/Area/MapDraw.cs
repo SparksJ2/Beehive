@@ -66,6 +66,8 @@ namespace Beehive
 				}
 			}
 
+			// todo alpha isn't working correctly due to flow being placed over the furniture.
+			AddCharTile(bmp, 0, 0, "⛤", 0);
 			AddCharTile(bmp, Refs.p.loc.X, Refs.p.loc.Y, "♂", 0);
 			AddCharTile(bmp, Refs.c.loc.X, Refs.c.loc.Y, "☿", 0);
 
@@ -106,17 +108,20 @@ namespace Beehive
 
 			// start bed
 			// set up bed rectangle
-			using (var gBed = Graphics.FromImage(bmp))
+			if (s == "⛤")
 			{
-				gBed.CompositingMode = CompositingMode.SourceOver;
-				int bedx1 = (30 * multX) + edgeX;
-				int bedy1 = (11 * multY) + edgeY;
-				int bedx2 = multX * 3;
-				int bedy2 = multY * 3;
-				RectangleF tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
-				Bitmap bedBitmap = GetTileBitmap("⛤", tripSize);
-				gBed.DrawImage(bedBitmap, bedx1, bedy1);
-			}// end bed
+				using (var gBed = Graphics.FromImage(bmp))
+				{
+					
+					int bedx1 = (30 * multX) + edgeX;
+					int bedy1 = (11 * multY) + edgeY;
+					int bedx2 = multX * 3;
+					int bedy2 = multY * 3;
+					RectangleF tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
+					Bitmap bedBitmap = GetTileBitmap("⛤", tripSize);
+					gBed.DrawImage(bedBitmap, bedx1, bedy1);
+				}// end bed
+			}
 
 			// end background
 
@@ -128,7 +133,7 @@ namespace Beehive
 				// paste symbol onto map
 				using (var gChar = Graphics.FromImage(bmp))
 				{
-					gChar.CompositingMode = CompositingMode.SourceOver;
+				 
 					gChar.DrawImage(singleTileImage, x1, y1);
 				}
 			}
