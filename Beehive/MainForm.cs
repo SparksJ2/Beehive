@@ -121,7 +121,7 @@ namespace Beehive
 				int max = annLines.Count;
 				for (int i = 0; i < max; i++)
 				{
-					//// putting the color change first fixes exception in Mono
+					//// putting the color change first fixes exception in Mono... sometimes
 					////    ¯\_(ツ)_/¯
 					//feedbackBox.SelectionColor = annLines[i].color;
 					//feedbackBox.SelectionAlignment = annLines[i].align;
@@ -140,15 +140,29 @@ namespace Beehive
 			}
 		}
 
+		private bool alreadyToldYou = false;
+
 		public void FancyAppendText(RichTextBox box, string text, Color color, HorizontalAlignment align)
 		{
 			box.SelectionStart = box.TextLength;
 			box.SelectionLength = 0;
 
-			box.SelectionColor = color;
+			try { box.SelectionColor = color; }
+			catch (Exception ex)
+			{
+				// Mono just won't play nice with RichTextBox colors so...
+				////    ¯\_(ツ)_/¯
+				if (!alreadyToldYou) { Console.WriteLine("SelectionColor fail: " + ex.Message); alreadyToldYou = true; }
+			}
+
 			box.SelectionAlignment = align;
 			box.AppendText(text);
-			box.SelectionColor = box.ForeColor;
+
+			try { box.SelectionColor = box.ForeColor; }
+			catch (Exception ex)
+			{
+				if (!alreadyToldYou) { Console.WriteLine("SelectionColor fail: " + ex.Message); alreadyToldYou = true; }
+			}
 		}
 	}
 }
