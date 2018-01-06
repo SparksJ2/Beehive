@@ -17,14 +17,24 @@ namespace Beehive
 	{
 		private Bitmap SansSerifBitmapFont;
 		private Bitmap SymbolaBitmapFont;
+		private Bitmap SymbolaBitmapFontMiscSyms;
 
 		private string nectarChar = "・"; // katakana middle dot
 										 //private string nectarChar = "•"; // list bullet point
+
+		private int multX = 12;
+		private int multY = 15;
+		private int edgeX = 10;
+		private int edgeY = 12;
+
+		private Size stdSize = new Size(12, 15);
+		private Size tripSize = new Size(12 * 3, 15 * 3);
 
 		private void LoadBitmapFonts()
 		{
 			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
 			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
+			SymbolaBitmapFontMiscSyms = new Bitmap(Properties.Resources.Symbola_20pt_36x45px_MiscSyms);
 		}
 
 		public Bitmap AsBitmap()
@@ -63,11 +73,6 @@ namespace Beehive
 			return bmp;
 		}
 
-		private int multX = 12;
-		private int multY = 15;
-		private int edgeX = 10;
-		private int edgeY = 12;
-
 		public void AddCharTile(Bitmap bmp, int x, int y, string s, int flow)
 		{
 			int x1 = (x * multX) + edgeX;
@@ -84,55 +89,76 @@ namespace Beehive
 			{
 				int flowInt = t.flow * 12;
 				if (flowInt > 96) flowInt = 96;
-				Graphics gFlow = Graphics.FromImage(bmp);
-				gFlow.FillRectangle(new SolidBrush(Color.FromArgb(12, flowInt, 12)), tileRect);
-				gFlow.Flush();
+				using (var gFlow = Graphics.FromImage(bmp))
+				{
+					gFlow.FillRectangle(new SolidBrush(Color.FromArgb(12, flowInt, 12)), tileRect);
+				}
 
 				// add   nectar drops
 				if (t.Cnectar)
 				{
-					Graphics gNectar = Graphics.FromImage(bmp);
-					gNectar.DrawImage(GetTileBitmap(nectarChar), x1, y1);
-					gNectar.Flush();
+					using (var gNectar = Graphics.FromImage(bmp))
+					{
+						gNectar.DrawImage(GetTileBitmap(nectarChar, stdSize), x1, y1);
+					}
 				}
 			}
+
+			// start bed
+			// set up bed rectangle
+			using (var gBed = Graphics.FromImage(bmp))
+			{
+				int bedx1 = (30 * multX) + edgeX;
+				int bedy1 = (11 * multY) + edgeY;
+				int bedx2 = multX * 3;
+				int bedy2 = multY * 3;
+				RectangleF tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
+				Bitmap bedBitmap = GetTileBitmap("⛤", tripSize);
+				gBed.DrawImage(bedBitmap, bedx1, bedy1);
+			}// end bed
+
 			// end background
 
 			// begin foreground
 			if (!t.clear || s == "♂" || s == "☿") // todo find a better way
 			{
-				Bitmap singleTileImage = GetTileBitmap(s);
+				Bitmap singleTileImage = GetTileBitmap(s, stdSize);
 
 				// paste symbol onto map
-				Graphics gChar = Graphics.FromImage(bmp);
-				gChar.DrawImage(singleTileImage, x1, y1);
-
-				// clean up
-				gChar.Flush();
-				//singleTileImage.Dispose(); // no! we'll re-use this bitmap from the cache
+				using (var gChar = Graphics.FromImage(bmp))
+				{
+					gChar.DrawImage(singleTileImage, x1, y1);
+				}
 			}
 		}
 
-		private Dictionary<string, Bitmap> TileBitmapCache;
+		public struct TileDesc // for TileBitmapCache only
+		{
+			private string s; private Size z;
 
-		private Bitmap GetTileBitmap(string s)
+			public TileDesc(string sIn, Size zIn)
+			{
+				s = sIn; z = zIn;
+			}
+		}
+
+		private Dictionary<TileDesc, Bitmap> TileBitmapCache;
+
+		private Bitmap GetTileBitmap(string s, Size z)
 		{
 			if (TileBitmapCache == null)
 			{
-				TileBitmapCache = new Dictionary<string, Bitmap>(); // todo add comparer
+				TileBitmapCache = new Dictionary<TileDesc, Bitmap>(); // todo add comparer
 			}
 
-			if (TileBitmapCache.ContainsKey(s))
+			var key = new TileDesc(s, z);
+
+			if (TileBitmapCache.ContainsKey(key))
 			{
-				return TileBitmapCache[s];
+				return TileBitmapCache[key];
 			}
 			else
 			{
-				// find our symbol in this tileset
-				int codePoint = s[0];
-				int codeX = codePoint % 64;
-				int codeY = codePoint / 64;
-
 				// because symbola gets nicer planet symbols
 				Bitmap useBitmapFont = SansSerifBitmapFont;
 				Color useColour = Color.White;
@@ -149,18 +175,41 @@ namespace Beehive
 					useColour = Refs.c.myColor;
 				}
 
-				// we'll cut from this rectangle
-				Rectangle cloneRect = new Rectangle(codeX * multX, codeY * multY, multX, multY);
+				int offset = 0;
+				if (s == "⛤")
+				{
+					useBitmapFont = SymbolaBitmapFontMiscSyms;
+					useColour = Color.Purple;
+					offset = 0x2600;
+				}
 
-				// extract this symbols as a tiny bitmap
-				System.Drawing.Imaging.PixelFormat format = useBitmapFont.PixelFormat;
-				Bitmap singleTileImage = useBitmapFont.Clone(cloneRect, format);
+				// find our symbol in this tileset
+				int codePoint = s[0] - offset;
+				int codeX = codePoint % 64;
+				int codeY = codePoint / 64;
+
+				// we'll cut from this rectangle
+				Rectangle cloneRect = new Rectangle(
+					codeX * z.Width, codeY * z.Height,
+					z.Width - 1, z.Height - 1);
+
+				// extract this symbols as a tiny bitmap, old style
+				PixelFormat format = useBitmapFont.PixelFormat;
+				var singleTileImage = useBitmapFont.Clone(cloneRect, format);
+
+				//// extract this symbols as a tiny bitmap, new style
+				//Bitmap singleTileImage = new Bitmap(z.Width, z.Height);
+				//using (var g = Graphics.FromImage(singleTileImage))
+				//{
+				//	var singleTileRect = new Rectangle(0, 0, z.Width, z.Height);
+				//	g.DrawImage(useBitmapFont, singleTileRect, cloneRect, GraphicsUnit.Pixel);
+				//}
 
 				// change color
 				singleTileImage = ColorTint(singleTileImage, useColour);
 
 				// we cache these bitmaps
-				TileBitmapCache.Add(s, singleTileImage);
+				TileBitmapCache.Add(key, singleTileImage);
 				return singleTileImage;
 			}
 		}
