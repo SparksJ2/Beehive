@@ -115,8 +115,8 @@ namespace Beehive
 				annLines.Add(new AnnounceLine(say, align, col));
 				if (annLines.Count > 6) annLines.RemoveAt(0);
 
-				feedbackBox.Text = "";
-				//feedbackBox.Clear();
+				//feedbackBox.Text = "";
+				feedbackBox.Clear();
 				 
 				int max = annLines.Count;
 				for (int i = 0; i < max; i++)
