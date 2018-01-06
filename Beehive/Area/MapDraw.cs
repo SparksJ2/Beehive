@@ -108,6 +108,7 @@ namespace Beehive
 			// set up bed rectangle
 			using (var gBed = Graphics.FromImage(bmp))
 			{
+				gBed.CompositingMode = CompositingMode.SourceOver;
 				int bedx1 = (30 * multX) + edgeX;
 				int bedy1 = (11 * multY) + edgeY;
 				int bedx2 = multX * 3;
@@ -127,6 +128,7 @@ namespace Beehive
 				// paste symbol onto map
 				using (var gChar = Graphics.FromImage(bmp))
 				{
+					gChar.CompositingMode = CompositingMode.SourceOver;
 					gChar.DrawImage(singleTileImage, x1, y1);
 				}
 			}
@@ -175,16 +177,16 @@ namespace Beehive
 					useColour = Refs.c.myColor;
 				}
 
-				int offset = 0;
+				int FontCodePointOffset = 0;
 				if (s == "⛤")
 				{
 					useBitmapFont = SymbolaBitmapFontMiscSyms;
 					useColour = Color.Purple;
-					offset = 0x2600;
+					FontCodePointOffset = 0x2600;
 				}
 
 				// find our symbol in this tileset
-				int codePoint = s[0] - offset;
+				int codePoint = s[0] - FontCodePointOffset;
 				int codeX = codePoint % 64;
 				int codeY = codePoint / 64;
 
@@ -198,9 +200,11 @@ namespace Beehive
 				var singleTileImage = useBitmapFont.Clone(cloneRect, format);
 
 				//// extract this symbols as a tiny bitmap, new style
+				//// bit blurry though...
 				//Bitmap singleTileImage = new Bitmap(z.Width, z.Height);
 				//using (var g = Graphics.FromImage(singleTileImage))
 				//{
+				//	g.InterpolationMode = InterpolationMode.Default;
 				//	var singleTileRect = new Rectangle(0, 0, z.Width, z.Height);
 				//	g.DrawImage(useBitmapFont, singleTileRect, cloneRect, GraphicsUnit.Pixel);
 				//}
