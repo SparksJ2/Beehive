@@ -117,18 +117,19 @@ namespace Beehive
 
 				//feedbackBox.Text = "";
 				feedbackBox.Clear();
-				 
+
 				int max = annLines.Count;
 				for (int i = 0; i < max; i++)
 				{
-					// putting the color change first fixes exception in Mono
-					//    ¯\_(ツ)_/¯
-					feedbackBox.SelectionColor = annLines[i].color;
-					feedbackBox.SelectionAlignment = annLines[i].align;
+					//// putting the color change first fixes exception in Mono
+					////    ¯\_(ツ)_/¯
+					//feedbackBox.SelectionColor = annLines[i].color;
+					//feedbackBox.SelectionAlignment = annLines[i].align;
 
-					// usage as in https://msdn.microsoft.com/en-us/library/system.windows.forms.richtextbox.selectionalignment(v=vs.110).aspx
-					// so it really should work
-					feedbackBox.SelectedText = (annLines[i].say + "\n");
+					//// usage as in https://msdn.microsoft.com/en-us/library/system.windows.forms.richtextbox.selectionalignment(v=vs.110).aspx
+					//// so it really should work
+					//feedbackBox.SelectedText = (annLines[i].say + "\n");
+					FancyAppendText(feedbackBox, annLines[i].say + "\n", annLines[i].color, annLines[i].align);
 				}
 				Refresh();
 			}
@@ -137,6 +138,17 @@ namespace Beehive
 				Console.WriteLine("Caught exception " + ex.ToString() +
 					" with message " + ex.Message);
 			}
+		}
+
+		public void FancyAppendText(RichTextBox box, string text, Color color, HorizontalAlignment align)
+		{
+			box.SelectionStart = box.TextLength;
+			box.SelectionLength = 0;
+
+			box.SelectionColor = color;
+			box.SelectionAlignment = align;
+			box.AppendText(text);
+			box.SelectionColor = box.ForeColor;
 		}
 	}
 }
