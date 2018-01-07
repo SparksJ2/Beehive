@@ -62,10 +62,11 @@ namespace Beehive
 			MessageBox.Show(
 				"In your vast bed, tucked deep in a dreamworld, far outside time and space,\n" +
 				"you play in eternal bliss with your horned lover.\n\n" +
-				"But she has escaped her pentagram... catch her and give her a good spanking!\n\n" +
+				"But she has escaped her pentagram...\n" +
+				"\tcatch her and bring her back home for a good spanking!\n\n" +
 				"Keys:\n" +
 				"\tWASD or arrow keys to move.\n" +
-				"\tShift+Direction to pick up or put down pillows.\n" +
+				"\tShift+Direction to pick up or put down various things.\n" +
 				"\tCtrl+Direction to throw pillows!\n");
 
 			Player p = Refs.p;
