@@ -121,15 +121,8 @@ namespace Beehive
 				int max = annLines.Count;
 				for (int i = 0; i < max; i++)
 				{
-					//// putting the color change first fixes exception in Mono... sometimes
-					////    ¯\_(ツ)_/¯
-					//feedbackBox.SelectionColor = annLines[i].color;
-					//feedbackBox.SelectionAlignment = annLines[i].align;
-
-					//// usage as in https://msdn.microsoft.com/en-us/library/system.windows.forms.richtextbox.selectionalignment(v=vs.110).aspx
-					//// so it really should work
-					//feedbackBox.SelectedText = (annLines[i].say + "\n");
-					FancyAppendText(feedbackBox, annLines[i].say + "\n", annLines[i].color, annLines[i].align);
+					feedbackBox.FancyAppendText(annLines[i].say + "\n",
+						annLines[i].color, annLines[i].align);
 				}
 				Refresh();
 			}
@@ -137,31 +130,6 @@ namespace Beehive
 			{
 				Console.WriteLine("Caught exception " + ex.ToString() +
 					" with message " + ex.Message);
-			}
-		}
-
-		private bool alreadyToldYou = false;
-
-		public void FancyAppendText(RichTextBox box, string text, Color color, HorizontalAlignment align)
-		{
-			box.SelectionStart = box.TextLength;
-			box.SelectionLength = 0;
-
-			try { box.SelectionColor = color; }
-			catch (Exception ex)
-			{
-				// Mono just won't play nice with RichTextBox colors so...
-				////    ¯\_(ツ)_/¯
-				if (!alreadyToldYou) { Console.WriteLine("SelectionColor fail: " + ex.Message); alreadyToldYou = true; }
-			}
-
-			box.SelectionAlignment = align;
-			box.AppendText(text);
-
-			try { box.SelectionColor = box.ForeColor; }
-			catch (Exception ex)
-			{
-				if (!alreadyToldYou) { Console.WriteLine("SelectionColor fail: " + ex.Message); alreadyToldYou = true; }
 			}
 		}
 	}
