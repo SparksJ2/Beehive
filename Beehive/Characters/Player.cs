@@ -221,7 +221,7 @@ namespace Beehive
 			UpdateInventory();
 		}
 
-		private void UpdateInventory()
+		public void UpdateInventory()
 		{
 			Refs.mf.miniInventory.Text =
 				"pillows: " + heldPillows + "\n" +

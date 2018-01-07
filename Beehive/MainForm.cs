@@ -74,6 +74,8 @@ namespace Beehive
 			Announce("You'll never catch meeee!", c.myAlign, c.myColor);
 			Announce("We'll see about that!", p.myAlign, p.myColor);
 			Announce("Whee! *giggle*", c.myAlign, c.myColor);
+
+			Refs.p.UpdateInventory();
 		}
 
 		public void UpdateMap()
