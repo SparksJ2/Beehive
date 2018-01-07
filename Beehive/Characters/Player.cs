@@ -12,6 +12,8 @@ namespace Beehive
 	public class Player : Mobile
 	{
 		public int heldPillows = 0;
+		public int heldCubi = 0;
+
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
 		public Player(string name, Color useColor) : base(name, useColor)
@@ -27,10 +29,10 @@ namespace Beehive
 				timepass = false;
 				switch (e.KeyCode)
 				{
-					case Keys.Down: case Keys.S: PlacePillowSouth(); break;
-					case Keys.D: case Keys.Right: PlacePillowEast(); break;
-					case Keys.Up: case Keys.W: PlacePillowNorth(); break;
-					case Keys.Left: case Keys.A: PlacePillowWest(); break;
+					case Keys.Down: case Keys.S: PlaceItemSouth(); break;
+					case Keys.D: case Keys.Right: PlaceItemEast(); break;
+					case Keys.Up: case Keys.W: PlaceItemNorth(); break;
+					case Keys.Left: case Keys.A: PlaceItemWest(); break;
 					case Keys.Space: break; // allow waiting
 					default: timepass = false; break;
 				}
@@ -184,53 +186,70 @@ namespace Beehive
 			if (t.clear) ThrowPillow(Dir.South);
 		}
 
-		private void ToggleClearTile(Tile t)
+		private void PlaceItemOnTile(Tile t)
 		{
 			if (Refs.m.EdgeLoc(t.loc)) return;
 
-			if (t.clear && heldPillows > 0)
+			var myCubi = Refs.c;
+			if (heldCubi > 0 && t.clear) // put down lover
+			{
+				heldCubi = 0;
+				myCubi.loc = t.loc;
+				myCubi.beingCarried = false;
+				Refs.mf.Announce("You're free to go... if you can.", myAlign, myColor);
+			}
+			else if (heldCubi == 0 && t.loc == myCubi.loc) // pick up lover
+			{
+				heldCubi = 1;
+				myCubi.loc = this.loc;
+				myCubi.beingCarried = true;				
+				Refs.mf.Announce("Gotcha!", myAlign, myColor);
+				Refs.mf.Announce("EEEK!!", myCubi.myAlign, myCubi.myColor);
+			}
+			else if (t.clear && heldPillows > 0)
 			{
 				t.clear = false;
 				heldPillows--;
-				UpdateInventory();
 				Refs.mf.Announce("You place the pillow to make a wall. You have " + heldPillows + " left.", myAlign, myColor);
 			}
 			else if (!t.clear)
 			{
 				t.clear = true;
 				heldPillows++;
-				UpdateInventory();
 				Refs.mf.Announce("You pick up a pillow. You now have " + heldPillows + ".", myAlign, myColor);
 			}
+			UpdateInventory();
 		}
 
 		private void UpdateInventory()
 		{
-			Refs.mf.miniInventory.Text = "pillows: " + heldPillows;
+			Refs.mf.miniInventory.Text =
+				"pillows: " + heldPillows + "\n" +
+				"succubi: " + heldCubi;
 		}
 
-		private void PlacePillowNorth()
+		private void PlaceItemNorth()
 		{
 			Tile t = Refs.m.TileByLoc(loc).OneNorth();
-			ToggleClearTile(t);
+			PlaceItemOnTile(t);
 		}
 
-		private void PlacePillowEast()
+		private void PlaceItemEast()
 		{
 			Tile t = Refs.m.TileByLoc(loc).OneEast();
-			ToggleClearTile(t);
+			PlaceItemOnTile(t);
 		}
 
-		private void PlacePillowSouth()
+		private void PlaceItemSouth()
 		{
 			Tile t = Refs.m.TileByLoc(loc).OneSouth();
-			ToggleClearTile(t);
+			PlaceItemOnTile(t);
 		}
 
-		private void PlacePillowWest()
+		private void PlaceItemWest()
 		{
 			Tile t = Refs.m.TileByLoc(loc).OneWest();
-			ToggleClearTile(t);
+			PlaceItemOnTile(t);
 		}
 
 		private void RunNorth()

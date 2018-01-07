@@ -92,9 +92,6 @@ namespace Beehive
 			new Flow().RemakeFlow(Refs.p.loc);
 			if (timePass)
 			{
-				// check win condition first
-				if (Refs.m.Touching(Refs.p, Refs.c)) { MessageBox.Show("Winners you are!"); }
-
 				// run ai
 				Refs.c.AiMove();
 			}

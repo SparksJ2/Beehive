@@ -22,6 +22,7 @@ namespace Beehive
 
 		private int spanked = 0;
 		private int horny = 0;
+		public bool beingCarried = false;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Right;
 
@@ -52,49 +53,74 @@ namespace Beehive
 				horny--;
 			}
 
+			var noMove = false;
 			if (spanked > 0)
 			{
 				spanked--;
 				// pain ==> pleasure
 				horny++;
+				noMove = true; // too oww to move.
 			}
-			else
+
+			if (beingCarried)
 			{
-				var maybe = new HashSet<Tile>(new TileComp());
+				loc = Refs.p.loc;
+				return;
+			}
+			else if (OnBed())
+			{
+				return;
+			}
+			else if (!noMove)
+			{
+				AIPathing();
+			}
+		}
 
-				maybe.Add(here.OneEast());
-				maybe.Add(here.OneSouth());
-				maybe.Add(here.OneNorth());
-				maybe.Add(here.OneWest());
+		private bool OnBed()
+		{
+			// todo fix hardcoded location
+			return (loc.X == 31 && loc.Y == 12);
+		}
 
-				// filter not clear maybes
-				maybe = maybe.Where(t => t.clear).ToTileHashSet();
+		private void AIPathing()
+		{
+			Tile here = Refs.m.TileByLoc(loc);
 
-				// don't move directly onto player
-				maybe = maybe.Where(t => t.loc != Refs.p.loc).ToTileHashSet();
+			var maybe = new HashSet<Tile>(new TileComp());
 
-				// pick a possibility and go there.
-				if (maybe.Count > 0)
+			maybe.Add(here.OneEast());
+			maybe.Add(here.OneSouth());
+			maybe.Add(here.OneNorth());
+			maybe.Add(here.OneWest());
+
+			// filter not clear maybes
+			maybe = maybe.Where(t => t.clear).ToTileHashSet();
+
+			// don't move directly onto player
+			maybe = maybe.Where(t => t.loc != Refs.p.loc).ToTileHashSet();
+
+			// pick a possibility and go there.
+			if (maybe.Count > 0)
+			{
+				int bestflow = maybe.Min(t => t.flow); // linq ftw
+
+				// is the tile that we're currently on already one of the best tiles?
+				if (here.flow != bestflow)
 				{
-					int bestflow = maybe.Min(t => t.flow); // linq ftw
+					// make a list of best tiles
+					HashSet<Tile> bests = maybe.Where(t => t.flow == bestflow).ToTileHashSet();
 
-					// is the tile that we're currently on already one of the best tiles?
-					if (here.flow != bestflow)
-					{
-						// make a list of best tiles
-						HashSet<Tile> bests = maybe.Where(t => t.flow == bestflow).ToTileHashSet();
-
-						// choose randomly between best tiles
-						// todo there is a method for rng tiles now
-						Tile newplace = bests.ElementAt(rng.Next(bests.Count));
-						loc = newplace.loc;
-					}
-					else
-					{
-						// not moving is a viable option
-						// don't vibrate between good tiles
-						//    (at least not in this way)
-					}
+					// choose randomly between best tiles
+					// todo there is a method for rng tiles now
+					Tile newplace = bests.ElementAt(rng.Next(bests.Count));
+					loc = newplace.loc;
+				}
+				else
+				{
+					// not moving is a viable option
+					// don't vibrate between good tiles
+					//    (at least not in this way)
 				}
 			}
 		}
