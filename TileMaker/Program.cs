@@ -21,19 +21,19 @@ namespace ResourcesTest
 			string fontString = "Symbola";
 			int em = 11;
 			string description = "";
-			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
+			//MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
 
 			fontString = "Microsoft Sans Serif";
 			em = 11;
-			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
+			//MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
 
 			minCodePoint = 0x2600;
 			maxCodePoint = 0x26ff; // 0x10ffff
 			size = new Size(12*3, 15*3); // as (width, height)
-			charsPerLine = 16;
+			charsPerLine = 64;
 			fontString = "Symbola";
 			description = "MiscSyms";
-			em = 20;
+			em = 28;
 			MakeTileFile(minCodePoint, maxCodePoint, size, charsPerLine, fontString, em, description);
 
 			//minCodePoint = 0x2500;

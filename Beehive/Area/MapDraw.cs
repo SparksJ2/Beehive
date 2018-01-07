@@ -34,7 +34,7 @@ namespace Beehive
 		{
 			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
 			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
-			SymbolaBitmapFontMiscSyms = new Bitmap(Properties.Resources.Symbola_20pt_36x45px_MiscSyms);
+			SymbolaBitmapFontMiscSyms = new Bitmap(Properties.Resources.Symbola_28pt_36x45px_MiscSyms);
 		}
 
 		public Bitmap AsBitmap()

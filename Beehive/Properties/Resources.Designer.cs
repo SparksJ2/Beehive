@@ -101,9 +101,9 @@ namespace Beehive.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Symbola_20pt_36x45px_MiscSyms {
+        internal static System.Drawing.Bitmap Symbola_28pt_36x45px_MiscSyms {
             get {
-                object obj = ResourceManager.GetObject("Symbola_20pt_36x45px_MiscSyms", resourceCulture);
+                object obj = ResourceManager.GetObject("Symbola_28pt_36x45px_MiscSyms", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

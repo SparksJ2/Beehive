@@ -114,7 +114,7 @@
     <Content Include="references.txt" />
     <None Include="Resources\MicrosoftSansSerif-11pt-12x15px.png" />
     <None Include="Resources\Symbola-11pt-12x15px.png" />
-    <Content Include="Resources\Symbola-20pt-36x45px-MiscSyms.png" />
+    <None Include="Resources\Symbola-28pt-36x45px-MiscSyms.png" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <ItemGroup />

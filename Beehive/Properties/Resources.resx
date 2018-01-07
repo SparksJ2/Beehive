@@ -130,7 +130,7 @@
   <data name="Symbola_11pt_12x15px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Symbola-11pt-12x15px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Symbola_20pt_36x45px_MiscSyms" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Symbola-20pt-36x45px-MiscSyms.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Symbola_28pt_36x45px_MiscSyms" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Symbola-28pt-36x45px-MiscSyms.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
