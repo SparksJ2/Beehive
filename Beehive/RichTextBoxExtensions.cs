@@ -29,7 +29,7 @@ namespace Beehive
 			{
 				// Mono frequently throws an exception on setting colors in
 				//    RichTextBoxs, but does it anyway, so here is the workaround.
-				box.SelectionColor = box.ForeColor;
+				box.SelectionColor = color;
 			}
 			catch (Exception ex)
 			{
