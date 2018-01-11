@@ -59,8 +59,12 @@ namespace Beehive
 
 			// specials and mobiles
 			AddCharSpecial(bmp, "⛤");
-			AddCharMobile(bmp, Refs.p, "♂");
-			AddCharMobile(bmp, Refs.c, "☿");
+
+			AddCharMobile(bmp, Refs.p);
+			foreach (Cubi c in Refs.h.roster)
+			{
+				AddCharMobile(bmp, c);
+			}
 
 			Console.WriteLine("Finished map drawing in " + sw.ElapsedMilliseconds + "ms");
 			return bmp;
@@ -88,13 +92,13 @@ namespace Beehive
 				{
 					using (var gNectar = Graphics.FromImage(bmp))
 					{
-						gNectar.DrawImage(GetTileBitmap(nectarChar, stdSize), x1, y1);
+						gNectar.DrawImage(GetTileBitmap(nectarChar, stdSize, t.nectarCol), x1, y1);
 					}
 				}
 			}
 			else // or add walls
 			{
-				Bitmap singleTileImage = GetTileBitmap(t.gly, stdSize);
+				Bitmap singleTileImage = GetTileBitmapOld(t.gly, stdSize);
 				using (var gChar = Graphics.FromImage(bmp))
 				{
 					gChar.DrawImage(singleTileImage, x1, y1);
@@ -113,21 +117,30 @@ namespace Beehive
 					int bedx2 = multX * 3;
 					int bedy2 = multY * 3;
 					RectangleF tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
-					Bitmap bedBitmap = GetTileBitmap("⛤", tripSize);
+					Bitmap bedBitmap = GetTileBitmapOld("⛤", tripSize);
+					gBed.DrawImage(bedBitmap, bedx1, bedy1);
+
+					bedx1 = (33 * multX) + edgeX;
+					tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
+					gBed.DrawImage(bedBitmap, bedx1, bedy1);
+
+					bedx1 = (36 * multX) + edgeX;
+					tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
 					gBed.DrawImage(bedBitmap, bedx1, bedy1);
 				}
 			}
 		}
 
-		public void AddCharMobile(Bitmap bmp, Mobile m, string s)
+		public void AddCharMobile(Bitmap bmp, Mobile m)
 		{
+			string s = m.glyph;
 			int x1 = (m.loc.X * multX) + edgeX;
 			int y1 = (m.loc.Y * multY) + edgeY;
 
 			// begin foreground
 			if (s == "♂" || s == "☿")
 			{
-				Bitmap singleTileImage = GetTileBitmap(s, stdSize);
+				Bitmap singleTileImage = GetTileBitmap(s, stdSize, m.myColor);
 
 				// paste symbol onto map
 				using (var gChar = Graphics.FromImage(bmp))
@@ -139,24 +152,32 @@ namespace Beehive
 
 		public struct TileDesc // for TileBitmapCache only
 		{
-			private string s; private Size z;
+			private string s;
+			private Size z;
+			private Color c;
 
-			public TileDesc(string sIn, Size zIn)
+			public TileDesc(string sIn, Size zIn, Color colIn)
 			{
-				s = sIn; z = zIn;
+				s = sIn; z = zIn; c = colIn;
 			}
 		}
 
 		private Dictionary<TileDesc, Bitmap> TileBitmapCache;
 
-		private Bitmap GetTileBitmap(string s, Size z)
+		private Bitmap GetTileBitmapOld(string s, Size z)
+		{
+			// todo legacy
+			return GetTileBitmap(s, z, Color.Black);
+		}
+
+		private Bitmap GetTileBitmap(string s, Size z, Color c)
 		{
 			if (TileBitmapCache == null)
 			{
 				TileBitmapCache = new Dictionary<TileDesc, Bitmap>(); // todo add comparer
 			}
 
-			var key = new TileDesc(s, z);
+			var key = new TileDesc(s, z, c);
 
 			if (TileBitmapCache.ContainsKey(key))
 			{
@@ -171,13 +192,13 @@ namespace Beehive
 				if (s == "♂")
 				{
 					useBitmapFont = SymbolaBitmapFont;
-					useColour = Refs.p.myColor;
+					useColour = c;
 				}
 
 				if (s == "☿" || s == nectarChar)
 				{
 					useBitmapFont = SymbolaBitmapFont;
-					useColour = Refs.c.myColor;
+					useColour = c;
 				}
 
 				int FontCodePointOffset = 0;

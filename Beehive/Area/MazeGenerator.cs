@@ -32,7 +32,7 @@ namespace Beehive
 
 			// set up central area
 			var homeStartClear = new Loc(29, 10);
-			var homeEndClear = new Loc(36, 14);
+			var homeEndClear = new Loc(39, 14);
 			NewMap.MakeClearArea(homeStartClear, homeEndClear);
 
 			var homeStartWall = new Loc(homeStartClear.X - 1, homeStartClear.Y - 1);

@@ -12,12 +12,13 @@ namespace Beehive
 	public class Player : Mobile
 	{
 		public int heldPillows = 0;
-		public int heldCubi = 0;
+		public int heldCubiId = 0;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
 		public Player(string name, Color useColor) : base(name, useColor)
 		{
+			glyph = "☿";
 		}
 
 		public bool HandlePlayerInput(PreviewKeyDownEventArgs e)
@@ -84,9 +85,12 @@ namespace Beehive
 			string moveClear = CheckClearForThrown(vector, activeTile);
 			if (moveClear == "spank")
 			{
+				Tile victimTile = Refs.m.TileByLoc(Loc.AddPts(activeTile.loc, vector));
+				Cubi victim = Refs.m.CubiAt(victimTile.loc);
+
 				Refs.mf.Announce("POINT BLANK PILLOW SPANK!", myAlign, myColor);
-				Refs.c.Spank(5);
-				Refs.mf.Announce("oww! *moan*", Refs.c.myAlign, Refs.c.myColor);
+				victim.Spank(5);
+				Refs.mf.Announce("oww! *moan*", victim.myAlign, victim.myColor);
 			}
 
 			while (moveClear == "clear")
@@ -101,7 +105,9 @@ namespace Beehive
 				if (moveClear == "spank")
 				{
 					// todo only one possible target?
-					Tile victimTile = Refs.m.TileByLoc(Refs.c.loc);
+					Tile victimTile = Refs.m.TileByLoc(Loc.AddPts(activeTile.loc, vector));
+					Cubi victim = Refs.m.CubiAt(victimTile.loc);
+
 					HashSet<Tile> escapes = new HashSet<Tile>(new TileComp());
 
 					if (IsVertical(vector))
@@ -115,14 +121,14 @@ namespace Beehive
 
 					if (escapes.Count > 0)
 					{
-						Refs.c.loc = Tile.RandomFromList(escapes).loc;
-						Refs.mf.Announce("Nyahhh missed me!", Refs.c.myAlign, Refs.c.myColor);
+						victim.loc = Tile.RandomFromList(escapes).loc;
+						Refs.mf.Announce("Nyahhh missed me!", victim.myAlign, victim.myColor);
 						moveClear = "clear";
 					}
 					else
 					{
-						Refs.c.Spank(5);
-						Refs.mf.Announce("Owwwww!", Refs.c.myAlign, Refs.c.myColor);
+						victim.Spank(5);
+						Refs.mf.Announce("Owwwww!", victim.myAlign, victim.myColor);
 					}
 				}
 
@@ -144,7 +150,12 @@ namespace Beehive
 		{
 			Loc newloc = Loc.AddPts(vector, activeTile.loc);
 			if (!Refs.m.TileByLoc(newloc).clear) return "wall";
-			if (Refs.m.TileByLoc(newloc).loc == Refs.c.loc) return "spank";
+
+			foreach (Cubi c in Refs.h.roster)
+			{
+				if (Refs.m.TileByLoc(newloc).loc == c.loc) { return "spank"; }
+			}
+
 			return "clear";
 		}
 
@@ -190,21 +201,25 @@ namespace Beehive
 		{
 			if (Refs.m.EdgeLoc(t.loc)) return;
 
-			var myCubi = Refs.c;
-			if (heldCubi > 0 && t.clear) // put down lover
+			if (heldCubiId > 0 && t.clear) // put down lover
 			{
-				heldCubi = 0;
-				myCubi.loc = t.loc;
-				myCubi.beingCarried = false;
+				Cubi myHeldCubi = Refs.h.GetId(heldCubiId);
+
+				myHeldCubi.loc = t.loc;
+				myHeldCubi.beingCarried = false;
+
+				heldCubiId = 0;
 				Refs.mf.Announce("You're free to go... if you can.", myAlign, myColor);
 			}
-			else if (heldCubi == 0 && t.loc == myCubi.loc) // pick up lover
+			else if (heldCubiId == 0 && Refs.m.ContainsCubi(t.loc)) // pick up lover
 			{
-				heldCubi = 1;
-				myCubi.loc = this.loc;
-				myCubi.beingCarried = true;				
+				Cubi caughtCubi = Refs.m.CubiAt(t.loc);
+				caughtCubi.loc = this.loc;
+				caughtCubi.beingCarried = true;
+				heldCubiId = caughtCubi.IdNo;
+
 				Refs.mf.Announce("Gotcha!", myAlign, myColor);
-				Refs.mf.Announce("EEEK!!", myCubi.myAlign, myCubi.myColor);
+				Refs.mf.Announce("EEEK!!", caughtCubi.myAlign, caughtCubi.myColor);
 			}
 			else if (t.clear && heldPillows > 0)
 			{
@@ -225,7 +240,7 @@ namespace Beehive
 		{
 			Refs.mf.miniInventory.Text =
 				"pillows: " + heldPillows + "\n" +
-				"succubi: " + heldCubi;
+				"succubi: " + heldCubiId;
 		}
 
 		private void PlaceItemNorth()

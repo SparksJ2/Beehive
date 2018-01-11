@@ -63,6 +63,7 @@
     <Compile Include="Area\MapDraw.cs" />
     <Compile Include="Area\Tile.cs" />
     <Compile Include="Area\TileComp.cs" />
+    <Compile Include="Characters\Harem.cs" />
     <Compile Include="Characters\Mobile.cs" />
     <Compile Include="Dir.cs" />
     <Compile Include="HashSetExt.cs" />

@@ -98,6 +98,24 @@ namespace Beehive
 			return TileList().Where(t => t.clear).ToTileHashSet();
 		}
 
+		public Cubi CubiAt(Loc l)
+		{
+			foreach (Cubi c in Refs.h.roster)
+			{
+				if (c.loc == l) return c;
+			}
+			throw new Exception("Looking in the wrong place!");
+		}
+
+		public bool ContainsCubi(Loc l)
+		{
+			foreach (Cubi c in Refs.h.roster)
+			{
+				if (c.loc == l) return true;
+			}
+			return false;
+		}
+
 		public void HealWalls()
 		{
 			foreach (Tile t in tiles)

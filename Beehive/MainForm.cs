@@ -50,8 +50,8 @@ namespace Beehive
 			// generate map
 			Refs.p = new Player("The Protagonist", Color.Cyan);
 			Refs.p.SetXY(32, 12); // todo fix hardcoded numbers
-			Refs.c = new Cubi("Ai'nana", Color.HotPink);
-			Refs.c.SetXY(33, 9);    // todo fix hardcoded numbers
+
+			Refs.h = new Harem();
 
 			Refs.m = new MazeGenerator().Create(65, 25);
 
@@ -61,20 +61,26 @@ namespace Beehive
 
 			MessageBox.Show(
 				"In your vast bed, tucked deep in a dreamworld, far outside time and space,\n" +
-				"you play in eternal bliss with your horned lover.\n\n" +
-				"But she has escaped her pentagram...\n" +
-				"\tcatch her and bring her back home for a good spanking!\n\n" +
+				"you play in eternal bliss with your horned lovers.\n\n" +
+				"But they have escaped their pentagrams...\n" +
+				"\tcatch them and bring them back home for a good spanking!\n\n" +
 				"Keys:\n" +
 				"\tWASD or arrow keys to move.\n" +
 				"\tShift+Direction to pick up or put down various things.\n" +
 				"\tCtrl+Direction to throw pillows!\n");
 
 			Player p = Refs.p;
-			Cubi c = Refs.c;
-			Announce("Welcome to the underworld. Look out, she's getting away!", p.myAlign, p.myColor);
+			Cubi c = Refs.h.roster[0];
+			Announce("Welcome to the underworld. Look out, they're getting away!", p.myAlign, p.myColor);
 			Announce("You'll never catch meeee!", c.myAlign, c.myColor);
 			Announce("We'll see about that!", p.myAlign, p.myColor);
 			Announce("Whee! *giggle*", c.myAlign, c.myColor);
+
+			c = Refs.h.roster[1];
+			Announce("Run, Master! *nyhha!*", c.myAlign, c.myColor);
+
+			c = Refs.h.roster[2];
+			Announce("Chase me Master! *hehe*", c.myAlign, c.myColor);
 
 			Refs.p.UpdateInventory();
 		}
@@ -96,7 +102,10 @@ namespace Beehive
 			if (timePass)
 			{
 				// run ai
-				Refs.c.AiMove();
+				foreach (Cubi c in Refs.h.roster)
+				{
+					c.AiMove();
+				}
 			}
 
 			// update screen

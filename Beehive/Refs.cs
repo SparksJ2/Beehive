@@ -9,7 +9,7 @@ namespace Beehive
 	public class Refs
 	{
 		public static Player p;
-		public static Cubi c;
+		public static Harem h;
 		public static Map m;
 		public static MainForm mf;
 	}

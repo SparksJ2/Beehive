@@ -12,6 +12,7 @@ namespace Beehive
 		public Loc loc;
 		public string name;
 		public Color myColor;
+		public string glyph;
 
 		public Mobile(string nameIn, Color useColor)
 		{

@@ -13,7 +13,10 @@ namespace Beehive
 		public bool clear = false;
 		public string gly = "#";
 		public int flow = 0;
+
 		public bool Cnectar = false;
+		public Color nectarCol;
+
 		public bool noTunnel = false; // only for maze gen
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
@@ -42,9 +45,11 @@ namespace Beehive
 			return ts.Where(t => t.noTunnel == false).ToTileHashSet();
 		}
 
+		public static Random rng;
+
 		public static Tile RandomFromList(HashSet<Tile> tileList)
 		{
-			var rng = Refs.c.rng;
+			if (rng == null) { rng = new Random(); }
 			return tileList.ElementAt(rng.Next(tileList.Count));
 		}
 

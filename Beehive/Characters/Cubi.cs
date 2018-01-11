@@ -23,12 +23,15 @@ namespace Beehive
 		private int spanked = 0;
 		private int horny = 0;
 		public bool beingCarried = false;
+		public int IdNo;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Right;
 
-		public Cubi(string name, Color useColor) : base(name, useColor)
+		public Cubi(string name, int id, Color useColor) : base(name, useColor)
 		{
 			rng = new Random();
+			IdNo = id;
+			glyph = "☿";
 		}
 
 		public void Spank(int i)
@@ -50,6 +53,7 @@ namespace Beehive
 			if (horny > 0 && here.Cnectar == false)
 			{
 				here.Cnectar = true;
+				here.nectarCol = myColor;
 				horny--;
 			}
 
@@ -80,25 +84,34 @@ namespace Beehive
 		private bool OnBed()
 		{
 			// todo fix hardcoded location
-			return (loc.X == 31 && loc.Y == 12);
+			return ((loc.X == 31 && loc.Y == 12) ||
+				(loc.X == 31 + 3 && loc.Y == 12) ||
+				(loc.X == 31 + 6 && loc.Y == 12));
 		}
 
 		private void AIPathing()
 		{
 			Tile here = Refs.m.TileByLoc(loc);
 
-			var maybe = new HashSet<Tile>(new TileComp());
-
-			maybe.Add(here.OneEast());
-			maybe.Add(here.OneSouth());
-			maybe.Add(here.OneNorth());
-			maybe.Add(here.OneWest());
+			var maybe = new HashSet<Tile>(new TileComp())
+			{
+				here.OneEast(),
+				here.OneSouth(),
+				here.OneNorth(),
+				here.OneWest()
+			};
 
 			// filter not clear maybes
 			maybe = maybe.Where(t => t.clear).ToTileHashSet();
 
 			// don't move directly onto player
 			maybe = maybe.Where(t => t.loc != Refs.p.loc).ToTileHashSet();
+
+			// don't move directly onto another cubi
+			foreach (Cubi c in Refs.h.roster)
+			{
+				maybe = maybe.Where(t => t.loc != c.loc).ToTileHashSet();
+			}
 
 			// pick a possibility and go there.
 			if (maybe.Count > 0)
