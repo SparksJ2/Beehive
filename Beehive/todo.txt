@@ -5,6 +5,13 @@ issues:
 
 todo list:
 ```````````
+
+'amusing bug: pillow-dodging frees ms. 'cubi from the bed' - 'motivation!'
+
+'...though she has the tendency to blunder back in and be caught again - 'yeah, that needs an 'oops' message.'
+
+'it should be possible to pillow-spank her into the bed' - 'I agree, added to todos list.
+
 central room area with holding pentagram
 
 think of a better name than beehive
