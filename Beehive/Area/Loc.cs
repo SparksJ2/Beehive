@@ -12,7 +12,6 @@ namespace Beehive
 		public int Y;
 
 		public Loc()
-
 		{
 			X = 0; Y = 0;
 		}
@@ -30,6 +29,14 @@ namespace Beehive
 		public static Loc AddPts(Loc a, Loc b, Loc c)
 		{
 			return new Loc(a.X + b.X + c.X, a.Y + b.Y + c.Y);
+		}
+
+		public static double Distance(Loc l1, Loc l2)
+		{
+			double a = Math.Pow(l1.X - l2.X, 2);
+			double b = Math.Pow(l1.Y - l2.Y, 2);
+			double c = Math.Sqrt(a + b);
+			return c;
 		}
 	}
 }

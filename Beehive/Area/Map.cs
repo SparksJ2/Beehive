@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Beehive
 {
-	public partial class Map
+	public partial class Map : IDisposable
 	{
 		private int xLen;
 		private int yLen;
@@ -84,11 +84,9 @@ namespace Beehive
 			return (t == null || t.clear == false);
 		}
 
-		public bool Touching(Player p, Cubi s)
+		public bool Touching(Mobile m1, Mobile m2)
 		{
-			double a = Math.Pow(p.loc.X - s.loc.X, 2);
-			double b = Math.Pow(p.loc.Y - s.loc.Y, 2);
-			double c = Math.Sqrt(a + b);
+			double c = Loc.Distance(m1.loc, m2.loc);
 			Console.WriteLine(c);
 			return (c < 1.01);
 		}
@@ -159,5 +157,23 @@ namespace Beehive
 				if (!n && !s && !e && !w) t.gly = "X";
 			}
 		} // end healwalls
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// dispose managed resources here
+				SansSerifBitmapFont.Dispose();
+				SymbolaBitmapFont.Dispose();
+				SymbolaBitmapFontMiscSyms.Dispose();
+			}
+			// free native resources
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 	}
 }

@@ -47,12 +47,17 @@ namespace Beehive
 
 			// clear the canvas to dark
 			Rectangle pgRect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-			SolidBrush solidBlack = new SolidBrush(Color.DarkSlateBlue);
-			gr.FillRectangle(solidBlack, pgRect);
+			using (var solidBlack = new SolidBrush(Color.DarkSlateBlue))
+			{
+				gr.FillRectangle(solidBlack, pgRect);
+			}
 
 			// frame the image with a black border
 			Rectangle rc = new Rectangle(5, 5, bmp.Width - 10, bmp.Height - 10);
-			gr.DrawRectangle(new Pen(Color.White, 4), rc);
+			using (var whitePen = new Pen(Color.White, 4))
+			{
+				gr.DrawRectangle(whitePen, rc);
+			}
 
 			// add flow and walls stuff
 			foreach (Tile t in tiles) { AddCharFlow(bmp, t); }
@@ -70,8 +75,7 @@ namespace Beehive
 			return bmp;
 		}
 
-		// todo could use some de-duplication work here
-		public void AddCharFlow(Bitmap bmp, Tile t)
+		public void AddCharFlow(Image img, Tile t)
 		{
 			int x1 = (t.loc.X * multX) + edgeX;
 			int y1 = (t.loc.Y * multY) + edgeY;
@@ -80,17 +84,20 @@ namespace Beehive
 			{
 				int flowInt = t.flow * 12;
 				if (flowInt > 96) flowInt = 96;
-				using (var gFlow = Graphics.FromImage(bmp))
+				using (var gFlow = Graphics.FromImage(img))
 				{
 					// Create a rectangle for the working area on the map
 					RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
-					gFlow.FillRectangle(new SolidBrush(Color.FromArgb(12, flowInt, 12)), tileRect);
+					using (var flowBrush = new SolidBrush(Color.FromArgb(12, flowInt, 12)))
+					{
+						gFlow.FillRectangle(flowBrush, tileRect);
+					}
 				}
 
 				// add nectar drops
 				if (t.Cnectar)
 				{
-					using (var gNectar = Graphics.FromImage(bmp))
+					using (var gNectar = Graphics.FromImage(img))
 					{
 						gNectar.DrawImage(GetTileBitmap(nectarChar, stdSize, t.nectarCol), x1, y1);
 					}
@@ -99,18 +106,18 @@ namespace Beehive
 			else // or add walls
 			{
 				Bitmap singleTileImage = GetTileBitmapOld(t.gly, stdSize);
-				using (var gChar = Graphics.FromImage(bmp))
+				using (var gChar = Graphics.FromImage(img))
 				{
 					gChar.DrawImage(singleTileImage, x1, y1);
 				}
 			}
 		}
 
-		public void AddCharSpecial(Bitmap bmp, string s)
+		public void AddCharSpecial(Image img, string s)
 		{
 			if (s == "⛤") // set up bed
 			{
-				using (var gBed = Graphics.FromImage(bmp))
+				using (var gBed = Graphics.FromImage(img))
 				{
 					int bedx1 = (30 * multX) + edgeX;
 					int bedy1 = (11 * multY) + edgeY;
@@ -131,7 +138,7 @@ namespace Beehive
 			}
 		}
 
-		public void AddCharMobile(Bitmap bmp, Mobile m)
+		public void AddCharMobile(Image img, Mobile m)
 		{
 			string s = m.glyph;
 			int x1 = (m.loc.X * multX) + edgeX;
@@ -143,14 +150,14 @@ namespace Beehive
 				Bitmap singleTileImage = GetTileBitmap(s, stdSize, m.myColor);
 
 				// paste symbol onto map
-				using (var gChar = Graphics.FromImage(bmp))
+				using (var gChar = Graphics.FromImage(img))
 				{
 					gChar.DrawImage(singleTileImage, x1, y1);
 				}
 			}
 		}
 
-		public struct TileDesc // for TileBitmapCache only
+		private struct TileDesc // for TileBitmapCache only
 		{
 			private string s;
 			private Size z;
@@ -166,7 +173,7 @@ namespace Beehive
 
 		private Bitmap GetTileBitmapOld(string s, Size z)
 		{
-			// todo legacy
+			// todo legacy version for generically colored things
 			return GetTileBitmap(s, z, Color.Black);
 		}
 
@@ -174,7 +181,7 @@ namespace Beehive
 		{
 			if (TileBitmapCache == null)
 			{
-				TileBitmapCache = new Dictionary<TileDesc, Bitmap>(); // todo add comparer
+				TileBitmapCache = new Dictionary<TileDesc, Bitmap>();
 			}
 
 			var key = new TileDesc(s, z, c);

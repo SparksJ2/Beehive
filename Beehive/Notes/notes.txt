@@ -12,3 +12,26 @@
 			// save the output
 			bitMapMap.Save("../../abcpdf.drawing.gif", System.Drawing.Imaging.ImageFormat.Gif);
 
+
+//public void KeyDownHandler(object sender, KeyEventArgs e)
+//{
+//	//e.SuppressKeyPress = isKeyPressed;
+//	//if (isKeyPressed) isKeyHeld = true;
+//	isKeyPressed = true;
+//}
+
+//public void KeyPressHandler(object sender, KeyPressEventArgs e)
+//{
+//	e.Handled = true;
+//}
+
+//public void KeyUpHandler(object sender, KeyEventArgs e)
+//{
+//	//isKeyPressed = false;
+//	//isKeyHeld = false;
+//}
+
+//this.KeyPress += new KeyPressEventHandler(KeyPressHandler);
+//this.KeyDown += new KeyEventHandler(KeyDownHandler);
+//this.KeyPress += new KeyPressEventHandler(KeyPressHandler);
+//this.KeyUp += new KeyEventHandler(KeyUpHandler);

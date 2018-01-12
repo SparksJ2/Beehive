@@ -45,11 +45,10 @@ namespace Beehive
 			return ts.Where(t => t.noTunnel == false).ToTileHashSet();
 		}
 
-		public static Random rng;
+		private static Random rng = new Random();
 
 		public static Tile RandomFromList(HashSet<Tile> tileList)
 		{
-			if (rng == null) { rng = new Random(); }
 			return tileList.ElementAt(rng.Next(tileList.Count));
 		}
 

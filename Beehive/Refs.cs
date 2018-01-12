@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beehive
 {
-	public class Refs
+	public static class Refs
 	{
 		public static Player p;
 		public static Harem h;

@@ -12,7 +12,7 @@ namespace Beehive
 {
 	public class Flow
 	{
-		public void RemakeFlow(Loc target)
+		public void RemakeFlow()
 		{
 			// target tiles get a .flow of 0, tiles 1 square from target
 			//    get a .flow of 1, tiles 2 out get a .flow of 2, etc...
@@ -91,9 +91,7 @@ namespace Beehive
 			foreach (Tile t in allTiles)
 			{
 				// todo de-duplicate with other pythagorus
-				double a = Math.Pow(Refs.p.loc.X - t.loc.X, 2);
-				double b = Math.Pow(Refs.p.loc.Y - t.loc.Y, 2);
-				double c = Math.Sqrt(a + b);
+				double c = Loc.Distance(Refs.p.loc, t.loc);
 
 				if (c > 10 && c < 12) { ring.Add(t); }
 			}

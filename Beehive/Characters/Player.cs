@@ -104,7 +104,6 @@ namespace Beehive
 				// nope, it has your cubi in.
 				if (moveClear == "spank")
 				{
-					// todo only one possible target?
 					Tile victimTile = Refs.m.TileByLoc(Loc.AddPts(activeTile.loc, vector));
 					Cubi victim = Refs.m.CubiAt(victimTile.loc);
 
@@ -112,11 +111,11 @@ namespace Beehive
 
 					if (IsVertical(vector))
 					{
-						escapes = victimTile.GetPossibleMoves(Dir.DodgeVertical());
+						escapes = victimTile.GetPossibleMoves(Dir.DodgeVertical);
 					}
 					else
 					{
-						escapes = victimTile.GetPossibleMoves(Dir.DodgeHorizontal());
+						escapes = victimTile.GetPossibleMoves(Dir.DodgeHorizontal);
 					}
 
 					if (escapes.Count > 0)

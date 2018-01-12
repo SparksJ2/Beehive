@@ -17,15 +17,14 @@ namespace Beehive
 {
 	public class Cubi : Mobile
 	{
-		// todo needs a general rng singleton or something
-		public Random rng;
-
 		private int spanked = 0;
 		private int horny = 0;
 		public bool beingCarried = false;
 		public int IdNo;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Right;
+
+		private static Random rng = new Random();
 
 		public Cubi(string name, int id, Color useColor) : base(name, useColor)
 		{
@@ -125,8 +124,8 @@ namespace Beehive
 					HashSet<Tile> bests = maybe.Where(t => t.flow == bestflow).ToTileHashSet();
 
 					// choose randomly between best tiles
-					// todo there is a method for rng tiles now
-					Tile newplace = bests.ElementAt(rng.Next(bests.Count));
+					Tile newplace = Tile.RandomFromList(bests);
+
 					loc = newplace.loc;
 				}
 				else
@@ -140,9 +139,7 @@ namespace Beehive
 
 		private double DistToPlayer()
 		{
-			double a = Math.Pow(Refs.p.loc.X - loc.X, 2);
-			double b = Math.Pow(Refs.p.loc.Y - loc.Y, 2);
-			return Math.Sqrt(a + b);
+			return Loc.Distance(Refs.p.loc, loc);
 		}
 	}
 }

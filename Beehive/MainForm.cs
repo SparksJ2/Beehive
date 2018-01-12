@@ -56,7 +56,7 @@ namespace Beehive
 			Refs.m = new MazeGenerator().Create(65, 25);
 
 			// draw initial map
-			new Flow().RemakeFlow(Refs.p.loc);
+			new Flow().RemakeFlow();
 			UpdateMap();
 
 			MessageBox.Show(
@@ -93,24 +93,33 @@ namespace Beehive
 
 		public void PreviewKeyDownHandler(object sender, PreviewKeyDownEventArgs e)
 		{
-			if (turnTimer.ElapsedMilliseconds < 300) return;
-			turnTimer.Start();
-			Console.WriteLine(e.KeyCode);
-
-			bool timePass = Refs.p.HandlePlayerInput(e);
-			new Flow().RemakeFlow(Refs.p.loc);
-			if (timePass)
+			try
 			{
-				// run ai
-				foreach (Cubi c in Refs.h.roster)
-				{
-					c.AiMove();
-				}
-			}
+				if (turnTimer.ElapsedMilliseconds < 300) return;
+				turnTimer.Start();
+				Console.WriteLine(e.KeyCode);
 
-			// update screen
-			Refs.m.HealWalls();
-			UpdateMap();
+				bool timePass = Refs.p.HandlePlayerInput(e);
+				new Flow().RemakeFlow();
+				if (timePass)
+				{
+					// run ai
+					foreach (Cubi c in Refs.h.roster)
+					{
+						c.AiMove();
+					}
+				}
+
+				// update screen
+				Refs.m.HealWalls();
+				UpdateMap();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Last chance catch of exception " + ex.GetType() +
+					" with message " + ex.Message + " at " + ex.Source +
+					" with trace " + ex.StackTrace);
+			}
 		}
 
 		private List<AnnounceLine> annLines;
@@ -137,32 +146,9 @@ namespace Beehive
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("Caught exception " + ex.ToString() +
+				Console.WriteLine("Caught exception in Announce(), " + ex.ToString() +
 					" with message " + ex.Message);
 			}
 		}
 	}
 }
-
-//public void KeyDownHandler(object sender, KeyEventArgs e)
-//{
-//	//e.SuppressKeyPress = isKeyPressed;
-//	//if (isKeyPressed) isKeyHeld = true;
-//	isKeyPressed = true;
-//}
-
-//public void KeyPressHandler(object sender, KeyPressEventArgs e)
-//{
-//	e.Handled = true;
-//}
-
-//public void KeyUpHandler(object sender, KeyEventArgs e)
-//{
-//	//isKeyPressed = false;
-//	//isKeyHeld = false;
-//}
-
-//this.KeyPress += new KeyPressEventHandler(KeyPressHandler);
-//this.KeyDown += new KeyEventHandler(KeyDownHandler);
-//this.KeyPress += new KeyPressEventHandler(KeyPressHandler);
-//this.KeyUp += new KeyEventHandler(KeyUpHandler);
