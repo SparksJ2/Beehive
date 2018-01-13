@@ -49,9 +49,9 @@ namespace Beehive
 			}
 
 			// leave nectar trail
-			if (horny > 0 && here.Cnectar == false)
+			if (horny > 0 && here.hasNectar == false)
 			{
-				here.Cnectar = true;
+				here.hasNectar = true;
 				here.nectarCol = myColor;
 				horny--;
 			}

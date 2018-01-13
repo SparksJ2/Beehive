@@ -14,7 +14,7 @@ namespace Beehive
 		public string gly = "#";
 		public int flow = 0;
 
-		public bool Cnectar = false;
+		public bool hasNectar = false;
 		public Color nectarCol;
 
 		public bool noTunnel = false; // only for maze gen

@@ -13,6 +13,7 @@ namespace Beehive
 	{
 		public int heldPillows = 0;
 		public int heldCubiId = 0;
+		private int hornyLevel = 0;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
@@ -21,13 +22,13 @@ namespace Beehive
 			glyph = "☿";
 		}
 
-		public bool HandlePlayerInput(PreviewKeyDownEventArgs e)
+		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
-			bool timepass = true;
+			int timepass = 1;
 			if (e.Shift)
 			{
 				// time doesn't progress when moving pillows, for now
-				timepass = false;
+				timepass = 0;
 				switch (e.KeyCode)
 				{
 					case Keys.Down: case Keys.S: PlaceItemSouth(); break;
@@ -35,13 +36,13 @@ namespace Beehive
 					case Keys.Up: case Keys.W: PlaceItemNorth(); break;
 					case Keys.Left: case Keys.A: PlaceItemWest(); break;
 					case Keys.Space: break; // allow waiting
-					default: timepass = false; break;
+					default: timepass = 0; break;
 				}
 			}
 			else if (e.Control)
 			{
 				// time doesn't progress when throwing pillows either, for now
-				timepass = false;
+				timepass = 0;
 				switch (e.KeyCode)
 				{
 					case Keys.Down: case Keys.S: ThrowPillowSouth(); break;
@@ -49,7 +50,7 @@ namespace Beehive
 					case Keys.Up: case Keys.W: ThrowPillowNorth(); break;
 					case Keys.Left: case Keys.A: ThrowPillowWest(); break;
 					case Keys.Space: break; // allow waiting
-					default: timepass = false; break;
+					default: timepass = 0; break;
 				}
 			}
 			else
@@ -61,9 +62,35 @@ namespace Beehive
 					case Keys.W: case Keys.Up: RunNorth(); break;
 					case Keys.A: case Keys.Left: RunWest(); break;
 					case Keys.Space: break; // allow waiting
-					default: timepass = false; break;
+					default: timepass = 0; break;
 				}
 			}
+
+			Tile here = Refs.m.TileByLoc(loc);
+
+			if (here.hasNectar && here.nectarCol != myColor) // yum
+			{
+				hornyLevel++;
+				here.hasNectar = false;
+			}
+
+			if (hornyLevel > 15) // having fun
+			{
+				Refs.mf.Announce("Awwww yeah! *splurt*", myAlign, myColor);
+				timepass += 5;
+
+				HashSet<Tile> splurtArea = here.GetPossibleMoves(Dir.AllAround);
+				foreach (Tile t in splurtArea)
+				{
+					if (t.clear)
+					{
+						t.hasNectar = true;
+						t.nectarCol = myColor;
+					}
+				}
+				hornyLevel = 0;
+			}
+
 			return timepass;
 		}
 

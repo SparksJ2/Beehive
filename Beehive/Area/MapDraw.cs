@@ -95,7 +95,7 @@ namespace Beehive
 				}
 
 				// add nectar drops
-				if (t.Cnectar)
+				if (t.hasNectar)
 				{
 					using (var gNectar = Graphics.FromImage(img))
 					{

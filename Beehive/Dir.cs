@@ -22,6 +22,11 @@ namespace Beehive
 		public static Loc SouthWest = Loc.AddPts(South, West);
 		public static Loc NorthWest = Loc.AddPts(North, West);
 
+		public static HashSet<Loc> AllAround =
+			new HashSet<Loc> {
+				North, East, South, West,
+			 	NorthEast, SouthEast, SouthWest, NorthWest  };
+
 		public static HashSet<Loc> KnightMoves =
 			new HashSet<Loc> {
 				Loc.AddPts(North, NorthEast), Loc.AddPts(North, NorthWest),

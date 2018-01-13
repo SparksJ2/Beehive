@@ -99,19 +99,22 @@ namespace Beehive
 				turnTimer.Start();
 				Console.WriteLine(e.KeyCode);
 
-				bool timePass = Refs.p.HandlePlayerInput(e);
+				int timePass = Refs.p.HandlePlayerInput(e);
+				Refs.m.HealWalls();
+
 				new Flow().RemakeFlow();
-				if (timePass)
+
+				while (timePass > 0)
 				{
 					// run ai
 					foreach (Cubi c in Refs.h.roster)
 					{
 						c.AiMove();
+						UpdateMap();
 					}
+					Thread.Sleep(75);
+					timePass--;
 				}
-
-				// update screen
-				Refs.m.HealWalls();
 				UpdateMap();
 			}
 			catch (Exception ex)
