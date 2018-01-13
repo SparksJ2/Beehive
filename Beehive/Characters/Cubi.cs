@@ -80,6 +80,7 @@ namespace Beehive
 				// consume player nectar
 				if (here.hasNectar && here.nectarCol == Refs.p.myColor)
 				{
+					Refs.mf.Announce("Yes, masters nectar! *lap lap*", myAlign, myColor);
 					here.hasNectar = false;
 					horny += 5;
 				}
