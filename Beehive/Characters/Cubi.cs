@@ -17,8 +17,7 @@ namespace Beehive
 {
 	public class Cubi : Mobile
 	{
-		private int spanked = 0;
-		private int horny = 0;
+		private int spanked = 0; // or other wise incapped, e.g. orgasm throes
 		public bool beingCarried = false;
 		public int IdNo;
 
@@ -77,6 +76,21 @@ namespace Beehive
 			else if (!noMove)
 			{
 				AIPathing();
+
+				// consume player nectar
+				if (here.hasNectar && here.nectarCol == Refs.p.myColor)
+				{
+					here.hasNectar = false;
+					horny += 5;
+				}
+
+				if (horny > 15) // having fun
+				{
+					Refs.mf.Announce("Aieee I'm cumming! *splurt*", myAlign, myColor);
+					Map.SplurtNectar(here, myColor);
+					spanked += 5;
+					horny = 0;
+				}
 			}
 		}
 

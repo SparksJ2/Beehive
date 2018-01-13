@@ -13,7 +13,6 @@ namespace Beehive
 	{
 		public int heldPillows = 0;
 		public int heldCubiId = 0;
-		private int hornyLevel = 0;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
@@ -70,25 +69,16 @@ namespace Beehive
 
 			if (here.hasNectar && here.nectarCol != myColor) // yum
 			{
-				hornyLevel++;
+				horny++;
 				here.hasNectar = false;
 			}
 
-			if (hornyLevel > 15) // having fun
+			if (horny > 15) // having fun
 			{
 				Refs.mf.Announce("Awwww yeah! *splurt*", myAlign, myColor);
 				timepass += 5;
-
-				HashSet<Tile> splurtArea = here.GetPossibleMoves(Dir.AllAround);
-				foreach (Tile t in splurtArea)
-				{
-					if (t.clear)
-					{
-						t.hasNectar = true;
-						t.nectarCol = myColor;
-					}
-				}
-				hornyLevel = 0;
+				Map.SplurtNectar(here, myColor);
+				horny = 0;
 			}
 
 			return timepass;

@@ -158,6 +158,19 @@ namespace Beehive
 			}
 		} // end healwalls
 
+		public static void SplurtNectar(Tile here, Color myColor)
+		{
+			HashSet<Tile> splurtArea = here.GetPossibleMoves(Dir.AllAround);
+			foreach (Tile t in splurtArea)
+			{
+				if (t.clear)
+				{
+					t.hasNectar = true;
+					t.nectarCol = myColor;
+				}
+			}
+		}
+
 		protected virtual void Dispose(bool disposing)
 		{
 			if (disposing)

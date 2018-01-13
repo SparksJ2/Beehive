@@ -27,7 +27,10 @@ namespace Beehive
 			ClearFlow();
 
 			// get a list of starting tiles(s) as starting loc(s)
-			HashSet<Tile> heads = SetUpInitialRing();
+			HashSet<Tile> heads = new HashSet<Tile>(); // todo add tilecomp
+			heads.UnionWith(SetUpInitialRing());
+			heads.UnionWith(PlayerNectarTiles());
+
 			foreach (Tile t in heads) { if (t.clear) { t.flow = 0; } }
 
 			// I call them heads because they 'snake' outwards from the initial point(s)
@@ -90,12 +93,25 @@ namespace Beehive
 			var ring = new HashSet<Tile>(new TileComp());
 			foreach (Tile t in allTiles)
 			{
-				// todo de-duplicate with other pythagorus
 				double c = Loc.Distance(Refs.p.loc, t.loc);
-
 				if (c > 10 && c < 12) { ring.Add(t); }
 			}
 			return ring;
+		}
+
+		private HashSet<Tile> PlayerNectarTiles()
+		{
+			// tiles containing player nectar are targets too
+			var allTiles = Refs.m.TileList();
+			var nectarTiles = new HashSet<Tile>(new TileComp());
+			foreach (Tile t in allTiles)
+			{
+				if (t.hasNectar && t.nectarCol == Refs.p.myColor)
+				{
+					nectarTiles.Add(t);
+				}
+			}
+			return nectarTiles;
 		}
 
 		private void ClearFlow()

@@ -14,6 +14,8 @@ namespace Beehive
 		public Color myColor;
 		public string glyph;
 
+		protected int horny = 0;
+
 		public Mobile(string nameIn, Color useColor)
 		{
 			loc = new Loc();
