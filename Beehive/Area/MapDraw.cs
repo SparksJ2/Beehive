@@ -82,7 +82,7 @@ namespace Beehive
 
 			if (t.clear) // set flow as background
 			{
-				int flowInt = t.flow * 12;
+				int flowInt = t.flow[1] * 12;
 				if (flowInt > 96) flowInt = 96;
 				using (var gFlow = Graphics.FromImage(img))
 				{

@@ -12,7 +12,15 @@ namespace Beehive
 {
 	public class Flow
 	{
-		public void RemakeFlow()
+		public void RemakeAllFlows()
+		{
+			for (int fCalc = 0; fCalc < 4; fCalc++)
+			{
+				RemakeFlow(fCalc);
+			}
+		}
+
+		public void RemakeFlow(int level)
 		{
 			// target tiles get a .flow of 0, tiles 1 square from target
 			//    get a .flow of 1, tiles 2 out get a .flow of 2, etc...
@@ -24,14 +32,14 @@ namespace Beehive
 			sw.Start();
 
 			// tidy up values from previous runs
-			ClearFlow();
+			ClearFlow(level);
 
 			// get a list of starting tiles(s) as starting loc(s)
 			HashSet<Tile> heads = new HashSet<Tile>(); // todo add tilecomp
 			heads.UnionWith(SetUpInitialRing());
 			heads.UnionWith(PlayerNectarTiles());
 
-			foreach (Tile t in heads) { if (t.clear) { t.flow = 0; } }
+			foreach (Tile t in heads) { if (t.clear) { t.flow[level] = 0; } }
 
 			// I call them heads because they 'snake' outwards from the initial point(s)
 			//    but you get splits into several heads at junctions so it's a bad metaphor...
@@ -63,11 +71,11 @@ namespace Beehive
 					foreach (Tile newTile in newTiles)
 					{
 						// ... if we can improve the flow rating of it ...
-						int delta = newTile.flow - head.flow;
+						int delta = newTile.flow[level] - head.flow[level];
 						if (newTile.clear && delta > 2)
 						{
 							// ... do so, and then make it a new head ...
-							newTile.flow = head.flow + 1;
+							newTile.flow[level] = head.flow[level] + 1;
 							newHeads.Add(newTile);
 							changes = true;
 						}
@@ -114,9 +122,9 @@ namespace Beehive
 			return nectarTiles;
 		}
 
-		private void ClearFlow()
+		private void ClearFlow(int level)
 		{
-			foreach (Tile t in Refs.m.TileList()) { t.flow = 9999; }
+			foreach (Tile t in Refs.m.TileList()) { t.flow[level] = 9999; }
 		}
 	}
 }

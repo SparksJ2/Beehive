@@ -56,7 +56,7 @@ namespace Beehive
 			Refs.m = new MazeGenerator().Create(65, 25);
 
 			// draw initial map
-			new Flow().RemakeFlow();
+			new Flow().RemakeAllFlows();
 			UpdateMap();
 
 			MessageBox.Show(
@@ -102,7 +102,7 @@ namespace Beehive
 				int timePass = Refs.p.HandlePlayerInput(e);
 				Refs.m.HealWalls();
 
-				new Flow().RemakeFlow();
+				new Flow().RemakeAllFlows();
 
 				while (timePass > 0)
 				{

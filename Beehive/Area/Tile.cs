@@ -12,12 +12,17 @@ namespace Beehive
 		public Loc loc;
 		public bool clear = false;
 		public string gly = "#";
-		public int flow = 0;
+		public int[] flow;
 
 		public bool hasNectar = false;
 		public Color nectarCol;
 
 		public bool noTunnel = false; // only for maze gen
+
+		public Tile()
+		{
+			flow = new int[4];
+		}
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
 		public HashSet<Tile> GetPossibleMoves(HashSet<Loc> options)

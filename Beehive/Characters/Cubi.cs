@@ -130,13 +130,13 @@ namespace Beehive
 			// pick a possibility and go there.
 			if (maybe.Count > 0)
 			{
-				int bestflow = maybe.Min(t => t.flow); // linq ftw
+				int bestflow = maybe.Min(t => t.flow[IdNo]); // linq ftw
 
 				// is the tile that we're currently on already one of the best tiles?
-				if (here.flow != bestflow)
+				if (here.flow[IdNo] != bestflow)
 				{
 					// make a list of best tiles
-					HashSet<Tile> bests = maybe.Where(t => t.flow == bestflow).ToTileHashSet();
+					HashSet<Tile> bests = maybe.Where(t => t.flow[IdNo] == bestflow).ToTileHashSet();
 
 					// choose randomly between best tiles
 					Tile newplace = Tile.RandomFromList(bests);
