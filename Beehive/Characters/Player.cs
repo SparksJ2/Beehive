@@ -18,7 +18,7 @@ namespace Beehive
 
 		public Player(string name, Color useColor) : base(name, useColor)
 		{
-			glyph = "☿";
+			glyph = "♂";
 		}
 
 		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
