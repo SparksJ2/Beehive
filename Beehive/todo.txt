@@ -56,3 +56,10 @@ the current lust cycle is: player chases cubi > cubi gets horny > cubi leaks nec
 player touching nectar consumes it > player gets horny > player spontaneous orgasm >
 player leaks nectar > cubi paths to player nectar > cubi touching nectar consumes it >
 cubi gets more horny > cubi spontaneous orgasm > cubi nectar leaks > (e.t.c....)
+
+
+tease theory
+`````````````
+while player is distant or not closing in, cubi bored++
+when subtract bored from target distance to player
+when too close, spook, set bored = 0 and set target distance far again
