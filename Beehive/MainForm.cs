@@ -103,19 +103,21 @@ namespace Beehive
 				Refs.m.HealWalls();
 
 				new Flow().RemakeAllFlows();
-
-				while (timePass > 0)
+				if (timePass == 0)
 				{
-					// run ai
-					foreach (Cubi c in Refs.h.roster)
-					{
-						c.AiMove();
-						UpdateMap();
-					}
-					Thread.Sleep(75);
-					timePass--;
+					UpdateMap();
 				}
-				UpdateMap();
+				else
+				{
+					while (timePass > 0)
+					{
+						// run ai for multiple turns if needed
+						foreach (Cubi c in Refs.h.roster) { c.AiMove(); }
+						UpdateMap();
+						Thread.Sleep(75);
+						timePass--;
+					}
+				}
 			}
 			catch (Exception ex)
 			{
