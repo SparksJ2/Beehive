@@ -21,7 +21,7 @@ namespace Beehive
 
 		public Tile()
 		{
-			flow = new int[4];
+			flow = new int[Refs.h.roster.Count + 1];
 		}
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()

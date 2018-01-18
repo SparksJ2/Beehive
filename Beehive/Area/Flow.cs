@@ -14,9 +14,9 @@ namespace Beehive
 	{
 		public void RemakeAllFlows()
 		{
-			for (int fCalc = 0; fCalc < 4; fCalc++)
+			foreach (Cubi c in Refs.h.roster)
 			{
-				RemakeFlow(fCalc);
+				RemakeFlow(c.IdNo);
 			}
 		}
 

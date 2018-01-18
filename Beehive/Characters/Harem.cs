@@ -27,6 +27,10 @@ namespace Beehive
 			Cubi c = new Cubi("Cy'rene", 3, Color.MediumVioletRed);
 			c.SetXY(35, 9);
 			roster.Add(c);
+
+			Cubi d = new Cubi("Del'ta", 4, Color.SeaGreen);
+			d.SetXY(34, 8);
+			roster.Add(d);
 		}
 
 		public Cubi GetId(int id)
