@@ -15,11 +15,14 @@ using System.Diagnostics;
 
 namespace Beehive
 {
+	public delegate HashSet<Tile> CubiAiType();
+
 	public class Cubi : Mobile
 	{
 		private int spanked = 0; // or other wise incapped, e.g. orgasm throes
 		public bool beingCarried = false;
 		public int IdNo;
+		public CubiAiType myAi;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Right;
 

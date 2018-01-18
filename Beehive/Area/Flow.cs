@@ -35,9 +35,7 @@ namespace Beehive
 			ClearFlow(level);
 
 			// get a list of starting tiles(s) as starting loc(s)
-			HashSet<Tile> heads = new HashSet<Tile>(); // todo add tilecomp
-			heads.UnionWith(SetUpInitialRing());
-			heads.UnionWith(PlayerNectarTiles());
+			HashSet<Tile> heads = Refs.h.roster[level - 1].myAi();
 
 			foreach (Tile t in heads) { if (t.clear) { t.flow[level] = 0; } }
 
@@ -91,35 +89,6 @@ namespace Beehive
 				"Finished flow in " + sw.ElapsedMilliseconds + "ms, " +
 				"heads = " + headsProcessed + ", " +
 				"failsafe reached = " + failsafe + ".");
-		}
-
-		private HashSet<Tile> SetUpInitialRing()
-		{
-			// we'll try to flow to a set distance from the player by
-			//    making a ring of target squares and working from there
-			var allTiles = Refs.m.TileList();
-			var ring = new HashSet<Tile>(new TileComp());
-			foreach (Tile t in allTiles)
-			{
-				double c = Loc.Distance(Refs.p.loc, t.loc);
-				if (c > 10 && c < 12) { ring.Add(t); }
-			}
-			return ring;
-		}
-
-		private HashSet<Tile> PlayerNectarTiles()
-		{
-			// tiles containing player nectar are targets too
-			var allTiles = Refs.m.TileList();
-			var nectarTiles = new HashSet<Tile>(new TileComp());
-			foreach (Tile t in allTiles)
-			{
-				if (t.hasNectar && t.nectarCol == Refs.p.myColor)
-				{
-					nectarTiles.Add(t);
-				}
-			}
-			return nectarTiles;
 		}
 
 		private void ClearFlow(int level)

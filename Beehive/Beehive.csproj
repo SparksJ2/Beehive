@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnnounceLine.cs" />
+    <Compile Include="Characters\CubiAi.cs" />
     <Compile Include="Area\Flow.cs" />
     <Compile Include="Area\Loc.cs" />
     <Compile Include="Area\Map.cs" />
