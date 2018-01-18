@@ -63,7 +63,6 @@ namespace Beehive
 					};
 
 					// ... (ignoring any nulls) ...
-
 					newTiles.RemoveWhere(item => item == null);
 
 					// ... and for each one found ...

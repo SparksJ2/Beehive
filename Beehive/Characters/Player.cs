@@ -13,6 +13,7 @@ namespace Beehive
 	{
 		public int heldPillows = 0;
 		public int heldCubiId = 0;
+		public int viewFlow = 0;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
@@ -23,6 +24,13 @@ namespace Beehive
 
 		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
+			// visualise flows
+			if (e.KeyCode == Keys.D0) { viewFlow = 0; return 0; }
+			if (e.KeyCode == Keys.D1) { viewFlow = 1; return 0; }
+			if (e.KeyCode == Keys.D2) { viewFlow = 2; return 0; }
+			if (e.KeyCode == Keys.D3) { viewFlow = 3; return 0; }
+			if (e.KeyCode == Keys.D4) { viewFlow = 4; return 0; }
+
 			int timepass = 1;
 			if (e.Shift)
 			{

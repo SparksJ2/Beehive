@@ -82,13 +82,35 @@ namespace Beehive
 
 			if (t.clear) // set flow as background
 			{
-				int flowInt = t.flow[1] * 12;
-				if (flowInt > 96) flowInt = 96;
+				int showFlow = Refs.p.viewFlow;
+
+				Color flowCol = Color.Black;
+
+				if (showFlow > 0)
+				{
+					flowCol = Refs.h.roster[showFlow - 1].myColor;
+				}
+				else
+				{
+					return; // todo there is no player flow for now
+				}
+
+				int flowInt = t.flow[showFlow] * 8;
+				int r = flowCol.R - flowInt;
+				int g = flowCol.G - flowInt;
+				int b = flowCol.B - flowInt;
+
+				r = r < 0 ? 0 : r;
+				g = g < 0 ? 0 : g;
+				b = b < 0 ? 0 : b;
+
+				Color useCol = Color.FromArgb(r, g, b);
+
 				using (var gFlow = Graphics.FromImage(img))
 				{
 					// Create a rectangle for the working area on the map
 					RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
-					using (var flowBrush = new SolidBrush(Color.FromArgb(12, flowInt, 12)))
+					using (var flowBrush = new SolidBrush(useCol))
 					{
 						gFlow.FillRectangle(flowBrush, tileRect);
 					}
