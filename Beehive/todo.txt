@@ -1,7 +1,9 @@
 ﻿
 issues:
 ````````
-(clear for now)
+can place more than one cubi per pentagram
+
+cubi can start on blocked square
 
 todo list:
 ```````````
