@@ -51,6 +51,9 @@ namespace Beehive
 			if (bored < 11.0) { bored += 0.1; }
 			teaseDistance = Convert.ToInt32(11 - bored);
 
+			// being carried resets boredom
+			if (beingCarried) { bored = 0; }
+
 			// being close to player makes for horny cubi
 			if (DistToPlayer() < 5.0)
 			{
