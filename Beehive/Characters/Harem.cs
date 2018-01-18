@@ -23,7 +23,7 @@ namespace Beehive
 
 			Cubi b = new Cubi("Bel'lona ", 2, Color.RosyBrown);
 			b.SetXY(34, 9);
-			b.myAi = new CubiAiType(CubiAi.SimpleFlee);
+			b.myAi = new CubiAiType(CubiAi.PreferInfront);
 			roster.Add(b);
 
 			Cubi c = new Cubi("Cy'rene", 3, Color.MediumVioletRed);

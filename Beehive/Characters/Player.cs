@@ -14,6 +14,7 @@ namespace Beehive
 		public int heldPillows = 0;
 		public int heldCubiId = 0;
 		public int viewFlow = 0;
+		public Loc lastMove;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
@@ -24,6 +25,7 @@ namespace Beehive
 
 		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
+			Loc lastPos = loc;
 			// visualise flows
 			if (e.KeyCode == Keys.D0) { viewFlow = 0; return 0; }
 			if (e.KeyCode == Keys.D1) { viewFlow = 1; return 0; }
@@ -74,6 +76,9 @@ namespace Beehive
 			}
 
 			Tile here = Refs.m.TileByLoc(loc);
+
+			Loc newpos = loc;
+			this.lastMove = Loc.SubPts(newpos, lastPos);
 
 			if (here.hasNectar && here.nectarCol != myColor) // yum
 			{

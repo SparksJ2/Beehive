@@ -31,6 +31,11 @@ namespace Beehive
 			return new Loc(a.X + b.X + c.X, a.Y + b.Y + c.Y);
 		}
 
+		public static Loc SubPts(Loc a, Loc b)
+		{
+			return new Loc(a.X - b.X, a.Y - b.Y);
+		}
+
 		public static double Distance(Loc l1, Loc l2)
 		{
 			double a = Math.Pow(l1.X - l2.X, 2);

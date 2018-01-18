@@ -19,5 +19,12 @@ namespace Beehive
 			return new HashSet<Tile>(source,
 				(IEqualityComparer<Tile>)new TileComp());
 		}
+
+		public static HashSet<Tile> Difference<Tile>(
+			this HashSet<Tile> source, HashSet<Tile> subtract)
+		{
+			foreach (Tile item in subtract) { source.Remove(item); }
+			return source;
+		}
 	}
 }
