@@ -1,7 +1,6 @@
 ﻿
 issues:
 ````````
-can place more than one cubi per pentagram
 
 cubi id != their place in the roster, leading to off-by-one problems
 
@@ -13,8 +12,6 @@ todo list:
 '...though she has the tendency to blunder back in and be caught again - 'yeah, that needs an 'oops' message.'
 
 'it should be possible to pillow-spank her into the bed' - 'I agree, added to todos list.
-
-central room area with holding pentagram
 
 think of a better name than beehive
 
