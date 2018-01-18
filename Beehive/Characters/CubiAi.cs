@@ -41,6 +41,38 @@ namespace Beehive
 			return heads;
 		}
 
+		public static HashSet<Tile> MirrorIdOne(int distance)
+		{
+			// not implemented
+			return SimpleFlee(distance);
+		}
+
+		public static HashSet<Tile> PreferBehind(int distance)
+		{
+			// todo some duplication here
+			Loc front = Refs.p.lastMove ?? new Loc(0, 0);
+			Loc playerLoc = Refs.p.loc ?? new Loc(0, 0);
+
+			HashSet<Tile> heads = new HashSet<Tile>(new TileComp());
+			heads.UnionWith(SetUpInitialRing(distance));
+
+			// remove tiles not to player front
+			HashSet<Tile> toRemove = new HashSet<Tile>(new TileComp());
+
+			foreach (Tile t in heads)
+			{
+				Loc relativeLoc = Loc.SubPts(t.loc, playerLoc);
+
+				// todo just debuff power by half to prevent player crossing
+				if (front.X * relativeLoc.X > 0) toRemove.Add(t);
+				if (front.Y * relativeLoc.Y > 0) toRemove.Add(t);
+			}
+
+			heads.Difference(toRemove);
+
+			return heads;
+		}
+
 		private static HashSet<Tile> SetUpInitialRing(int distance)
 		{
 			// we'll try to flow to a set distance from the player by

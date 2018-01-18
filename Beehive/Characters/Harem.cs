@@ -28,12 +28,12 @@ namespace Beehive
 
 			Cubi c = new Cubi("Cy'rene", 3, Color.MediumVioletRed);
 			c.SetXY(35, 9);
-			c.myAi = new CubiAiType(CubiAi.SimpleFlee);
+			c.myAi = new CubiAiType(CubiAi.MirrorIdOne);
 			roster.Add(c);
 
 			Cubi d = new Cubi("Del'ta", 4, Color.SeaGreen);
 			d.SetXY(34, 8);
-			d.myAi = new CubiAiType(CubiAi.SimpleFlee);
+			d.myAi = new CubiAiType(CubiAi.PreferBehind);
 			roster.Add(d);
 		}
 
