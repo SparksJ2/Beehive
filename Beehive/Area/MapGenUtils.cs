@@ -44,6 +44,7 @@ namespace Beehive
 
 		internal void MakeClearArea(Loc point1, Loc point2)
 		{
+			// todo note clears the area inside, not including the boundary
 			var workingList = TileList();
 			workingList = workingList.Where(t =>
 				t.loc.X > point1.X &&

@@ -35,13 +35,25 @@ namespace Beehive
 			var homeEndClear = new Loc(39, 14);
 			NewMap.MakeClearArea(homeStartClear, homeEndClear);
 
+			// mark home walls not to be tunneled away
 			var homeStartWall = new Loc(homeStartClear.X - 1, homeStartClear.Y - 1);
 			var homeEndWall = new Loc(homeEndClear.X + 1, homeEndClear.Y + 1);
 			NewMap.MarkNoTunnel(homeStartWall, homeEndWall);
 
 			// todo hardcoded doorway
-			NewMap.TileByLoc(new Loc(33, homeStartClear.Y)).clear = true;
-			NewMap.TileByLoc(new Loc(32, homeStartClear.Y)).clear = true;
+			var doorStartClear = new Loc(32, 9);
+			var doorEndClear = new Loc(36, 11);
+			NewMap.MakeClearArea(doorStartClear, doorEndClear);
+
+			// todo hardcoded initial departure area
+			var spawnStartClear = new Loc(29, 7);
+			var spawnEndClear = new Loc(39, 10);
+			NewMap.MakeClearArea(spawnStartClear, spawnEndClear);
+
+			//NewMap.TileByLoc(new Loc(35, homeStartClear.Y)).clear = true;
+			//NewMap.TileByLoc(new Loc(34, homeStartClear.Y)).clear = true;
+			//NewMap.TileByLoc(new Loc(33, homeStartClear.Y)).clear = true;
+			//NewMap.TileByLoc(new Loc(32, homeStartClear.Y)).clear = true;
 
 			// cache startup
 			NewMap.InitClearTilesCache();
