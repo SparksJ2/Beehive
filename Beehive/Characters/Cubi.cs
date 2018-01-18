@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace Beehive
 {
-	public delegate HashSet<Tile> CubiAiType();
+	public delegate HashSet<Tile> CubiAiType(int distance);
 
 	public class Cubi : Mobile
 	{
@@ -23,6 +23,8 @@ namespace Beehive
 		public bool beingCarried = false;
 		public int IdNo;
 		public CubiAiType myAi;
+		public double bored = 0.0;
+		public int teaseDistance = 11;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Right;
 
@@ -38,11 +40,16 @@ namespace Beehive
 		public void Spank(int i)
 		{
 			spanked += i;
+			bored = 0;
 		}
 
 		public void AiMove()
 		{
 			Tile here = Refs.m.TileByLoc(loc);
+
+			// todo bored just slowly goes up for now
+			if (bored < 11.0) { bored += 0.1; }
+			teaseDistance = Convert.ToInt32(11 - bored);
 
 			// being close to player makes for horny cubi
 			if (DistToPlayer() < 5.0)
@@ -50,8 +57,8 @@ namespace Beehive
 				horny++;
 			}
 
-			// leave nectar trail
-			if (horny > 0 && here.hasNectar == false)
+			// leave nectar trail, overlay previous trails
+			if (horny > 0)
 			{
 				here.hasNectar = true;
 				here.nectarCol = myColor;

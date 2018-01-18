@@ -8,16 +8,16 @@ namespace Beehive
 {
 	public static class CubiAi
 	{
-		public static HashSet<Tile> SimpleFlee()
+		public static HashSet<Tile> SimpleFlee(int distance)
 		{
-			HashSet<Tile> heads = new HashSet<Tile>(); // todo add tilecomp
-			heads.UnionWith(SetUpInitialRing());
+			HashSet<Tile> heads = new HashSet<Tile>(new TileComp());
+			heads.UnionWith(SetUpInitialRing(distance));
 			heads.UnionWith(PlayerNectarTiles());
 
 			return heads;
 		}
 
-		private static HashSet<Tile> SetUpInitialRing()
+		private static HashSet<Tile> SetUpInitialRing(int distance)
 		{
 			// we'll try to flow to a set distance from the player by
 			//    making a ring of target squares and working from there
@@ -26,7 +26,7 @@ namespace Beehive
 			foreach (Tile t in allTiles)
 			{
 				double c = Loc.Distance(Refs.p.loc, t.loc);
-				if (c > 10 && c < 12) { ring.Add(t); }
+				if (c > distance - 1 && c < distance + 1) { ring.Add(t); }
 			}
 			return ring;
 		}

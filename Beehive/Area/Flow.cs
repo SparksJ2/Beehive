@@ -35,7 +35,8 @@ namespace Beehive
 			ClearFlow(level);
 
 			// get a list of starting tiles(s) as starting loc(s)
-			HashSet<Tile> heads = Refs.h.roster[level - 1].myAi();
+			Cubi c = Refs.h.roster[level - 1];
+			HashSet<Tile> heads = c.myAi(c.teaseDistance);
 
 			foreach (Tile t in heads) { if (t.clear) { t.flow[level] = 0; } }
 
