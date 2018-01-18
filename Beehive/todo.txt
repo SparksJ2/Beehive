@@ -3,7 +3,7 @@ issues:
 ````````
 can place more than one cubi per pentagram
 
-cubi can start on blocked square
+cubi id != their place in the roster, leading to off-by-one problems
 
 todo list:
 ```````````
