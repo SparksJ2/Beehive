@@ -29,7 +29,7 @@ namespace ResourcesTest
 
 			minCodePoint = 0x2600;
 			maxCodePoint = 0x26ff; // 0x10ffff
-			size = new Size(12*3, 15*3); // as (width, height)
+			size = new Size(12 * 3, 15 * 3); // as (width, height)
 			charsPerLine = 64;
 			fontString = "Symbola";
 			description = "MiscSyms";

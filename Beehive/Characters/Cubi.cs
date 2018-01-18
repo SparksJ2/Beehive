@@ -55,10 +55,7 @@ namespace Beehive
 			if (beingCarried) { bored = 0; }
 
 			// being close to player makes for horny cubi
-			if (DistToPlayer() < 5.0)
-			{
-				horny++;
-			}
+			if (DistToPlayer() < 5.0) { horny++; }
 
 			// leave nectar trail, overlay previous trails
 			if (horny > 0)
