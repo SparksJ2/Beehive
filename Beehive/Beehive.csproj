@@ -110,6 +110,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Characters\personality.txt" />
     <Content Include="Notes\notes.txt" />
     <Content Include="Area\walls.txt" />
     <Content Include="Notes\workspace.txt" />
