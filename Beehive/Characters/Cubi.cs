@@ -140,7 +140,7 @@ namespace Beehive
 			// pick a possibility and go there.
 			if (maybe.Count > 0)
 			{
-				int bestflow = maybe.Min(t => t.flow[IdNo]); // linq ftw
+				double bestflow = maybe.Min(t => t.flow[IdNo]); // linq ftw
 
 				// is the tile that we're currently on already one of the best tiles?
 				if (here.flow[IdNo] != bestflow)

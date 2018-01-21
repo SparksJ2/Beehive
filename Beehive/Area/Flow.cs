@@ -69,7 +69,7 @@ namespace Beehive
 					foreach (Tile newTile in newTiles)
 					{
 						// ... if we can improve the flow rating of it ...
-						int delta = newTile.flow[level] - head.flow[level];
+						double delta = newTile.flow[level] - head.flow[level];
 						if (newTile.clear && delta > 2)
 						{
 							// ... do so, and then make it a new head ...

@@ -95,10 +95,10 @@ namespace Beehive
 					return; // todo there is no player flow for now
 				}
 
-				int flowInt = t.flow[showFlow] * 8;
-				int r = flowCol.R - flowInt;
-				int g = flowCol.G - flowInt;
-				int b = flowCol.B - flowInt;
+				double flowInt = t.flow[showFlow] * 8;
+				int r = Convert.ToInt32(flowCol.R - flowInt);
+				int g = Convert.ToInt32(flowCol.G - flowInt);
+				int b = Convert.ToInt32(flowCol.B - flowInt);
 
 				r = r < 0 ? 0 : r;
 				g = g < 0 ? 0 : g;
