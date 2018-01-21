@@ -20,6 +20,12 @@ namespace Beehive
 				(IEqualityComparer<Tile>)new TileComp());
 		}
 
+		public static HashSet<FlowSquare> ToFlowSquareHashSet<FlowSquare>(this IEnumerable<FlowSquare> source)
+		{
+			return new HashSet<FlowSquare>(source,
+				(IEqualityComparer<FlowSquare>)new FlowSquareComp());
+		}
+
 		public static HashSet<Tile> Difference<Tile>(
 			this HashSet<Tile> source, HashSet<Tile> subtract)
 		{

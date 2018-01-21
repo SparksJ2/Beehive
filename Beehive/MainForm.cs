@@ -56,7 +56,7 @@ namespace Beehive
 			Refs.m = new MazeGenerator().Create(65, 25);
 
 			// draw initial map
-			new Flow().RemakeAllFlows();
+			Flow.RemakeAllFlows();
 			UpdateMap();
 
 			MessageBox.Show(
@@ -93,19 +93,26 @@ namespace Beehive
 
 		public void PreviewKeyDownHandler(object sender, PreviewKeyDownEventArgs e)
 		{
+			var sw = new Stopwatch(); sw.Start();
+			Console.WriteLine("Key " + e.KeyCode + " Pressed");
+			Console.WriteLine("Starting new frame.");
 			try
 			{
 				if (turnTimer.ElapsedMilliseconds < 300) return;
 				turnTimer.Start();
-				Console.WriteLine(e.KeyCode);
 
 				int timePass = Refs.p.HandlePlayerInput(e);
-				Refs.m.HealWalls();
 
-				new Flow().RemakeAllFlows();
+				Refs.m.HealWalls();
+				Console.WriteLine("Finished HealWalls at " + sw.ElapsedMilliseconds + "ms in.");
+
+				Flow.RemakeAllFlows();
+				Console.WriteLine("Finished RemakeAllFlows at " + sw.ElapsedMilliseconds + "ms in.");
+
 				if (timePass == 0)
 				{
 					UpdateMap();
+					Console.WriteLine("Finished UpdateMap at " + sw.ElapsedMilliseconds + "ms in.");
 				}
 				else
 				{
@@ -113,8 +120,12 @@ namespace Beehive
 					{
 						// run ai for multiple turns if needed
 						foreach (Cubi c in Refs.h.roster) { c.AiMove(); }
+						Console.WriteLine("Finished AiMove at " + sw.ElapsedMilliseconds + "ms in.");
+
 						UpdateMap();
 						Thread.Sleep(75);
+
+						Console.WriteLine("Finished UpdateMap at " + sw.ElapsedMilliseconds + "ms in.");
 						timePass--;
 					}
 				}
@@ -125,6 +136,9 @@ namespace Beehive
 					" with message " + ex.Message + " at " + ex.Source +
 					" with trace " + ex.StackTrace);
 			}
+
+			Console.WriteLine("Total time this update = " + sw.ElapsedMilliseconds + "ms. or " +
+				1000 / sw.ElapsedMilliseconds + " fps if it mattered.");
 		}
 
 		private List<AnnounceLine> annLines;

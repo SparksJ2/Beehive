@@ -12,7 +12,6 @@ namespace Beehive
 		public Loc loc;
 		public bool clear = false;
 		public string gly = "#";
-		public double[] flow;
 
 		public bool hasNectar = false;
 		public Color nectarCol;
@@ -21,7 +20,7 @@ namespace Beehive
 
 		public Tile()
 		{
-			flow = new double[Refs.h.roster.Count + 1];
+			// intentionally left blank
 		}
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()

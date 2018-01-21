@@ -16,6 +16,7 @@ namespace Beehive
 		private int xLen;
 		private int yLen;
 		private Tile[,] tiles;
+		public Flow[] flows;
 
 		public Map(int xIn, int yIn)
 		{
@@ -30,6 +31,14 @@ namespace Beehive
 				{
 					tiles[x, y] = new Tile { loc = new Loc(x, y) };
 				}
+			}
+
+			// init all flows stuff here
+			var flowsCount = Refs.h.roster.Count + 1; // 0 is for master, eventually
+			flows = new Flow[flowsCount];
+			for (int fLoop = 0; fLoop < flowsCount; fLoop++)
+			{
+				flows[fLoop] = new Flow(xIn, yIn, fLoop);
 			}
 
 			LoadBitmapFonts();

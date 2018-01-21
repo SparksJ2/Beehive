@@ -233,7 +233,7 @@ namespace Beehive
 			if (heldCubiId > 0 && t.clear && !Refs.m.ContainsCubi(t.loc))
 			{
 				// put down lover
-				Cubi myHeldCubi = Refs.h.GetId(heldCubiId);
+				Cubi myHeldCubi = Harem.GetId(heldCubiId);
 				myHeldCubi.loc = t.loc;
 				myHeldCubi.beingCarried = false;
 				heldCubiId = 0;
@@ -245,7 +245,7 @@ namespace Beehive
 				Cubi caughtCubi = Refs.m.CubiAt(t.loc);
 				caughtCubi.loc = this.loc;
 				caughtCubi.beingCarried = true;
-				heldCubiId = caughtCubi.IdNo;
+				heldCubiId = caughtCubi.myIdNo;
 				Refs.mf.Announce("Gotcha!", myAlign, myColor);
 				Refs.mf.Announce("EEEK!!", caughtCubi.myAlign, caughtCubi.myColor);
 			}

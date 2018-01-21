@@ -39,9 +39,6 @@ namespace Beehive
 
 		public Bitmap AsBitmap()
 		{
-			var sw = new Stopwatch();
-			sw.Start();
-
 			Bitmap bmp = new Bitmap((int)(800), (int)(400));
 			Graphics gr = Graphics.FromImage(bmp);
 
@@ -60,7 +57,7 @@ namespace Beehive
 			}
 
 			// add flow and walls stuff
-			foreach (Tile t in tiles) { AddCharFlow(bmp, t); }
+			foreach (Tile t in tiles) { AddBackgroundOrWalls(bmp, t); }
 
 			// specials and mobiles
 			AddCharSpecial(bmp, "⛤");
@@ -71,11 +68,10 @@ namespace Beehive
 				AddCharMobile(bmp, c);
 			}
 
-			Console.WriteLine("Finished map drawing in " + sw.ElapsedMilliseconds + "ms");
 			return bmp;
 		}
 
-		public void AddCharFlow(Image img, Tile t)
+		public void AddBackgroundOrWalls(Image img, Tile t)
 		{
 			int x1 = (t.loc.X * multX) + edgeX;
 			int y1 = (t.loc.Y * multY) + edgeY;
@@ -95,10 +91,11 @@ namespace Beehive
 					return; // todo there is no player flow for now
 				}
 
-				double flowInt = t.flow[showFlow] * 8;
-				int r = Convert.ToInt32(flowCol.R - flowInt);
-				int g = Convert.ToInt32(flowCol.G - flowInt);
-				int b = Convert.ToInt32(flowCol.B - flowInt);
+				double flowInt = Refs.m.flows[showFlow].FlowSquareByLoc(t.loc).flow;
+
+				int r = Convert.ToInt32(flowCol.R - flowInt * 4);
+				int g = Convert.ToInt32(flowCol.G - flowInt * 4);
+				int b = Convert.ToInt32(flowCol.B - flowInt * 4);
 
 				r = r < 0 ? 0 : r;
 				g = g < 0 ? 0 : g;

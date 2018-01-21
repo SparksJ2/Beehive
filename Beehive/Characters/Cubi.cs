@@ -15,13 +15,13 @@ using System.Diagnostics;
 
 namespace Beehive
 {
-	public delegate HashSet<Tile> CubiAiType(int distance);
+	public delegate void CubiAiType(int distance, Flow f);
 
 	public class Cubi : Mobile
 	{
 		private int spanked = 0; // or other wise incapped, e.g. orgasm throes
 		public bool beingCarried = false;
-		public int IdNo;
+		public int myIdNo;
 		public CubiAiType myAi;
 		public double bored = 0.0;
 		public int teaseDistance = 11;
@@ -33,7 +33,7 @@ namespace Beehive
 		public Cubi(string name, int id, Color useColor) : base(name, useColor)
 		{
 			rng = new Random();
-			IdNo = id;
+			myIdNo = id;
 			glyph = "☿";
 		}
 
@@ -48,8 +48,9 @@ namespace Beehive
 			Tile here = Refs.m.TileByLoc(loc);
 
 			// todo bored just slowly goes up for now
-			if (bored < 11.0) { bored += 0.1; }
-			teaseDistance = Convert.ToInt32(11 - bored);
+			// todo turned bored off while I work on Ai stuff
+			//if (bored < 11.0) { bored += 0.1; }
+			//teaseDistance = Convert.ToInt32(11 - bored);
 
 			// being carried resets boredom
 			if (beingCarried) { bored = 0; }
@@ -117,7 +118,8 @@ namespace Beehive
 		{
 			Tile here = Refs.m.TileByLoc(loc);
 
-			var maybe = new HashSet<Tile>(new TileComp())
+			// places one square away that we could go to
+			var maybeTiles = new HashSet<Tile>(new TileComp())
 			{
 				here.OneEast(),
 				here.OneSouth(),
@@ -125,32 +127,45 @@ namespace Beehive
 				here.OneWest()
 			};
 
-			// filter not clear maybes
-			maybe = maybe.Where(t => t.clear).ToTileHashSet();
+			// filter tiles containing wall
+			maybeTiles = maybeTiles.Where(t => t.clear).ToTileHashSet();
 
 			// don't move directly onto player
-			maybe = maybe.Where(t => t.loc != Refs.p.loc).ToTileHashSet();
+			// todo (or right next to player)
+			maybeTiles = maybeTiles.Where(t => t.loc != Refs.p.loc).ToTileHashSet();
 
 			// don't move directly onto another cubi
 			foreach (Cubi c in Refs.h.roster)
 			{
-				maybe = maybe.Where(t => t.loc != c.loc).ToTileHashSet();
+				maybeTiles = maybeTiles.Where(t => t.loc != c.loc).ToTileHashSet();
 			}
 
 			// pick a possibility and go there.
-			if (maybe.Count > 0)
+			if (maybeTiles.Count > 0)
 			{
-				double bestflow = maybe.Min(t => t.flow[IdNo]); // linq ftw
+				Flow myFlow = Refs.m.flows[myIdNo];
+
+				// convert maybe tiles to maybe squares
+				HashSet<FlowSquare> maybeSquares = myFlow.FlowSquaresFromTileSet(maybeTiles);
 
 				// is the tile that we're currently on already one of the best tiles?
-				if (here.flow[IdNo] != bestflow)
+				int bestFlow = maybeSquares.Min(sq => sq.flow);
+				FlowSquare hereSquare = myFlow.FlowSquareByLoc(here.loc);
+
+				// if we're not in an optimal place...
+				if (hereSquare.flow != bestFlow)
 				{
-					// make a list of best tiles
-					HashSet<Tile> bests = maybe.Where(t => t.flow[IdNo] == bestflow).ToTileHashSet();
+					// make a list of best flowsquares...
+					HashSet<FlowSquare> bestSquares =
+						maybeSquares.Where(t => t.flow == bestFlow).ToFlowSquareHashSet();
 
-					// choose randomly between best tiles
-					Tile newplace = Tile.RandomFromList(bests);
+					// convert back to tiles..
+					HashSet<Tile> bestTiles = myFlow.TileSetFromFlowSquares(bestSquares);
 
+					// choose randomly between best tiles...
+					Tile newplace = Tile.RandomFromList(bestTiles);
+
+					// finally, perform move to selected tile!
 					loc = newplace.loc;
 				}
 				else
