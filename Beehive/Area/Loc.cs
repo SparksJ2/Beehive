@@ -36,6 +36,11 @@ namespace Beehive
 			return new Loc(a.X - b.X, a.Y - b.Y);
 		}
 
+		public static bool Same(Loc a, Loc b)
+		{
+			return a.X - b.X == 0 && a.Y - b.Y == 0;
+		}
+
 		public static double Distance(Loc l1, Loc l2)
 		{
 			double a = Math.Pow(l1.X - l2.X, 2);

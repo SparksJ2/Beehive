@@ -8,19 +8,41 @@ namespace Beehive
 {
 	public static class CubiAi
 	{
-		public static void SimpleFlee(int distance, Flow ourFlow)
+		public static void FleeToRing(int distance, Flow ourFlow)
 		{
 			HashSet<FlowSquare> heads = new HashSet<FlowSquare>(new FlowSquareComp());
-
 			heads.UnionWith(SetUpInitialRing(distance, ourFlow));
 			heads.UnionWith(PlayerNectarTiles(ourFlow));
+			foreach (FlowSquare fs in heads) { fs.flow = 0; }
+			ourFlow.RunFlow(maskWalls: true);
+		}
 
-			foreach (FlowSquare fs in heads)
-			{
-				fs.flow = 0;
-			}
+		public static void FlowOutAndBack(int distance, Flow ourFlow)
+		{
+			// ref http://www.roguebasin.com/index.php?title=Dijkstra_Maps_Visualized
+			ourFlow.SetToNines();
+			ourFlow.FlowSquareByLoc(Refs.p.loc).flow = 0;
 
-			ourFlow.RunFlow();
+			ourFlow.RunFlow(maskWalls: true);
+			ReportHighAndLow(ourFlow, "after first flow");
+
+			ourFlow.Reverse();
+			ReportHighAndLow(ourFlow, "after reverse   ");
+
+			ourFlow.MultFactor(1.5);
+			ReportHighAndLow(ourFlow, "after mult      ");
+
+			ourFlow.RunFlow(maskWalls: true);
+			ReportHighAndLow(ourFlow, "after 2nd flow  ");
+
+			ourFlow.AdjustFactor(-25);
+		}
+
+		private static void ReportHighAndLow(Flow ourFlow, string s)
+		{
+			double high = ourFlow.GetHighest();
+			double low = ourFlow.GetLowest();
+			Console.WriteLine(s + ", low =" + low + " , high =" + high);
 		}
 
 		// todo turned off while we work on refactoring Ai
@@ -83,6 +105,8 @@ namespace Beehive
 		//public static TiltedRing<Tile> PreferBehind(int distance)
 		//{
 		//}
+
+		// utility stuff follows
 
 		private static HashSet<FlowSquare> SetUpInitialRing(int distance, Flow f)
 		{

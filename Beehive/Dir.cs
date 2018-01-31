@@ -25,7 +25,11 @@ namespace Beehive
 		public static HashSet<Loc> AllAround =
 			new HashSet<Loc> {
 				North, East, South, West,
-			 	NorthEast, SouthEast, SouthWest, NorthWest  };
+			 	NorthEast, SouthEast, SouthWest, NorthWest };
+
+		public static HashSet<Loc> Cardinals =
+			new HashSet<Loc> {
+				North, East, South, West };
 
 		public static HashSet<Loc> KnightMoves =
 			new HashSet<Loc> {

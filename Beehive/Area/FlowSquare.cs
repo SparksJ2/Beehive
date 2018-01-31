@@ -8,7 +8,7 @@ namespace Beehive
 {
 	public class FlowSquare
 	{
-		public int flow;
+		public double flow;
 		public bool mask;
 		public Loc loc;
 		public Flow myFlowMap;

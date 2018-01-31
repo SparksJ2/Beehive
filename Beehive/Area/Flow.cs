@@ -39,6 +39,38 @@ namespace Beehive
 			SetToNines();
 		}
 
+		internal double GetHighest()
+		{
+			double high = 0;
+			for (int x = 0; x < xLen; x++)
+			{
+				for (int y = 0; y < yLen; y++)
+				{
+					if (flowMap[x, y].flow > high && flowMap[x, y].flow < 2000)
+					{
+						high = flowMap[x, y].flow;
+					}
+				}
+			}
+			return high;
+		}
+
+		internal double GetLowest()
+		{
+			double low = 0;
+			for (int x = 0; x < xLen; x++)
+			{
+				for (int y = 0; y < yLen; y++)
+				{
+					if (flowMap[x, y].flow < low && flowMap[x, y].flow > -2000)
+					{
+						low = flowMap[x, y].flow;
+					}
+				}
+			}
+			return low;
+		}
+
 		public FlowSquare FlowSquareByLoc(Loc p)
 		{
 			return flowMap[p.X, p.Y];
@@ -51,6 +83,43 @@ namespace Beehive
 				for (int y = 0; y < yLen; y++)
 				{
 					flowMap[x, y].flow = 9999;
+				}
+			}
+		}
+
+		public void MultFactor(double d) // heh
+		{
+			for (int x = 0; x < xLen; x++)
+			{
+				for (int y = 0; y < yLen; y++)
+				{
+					flowMap[x, y].flow *= d;
+				}
+			}
+		}
+
+		public void AdjustFactor(double d) // heh
+		{
+			for (int x = 0; x < xLen; x++)
+			{
+				for (int y = 0; y < yLen; y++)
+				{
+					flowMap[x, y].flow += d;
+				}
+			}
+		}
+
+		public void Reverse()
+		{
+			double half = GetHighest() / 2;
+			double v;
+			for (int x = 0; x < xLen; x++)
+			{
+				for (int y = 0; y < yLen; y++)
+				{
+					v = flowMap[x, y].flow;
+					v -= half; v = -v; v += half;
+					flowMap[x, y].flow = v;
 				}
 			}
 		}
@@ -80,22 +149,25 @@ namespace Beehive
 			//Console.WriteLine("Finished this flow in " + sw.ElapsedMilliseconds + "ms.");
 		}
 
-		public HashSet<FlowSquare> AllFlow()
+		public HashSet<FlowSquare> AllFlowSquares()
 		{
 			var flowList = new HashSet<FlowSquare>(new FlowSquareComp());
 			foreach (FlowSquare fs in flowMap) { flowList.Add(fs); }
 			return flowList;
 		}
 
-		public void RunFlow()
+		public void RunFlow(Boolean maskWalls)
 		{
-			HashSet<FlowSquare> heads = AllFlow();
+			HashSet<FlowSquare> heads = AllFlowSquares();
 
-			foreach (FlowSquare fs in heads)
+			if (maskWalls)
 			{
-				// mask out walls etc, we don't flow over those
-				Tile thisTile = Refs.m.TileByLoc(fs.loc);
-				if (!thisTile.clear) { fs.mask = true; }
+				foreach (FlowSquare fs in heads)
+				{
+					// mask out walls etc, we don't flow over those
+					Tile thisTile = Refs.m.TileByLoc(fs.loc);
+					if (!thisTile.clear) { fs.mask = true; }
+				}
 			}
 
 			// I call them heads because they 'snake' outwards from the initial point(s)
@@ -132,7 +204,7 @@ namespace Beehive
 						double delta = newFlowSq.flow - fs.flow;
 
 						Tile targetTile = Refs.m.TileByLoc(fs.loc);
-						if (targetTile.clear && delta > 2)
+						if (targetTile.clear && delta > 1.0001)
 						{
 							// ... do so, and then make it a new head ...
 							newFlowSq.flow = fs.flow + 1;

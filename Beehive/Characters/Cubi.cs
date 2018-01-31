@@ -116,28 +116,61 @@ namespace Beehive
 
 		private void AIPathing()
 		{
-			Tile here = Refs.m.TileByLoc(loc);
+			Tile myTile = Refs.m.TileByLoc(loc);
 
 			// places one square away that we could go to
 			var maybeTiles = new HashSet<Tile>(new TileComp())
 			{
-				here.OneEast(),
-				here.OneSouth(),
-				here.OneNorth(),
-				here.OneWest()
+				myTile.OneEast(),
+				myTile.OneSouth(),
+				myTile.OneNorth(),
+				myTile.OneWest()
 			};
 
 			// filter tiles containing wall
 			maybeTiles = maybeTiles.Where(t => t.clear).ToTileHashSet();
 
 			// don't move directly onto player
-			// todo (or right next to player)
 			maybeTiles = maybeTiles.Where(t => t.loc != Refs.p.loc).ToTileHashSet();
+
+			// or right next to the player!
+			Loc playerLoc = Refs.p.loc;
+			Tile playerTile = Refs.m.TileByLoc(playerLoc);
+
+			var grabRange = playerTile.GetPossibleMoves(Dir.Cardinals);
+			foreach (Tile g in grabRange)
+			{
+				maybeTiles = maybeTiles.Where(t => t.loc != g.loc).ToTileHashSet();
+			}
 
 			// don't move directly onto another cubi
 			foreach (Cubi c in Refs.h.roster)
 			{
 				maybeTiles = maybeTiles.Where(t => t.loc != c.loc).ToTileHashSet();
+			}
+
+			if (DistToPlayer() < 1.1) // close range tactical maneuvers!
+			{
+				Console.WriteLine(name + " tactical evading!");
+				// last second evasion, our hope is to move tactically to avoid a foolish mistake
+
+				// first, try to move directly away
+				// todo fairly ugly but will do for now...
+				Loc relative = Loc.SubPts(loc, playerLoc);
+				Tile southTile = myTile.OneSouth();
+				Tile northTile = myTile.OneNorth();
+				Tile eastTile = myTile.OneEast();
+				Tile westTile = myTile.OneWest();
+
+				if (Loc.Same(relative, Dir.North)) { IfClearMoveTo(northTile); return; }
+				if (Loc.Same(relative, Dir.South)) { IfClearMoveTo(southTile); return; }
+				if (Loc.Same(relative, Dir.East)) { IfClearMoveTo(eastTile); return; }
+				if (Loc.Same(relative, Dir.West)) { IfClearMoveTo(westTile); return; }
+				Console.WriteLine(name + " away move evasion failed, todo attemptinging sideways move...");
+
+				// todo - secondly, try to move to the square diagonal to the player
+
+				// todo decision making still a problem, we shouldn't move directly away when diagonally would be better...
 			}
 
 			// pick a possibility and go there.
@@ -149,11 +182,11 @@ namespace Beehive
 				HashSet<FlowSquare> maybeSquares = myFlow.FlowSquaresFromTileSet(maybeTiles);
 
 				// is the tile that we're currently on already one of the best tiles?
-				int bestFlow = maybeSquares.Min(sq => sq.flow);
-				FlowSquare hereSquare = myFlow.FlowSquareByLoc(here.loc);
+				double bestFlow = maybeSquares.Min(sq => sq.flow);
+				FlowSquare hereSquare = myFlow.FlowSquareByLoc(myTile.loc);
 
 				// if we're not in an optimal place...
-				if (hereSquare.flow != bestFlow)
+				if (hereSquare.flow > bestFlow)
 				{
 					// make a list of best flowsquares...
 					HashSet<FlowSquare> bestSquares =
@@ -177,9 +210,14 @@ namespace Beehive
 			}
 		}
 
-		private double DistToPlayer()
+		private void IfClearMoveTo(Tile t)
 		{
-			return Loc.Distance(Refs.p.loc, loc);
+			// not wall and not player
+			if (t.clear == true && t.loc != Refs.p.loc) { loc = t.loc; }
 		}
+
+		private bool FiftyFifty() => rng.NextDouble() > 0.5;
+
+		private double DistToPlayer() => Loc.Distance(Refs.p.loc, loc);
 	}
 }

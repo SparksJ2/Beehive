@@ -76,7 +76,7 @@ namespace Beehive
 			int x1 = (t.loc.X * multX) + edgeX;
 			int y1 = (t.loc.Y * multY) + edgeY;
 
-			if (t.clear) // set flow as background
+			if (t.clear) // set flow as background only
 			{
 				int showFlow = Refs.p.viewFlow;
 
@@ -85,31 +85,23 @@ namespace Beehive
 				if (showFlow > 0)
 				{
 					flowCol = Refs.h.roster[showFlow - 1].myColor;
-				}
-				else
-				{
-					return; // todo there is no player flow for now
-				}
 
-				double flowInt = Refs.m.flows[showFlow].FlowSquareByLoc(t.loc).flow;
+					double flowInt = Refs.m.flows[showFlow].FlowSquareByLoc(t.loc).flow;
 
-				int r = Convert.ToInt32(flowCol.R - flowInt * 4);
-				int g = Convert.ToInt32(flowCol.G - flowInt * 4);
-				int b = Convert.ToInt32(flowCol.B - flowInt * 4);
+					int r = ByteLimit(Convert.ToInt32(flowCol.R - flowInt * 4));
+					int g = ByteLimit(Convert.ToInt32(flowCol.G - flowInt * 4));
+					int b = ByteLimit(Convert.ToInt32(flowCol.B - flowInt * 4));
 
-				r = r < 0 ? 0 : r;
-				g = g < 0 ? 0 : g;
-				b = b < 0 ? 0 : b;
+					Color useCol = Color.FromArgb(r, g, b);
 
-				Color useCol = Color.FromArgb(r, g, b);
-
-				using (var gFlow = Graphics.FromImage(img))
-				{
-					// Create a rectangle for the working area on the map
-					RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
-					using (var flowBrush = new SolidBrush(useCol))
+					using (var gFlow = Graphics.FromImage(img))
 					{
-						gFlow.FillRectangle(flowBrush, tileRect);
+						// Create a rectangle for the working area on the map
+						RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
+						using (var flowBrush = new SolidBrush(useCol))
+						{
+							gFlow.FillRectangle(flowBrush, tileRect);
+						}
 					}
 				}
 
@@ -130,6 +122,13 @@ namespace Beehive
 					gChar.DrawImage(singleTileImage, x1, y1);
 				}
 			}
+		}
+
+		private int ByteLimit(int x)
+		{
+			x = x < 0 ? 0 : x;
+			x = x > 255 ? 255 : x;
+			return x;
 		}
 
 		public void AddCharSpecial(Image img, string s)
