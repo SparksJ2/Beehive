@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnnounceLine.cs" />
+    <Compile Include="Utility\AnnounceLine.cs" />
     <Compile Include="Area\FlowSquare.cs" />
     <Compile Include="Area\FlowSquareComp.cs" />
     <Compile Include="Characters\CubiAi.cs" />
@@ -70,8 +70,8 @@
     <Compile Include="Area\TileComp.cs" />
     <Compile Include="Characters\Harem.cs" />
     <Compile Include="Characters\Mobile.cs" />
-    <Compile Include="Dir.cs" />
-    <Compile Include="HashSetExt.cs" />
+    <Compile Include="Area\Dir.cs" />
+    <Compile Include="Utility\HashSetExt.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,8 +84,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Characters\Cubi.cs" />
-    <Compile Include="Refs.cs" />
-    <Compile Include="RichTextBoxExtensions.cs" />
+    <Compile Include="Utility\Refs.cs" />
+    <Compile Include="Utility\RichTextBoxExtensions.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,11 +118,11 @@
     <Content Include="Area\walls.txt" />
     <Content Include="Notes\workspace.txt" />
     <Content Include="Notes\zodiac.txt" />
-    <Content Include="references.txt" />
+    <Content Include="Notes\references.txt" />
     <None Include="Resources\MicrosoftSansSerif-11pt-12x15px.png" />
     <None Include="Resources\Symbola-11pt-12x15px.png" />
     <None Include="Resources\Symbola-28pt-36x45px-MiscSyms.png" />
-    <Content Include="todo.txt" />
+    <Content Include="Notes\todo.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
