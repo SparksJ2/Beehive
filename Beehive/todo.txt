@@ -1,11 +1,16 @@
 ﻿
 issues:
 ````````
+'cubi id != their place in the roster, leading to off-by-one problems
 
-cubi id != their place in the roster, leading to off-by-one problems
 
 todo list:
 ```````````
+fix dodgy animation coding
+
+adjust pickup / throw interface to be more angband/nethack-esq
+
+add throwing 'cubi (they have wings, they'll be fine!)
 
 'amusing bug: pillow-dodging frees ms. 'cubi from the bed' - 'motivation!'
 
@@ -27,7 +32,7 @@ other todos (see window)
 
 pacman nectar drops for powerup?
 
-carry cubi back to bed for 'win condition' ;)
+carry 'cubi back to bed for 'win condition' ;)
 
 "oops... your lover escapes your grip, keep trying!"
 
@@ -47,18 +52,15 @@ weight allowance
 learn javascript, lol
 line of sight stuff maybe, if it's fun
 
-````````````
-
 further notes
 ``````````````
-the current lust cycle is: player chases cubi > cubi gets horny > cubi leaks nectar >
+the current lust cycle is: player chases 'cubi > 'cubi gets horny > 'cubi leaks nectar >
 player touching nectar consumes it > player gets horny > player spontaneous orgasm >
-player leaks nectar > cubi paths to player nectar > cubi touching nectar consumes it >
-cubi gets more horny > cubi spontaneous orgasm > cubi nectar leaks > (e.t.c....)
-
+player leaks nectar > 'cubi paths to player nectar > 'cubi touching nectar consumes it >
+'cubi gets more horny > 'cubi spontaneous orgasm > 'cubi nectar leaks > (etc...)
 
 tease theory
 `````````````
-while player is distant or not closing in, cubi bored++
+while player is distant or not closing in 'cubi bored++
 when subtract bored from target distance to player
 when too close, spook, set bored = 0 and set target distance far again
