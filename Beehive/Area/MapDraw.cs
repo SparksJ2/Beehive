@@ -57,7 +57,7 @@ namespace Beehive
 			}
 
 			// add flow and walls stuff
-			foreach (Tile t in tiles) { AddBackgroundOrWalls(bmp, t); }
+			foreach (MapTile t in tiles) { AddBackgroundOrWalls(bmp, t); }
 
 			// specials and mobiles
 			AddCharSpecial(bmp, "⛤");
@@ -71,7 +71,7 @@ namespace Beehive
 			return bmp;
 		}
 
-		public void AddBackgroundOrWalls(Image img, Tile t)
+		public void AddBackgroundOrWalls(Image img, MapTile t)
 		{
 			int x1 = (t.loc.X * multX) + edgeX;
 			int y1 = (t.loc.Y * multY) + edgeY;

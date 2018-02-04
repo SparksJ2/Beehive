@@ -141,15 +141,15 @@ namespace Beehive
 				1000 / sw.ElapsedMilliseconds + " fps if it mattered.");
 		}
 
-		private List<AnnounceLine> annLines;
+		private List<AnnounceStruct> annLines;
 
 		internal void Announce(string say, HorizontalAlignment align, Color col)
 		{
 			try
 			{
-				if (annLines == null) annLines = new List<AnnounceLine>();
+				if (annLines == null) annLines = new List<AnnounceStruct>();
 
-				annLines.Add(new AnnounceLine(say, align, col));
+				annLines.Add(new AnnounceStruct(say, align, col));
 				if (annLines.Count > 6) annLines.RemoveAt(0);
 
 				//feedbackBox.Text = "";

@@ -72,8 +72,8 @@ namespace Beehive
 				var nextTo = NewMap.GetNextTo(clear);
 				var isClosed5sides = NewMap.GetClosed5Sides(nextTo);
 
-				var andWalls = Tile.FilterOutClear(isClosed5sides);
-				var andTunnelable = Tile.Tunnelable(andWalls);
+				var andWalls = MapTile.FilterOutClear(isClosed5sides);
+				var andTunnelable = MapTile.Tunnelable(andWalls);
 
 				var candidates = andTunnelable;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Beehive
 {
-	public class Tile
+	public class MapTile
 	{
 		public Loc loc;
 		public bool clear = false;
@@ -18,15 +18,15 @@ namespace Beehive
 
 		public bool noTunnel = false; // only for maze gen
 
-		public Tile()
+		public MapTile()
 		{
 			// intentionally left blank
 		}
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
-		public HashSet<Tile> GetPossibleMoves(HashSet<Loc> options)
+		public HashSet<MapTile> GetPossibleMoves(HashSet<Loc> options)
 		{
-			var result = new HashSet<Tile>(new TileComp());
+			var result = new HashSet<MapTile>(new MapTileComp());
 
 			foreach (Loc p in options)
 			{
@@ -39,66 +39,66 @@ namespace Beehive
 			return result;
 		}
 
-		public static HashSet<Tile> FilterOutClear(HashSet<Tile> ts)
+		public static HashSet<MapTile> FilterOutClear(HashSet<MapTile> ts)
 		{
 			return ts.Where(t => !t.clear).ToTileHashSet();
 		}
 
-		public static HashSet<Tile> Tunnelable(HashSet<Tile> ts)
+		public static HashSet<MapTile> Tunnelable(HashSet<MapTile> ts)
 		{
 			return ts.Where(t => t.noTunnel == false).ToTileHashSet();
 		}
 
 		private static Random rng = new Random();
 
-		public static Tile RandomFromList(HashSet<Tile> tileList)
+		public static MapTile RandomFromList(HashSet<MapTile> tileList)
 		{
 			return tileList.ElementAt(rng.Next(tileList.Count));
 		}
 
-		public Tile OneNorth()
+		public MapTile OneNorth()
 		{
 			var newLoc = Loc.AddPts(loc, Dir.North);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
-		public Tile OneSouth()
+		public MapTile OneSouth()
 		{
 			var newLoc = Loc.AddPts(loc, Dir.South);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
-		public Tile OneEast()
+		public MapTile OneEast()
 		{
 			var newLoc = Loc.AddPts(loc, Dir.East);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
-		public Tile OneWest()
+		public MapTile OneWest()
 		{
 			var newLoc = Loc.AddPts(loc, Dir.West);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
-		public Tile OneNorthEast()
+		public MapTile OneNorthEast()
 		{
 			var newLoc = Loc.AddPts(loc, Dir.NorthEast);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
-		public Tile OneSouthEast()
+		public MapTile OneSouthEast()
 		{
 			var newLoc = Loc.AddPts(loc, Dir.SouthEast);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
-		public Tile OneNorthWest()
+		public MapTile OneNorthWest()
 		{
 			var newLoc = Loc.AddPts(loc, Dir.NorthWest);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;
 		}
 
-		public Tile OneSouthWest()
+		public MapTile OneSouthWest()
 		{
 			var newLoc = Loc.AddPts(loc, Dir.SouthWest);
 			return (Refs.m.ValidLoc(newLoc)) ? Refs.m.TileByLoc(newLoc) : null;

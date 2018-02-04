@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Beehive
 {
-	internal class TileComp : IEqualityComparer<Tile>
+	internal class MapTileComp : IEqualityComparer<MapTile>
 	{
-		public bool Equals(Tile n1, Tile n2)
+		public bool Equals(MapTile n1, MapTile n2)
 		{
 			if (n1 == null && n2 == null) return true;
 			else if (n1 == null || n2 == null) return false;
@@ -16,7 +16,7 @@ namespace Beehive
 			return ((n1.loc.X == n2.loc.X) && (n1.loc.Y == n2.loc.Y));
 		}
 
-		public int GetHashCode(Tile n)
+		public int GetHashCode(MapTile n)
 		{
 			return n.loc.X + (n.loc.Y << 8);
 		}

@@ -12,7 +12,7 @@ namespace Beehive
 {
 	public class Flow
 	{
-		private FlowSquare[,] flowMap;
+		private FlowTile[,] flowMap;
 		private int xLen, yLen;
 		private int level;
 
@@ -28,12 +28,12 @@ namespace Beehive
 			xLen = xIn;
 			yLen = yIn;
 			level = levelIn;
-			flowMap = new FlowSquare[xLen, yLen];
+			flowMap = new FlowTile[xLen, yLen];
 			for (int x = 0; x < xLen; x++)
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					flowMap[x, y] = new FlowSquare(new Loc(x, y), this) { flow = 9999 };
+					flowMap[x, y] = new FlowTile(new Loc(x, y), this) { flow = 9999 };
 				}
 			}
 			SetToNines();
@@ -71,7 +71,7 @@ namespace Beehive
 			return low;
 		}
 
-		public FlowSquare FlowSquareByLoc(Loc p)
+		public FlowTile FlowSquareByLoc(Loc p)
 		{
 			return flowMap[p.X, p.Y];
 		}
@@ -149,23 +149,23 @@ namespace Beehive
 			//Console.WriteLine("Finished this flow in " + sw.ElapsedMilliseconds + "ms.");
 		}
 
-		public HashSet<FlowSquare> AllFlowSquares()
+		public HashSet<FlowTile> AllFlowSquares()
 		{
-			var flowList = new HashSet<FlowSquare>(new FlowSquareComp());
-			foreach (FlowSquare fs in flowMap) { flowList.Add(fs); }
+			var flowList = new HashSet<FlowTile>(new FlowTileComp());
+			foreach (FlowTile fs in flowMap) { flowList.Add(fs); }
 			return flowList;
 		}
 
 		public void RunFlow(Boolean maskWalls)
 		{
-			HashSet<FlowSquare> heads = AllFlowSquares();
+			HashSet<FlowTile> heads = AllFlowSquares();
 
 			if (maskWalls)
 			{
-				foreach (FlowSquare fs in heads)
+				foreach (FlowTile fs in heads)
 				{
 					// mask out walls etc, we don't flow over those
-					Tile thisTile = Refs.m.TileByLoc(fs.loc);
+					MapTile thisTile = Refs.m.TileByLoc(fs.loc);
 					if (!thisTile.clear) { fs.mask = true; }
 				}
 			}
@@ -182,13 +182,13 @@ namespace Beehive
 			{
 				changes = false; failsafe++;
 
-				HashSet<FlowSquare> newHeads = new HashSet<FlowSquare>(new FlowSquareComp());
+				HashSet<FlowTile> newHeads = new HashSet<FlowTile>(new FlowTileComp());
 
 				// for each active head tile...
-				foreach (FlowSquare fs in heads)
+				foreach (FlowTile fs in heads)
 				{
 					// ...find the tiles next to it...
-					HashSet<FlowSquare> newTiles = new HashSet<FlowSquare>(new FlowSquareComp())
+					HashSet<FlowTile> newTiles = new HashSet<FlowTile>(new FlowTileComp())
 					{
 						fs.OneNorth(), fs.OneEast(),
 						fs.OneSouth(), fs.OneWest()
@@ -198,12 +198,12 @@ namespace Beehive
 					newTiles.RemoveWhere(item => item == null);
 
 					// ... and for each one found ...
-					foreach (FlowSquare newFlowSq in newTiles)
+					foreach (FlowTile newFlowSq in newTiles)
 					{
 						// ... if we can improve the flow rating of it ...
 						double delta = newFlowSq.flow - fs.flow;
 
-						Tile targetTile = Refs.m.TileByLoc(fs.loc);
+						MapTile targetTile = Refs.m.TileByLoc(fs.loc);
 						if (targetTile.clear && delta > 1.0001)
 						{
 							// ... do so, and then make it a new head ...
@@ -221,11 +221,11 @@ namespace Beehive
 			}
 		}
 
-		internal HashSet<FlowSquare> FlowSquaresFromTileSet(HashSet<Tile> tiles)
+		internal HashSet<FlowTile> FlowSquaresFromTileSet(HashSet<MapTile> tiles)
 		{
-			var result = new HashSet<FlowSquare>(new FlowSquareComp());
+			var result = new HashSet<FlowTile>(new FlowTileComp());
 
-			foreach (Tile t in tiles)
+			foreach (MapTile t in tiles)
 			{
 				result.Add(FlowSquareByLoc(t.loc));
 			}
@@ -233,11 +233,11 @@ namespace Beehive
 			return result;
 		}
 
-		internal HashSet<Tile> TileSetFromFlowSquares(HashSet<FlowSquare> squares)
+		internal HashSet<MapTile> TileSetFromFlowSquares(HashSet<FlowTile> squares)
 		{
-			var result = new HashSet<Tile>(new TileComp());
+			var result = new HashSet<MapTile>(new MapTileComp());
 
-			foreach (FlowSquare fs in squares)
+			foreach (FlowTile fs in squares)
 			{
 				result.Add(Refs.m.TileByLoc(fs.loc));
 			}

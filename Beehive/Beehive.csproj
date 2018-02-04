@@ -58,16 +58,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utility\AnnounceLine.cs" />
-    <Compile Include="Area\FlowSquare.cs" />
-    <Compile Include="Area\FlowSquareComp.cs" />
+    <Compile Include="Utility\AnnounceStruct.cs" />
+    <Compile Include="Area\FlowTile.cs" />
+    <Compile Include="Area\FlowTileComp.cs" />
     <Compile Include="Characters\CubiAi.cs" />
     <Compile Include="Area\Flow.cs" />
     <Compile Include="Area\Loc.cs" />
     <Compile Include="Area\Map.cs" />
     <Compile Include="Area\MapDraw.cs" />
-    <Compile Include="Area\Tile.cs" />
-    <Compile Include="Area\TileComp.cs" />
+    <Compile Include="Area\MapTile.cs" />
+    <Compile Include="Area\MapTileComp.cs" />
     <Compile Include="Characters\Harem.cs" />
     <Compile Include="Characters\Mobile.cs" />
     <Compile Include="Area\Dir.cs" />
@@ -78,7 +78,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Area\MazeGenerator.cs" />
+    <Compile Include="Area\MapGenerator.cs" />
     <Compile Include="Characters\Player.cs" />
     <Compile Include="Area\MapGenUtils.cs" />
     <Compile Include="Program.cs" />
@@ -113,7 +113,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Characters\personality.txt" />
+    <Content Include="Notes\personality.txt" />
     <Content Include="Notes\notes.txt" />
     <Content Include="Area\walls.txt" />
     <Content Include="Notes\workspace.txt" />

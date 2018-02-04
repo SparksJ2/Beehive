@@ -15,7 +15,7 @@ namespace Beehive
 	{
 		private int xLen;
 		private int yLen;
-		private Tile[,] tiles;
+		private MapTile[,] tiles;
 		public Flow[] flows;
 
 		public Map(int xIn, int yIn)
@@ -23,13 +23,13 @@ namespace Beehive
 			xLen = xIn;
 			yLen = yIn;
 
-			tiles = new Tile[xLen, yLen];
+			tiles = new MapTile[xLen, yLen];
 
 			for (int x = 0; x < xLen; x++)
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					tiles[x, y] = new Tile { loc = new Loc(x, y) };
+					tiles[x, y] = new MapTile { loc = new Loc(x, y) };
 				}
 			}
 
@@ -55,19 +55,19 @@ namespace Beehive
 		}
 
 		// list of all tiles, never changes.
-		public HashSet<Tile> cachedTileList;
+		public HashSet<MapTile> cachedTileList;
 
-		public HashSet<Tile> TileList()
+		public HashSet<MapTile> TileList()
 		{
 			if (cachedTileList == null)
 			{
-				cachedTileList = new HashSet<Tile>(new TileComp());
-				foreach (Tile t in tiles) { cachedTileList.Add(t); }
+				cachedTileList = new HashSet<MapTile>(new MapTileComp());
+				foreach (MapTile t in tiles) { cachedTileList.Add(t); }
 			}
 			return cachedTileList;
 		}
 
-		public Tile TileByLoc(Loc p)
+		public MapTile TileByLoc(Loc p)
 		{
 			return tiles[p.X, p.Y];
 		}
@@ -88,7 +88,7 @@ namespace Beehive
 				p.Y == 0 || p.Y == yLen - 1) ? true : false;
 		}
 
-		public bool IsSolid(Tile t)
+		public bool IsSolid(MapTile t)
 		{
 			return (t == null || t.clear == false);
 		}
@@ -100,7 +100,7 @@ namespace Beehive
 			return (c < 1.01);
 		}
 
-		public HashSet<Tile> GetClearTilesListNormal()
+		public HashSet<MapTile> GetClearTilesListNormal()
 		{
 			return TileList().Where(t => t.clear).ToTileHashSet();
 		}
@@ -125,7 +125,7 @@ namespace Beehive
 
 		public void HealWalls()
 		{
-			foreach (Tile t in tiles)
+			foreach (MapTile t in tiles)
 			{
 				var n = IsSolid(t.OneNorth());
 				var s = IsSolid(t.OneSouth());
@@ -167,10 +167,10 @@ namespace Beehive
 			}
 		} // end healwalls
 
-		public static void SplurtNectar(Tile here, Color myColor)
+		public static void SplurtNectar(MapTile here, Color myColor)
 		{
-			HashSet<Tile> splurtArea = here.GetPossibleMoves(Dir.AllAround);
-			foreach (Tile t in splurtArea)
+			HashSet<MapTile> splurtArea = here.GetPossibleMoves(Dir.AllAround);
+			foreach (MapTile t in splurtArea)
 			{
 				if (t.clear)
 				{

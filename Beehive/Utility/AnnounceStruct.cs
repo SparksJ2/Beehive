@@ -8,13 +8,13 @@ using System.Windows.Forms;
 
 namespace Beehive
 {
-	internal class AnnounceLine
+	internal class AnnounceStruct
 	{
 		public string say;
 		public HorizontalAlignment align;
 		public Color color;
 
-		public AnnounceLine(string sayIn, HorizontalAlignment alignIn, Color colIn)
+		public AnnounceStruct(string sayIn, HorizontalAlignment alignIn, Color colIn)
 		{
 			say = sayIn;
 			align = alignIn;

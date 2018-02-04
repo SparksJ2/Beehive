@@ -75,7 +75,7 @@ namespace Beehive
 				}
 			}
 
-			Tile here = Refs.m.TileByLoc(loc);
+			MapTile here = Refs.m.TileByLoc(loc);
 
 			Loc newpos = loc;
 			this.lastMove = Loc.SubPts(newpos, lastPos);
@@ -108,14 +108,14 @@ namespace Beehive
 
 			// determine release point of throw
 			Loc startloc = Loc.AddPts(this.loc, vector);
-			Tile activeTile = Refs.m.TileByLoc(startloc);
+			MapTile activeTile = Refs.m.TileByLoc(startloc);
 			string pillowGlyph = "O";
 
 			// if the next tile now is our lover, extra spank stun!
 			string moveClear = CheckClearForThrown(vector, activeTile);
 			if (moveClear == "spank")
 			{
-				Tile victimTile = Refs.m.TileByLoc(Loc.AddPts(activeTile.loc, vector));
+				MapTile victimTile = Refs.m.TileByLoc(Loc.AddPts(activeTile.loc, vector));
 				Cubi victim = Refs.m.CubiAt(victimTile.loc);
 
 				Refs.mf.Announce("POINT BLANK PILLOW SPANK!", myAlign, myColor);
@@ -134,10 +134,10 @@ namespace Beehive
 				// nope, it has your cubi in.
 				if (moveClear == "spank")
 				{
-					Tile victimTile = Refs.m.TileByLoc(Loc.AddPts(activeTile.loc, vector));
+					MapTile victimTile = Refs.m.TileByLoc(Loc.AddPts(activeTile.loc, vector));
 					Cubi victim = Refs.m.CubiAt(victimTile.loc);
 
-					HashSet<Tile> escapes = new HashSet<Tile>(new TileComp());
+					HashSet<MapTile> escapes = new HashSet<MapTile>(new MapTileComp());
 
 					if (IsVertical(vector))
 					{
@@ -150,7 +150,7 @@ namespace Beehive
 
 					if (escapes.Count > 0)
 					{
-						victim.loc = Tile.RandomFromList(escapes).loc;
+						victim.loc = MapTile.RandomFromList(escapes).loc;
 						Refs.mf.Announce("Nyahhh missed me!", victim.myAlign, victim.myColor);
 						moveClear = "clear";
 					}
@@ -175,7 +175,7 @@ namespace Beehive
 			Refs.mf.UpdateMap();
 		}
 
-		private string CheckClearForThrown(Loc vector, Tile activeTile)
+		private string CheckClearForThrown(Loc vector, MapTile activeTile)
 		{
 			Loc newloc = Loc.AddPts(vector, activeTile.loc);
 			if (!Refs.m.TileByLoc(newloc).clear) return "wall";
@@ -188,7 +188,7 @@ namespace Beehive
 			return "clear";
 		}
 
-		private void Animate(Tile activeTile, string pillowGlyph)
+		private void Animate(MapTile activeTile, string pillowGlyph)
 		{
 			// todo animation code is a bit makeshift and needs to be cleaned up andmoved to Map.cs
 			activeTile.clear = false;
@@ -204,29 +204,29 @@ namespace Beehive
 
 		private void ThrowPillowNorth()
 		{
-			Tile t = Refs.m.TileByLoc(this.loc).OneNorth();
+			MapTile t = Refs.m.TileByLoc(this.loc).OneNorth();
 			if (t.clear) ThrowPillow(Dir.North);
 		}
 
 		private void ThrowPillowWest()
 		{
-			Tile t = Refs.m.TileByLoc(this.loc).OneWest();
+			MapTile t = Refs.m.TileByLoc(this.loc).OneWest();
 			if (t.clear) ThrowPillow(Dir.West);
 		}
 
 		private void ThrowPillowEast()
 		{
-			Tile t = Refs.m.TileByLoc(this.loc).OneEast();
+			MapTile t = Refs.m.TileByLoc(this.loc).OneEast();
 			if (t.clear) ThrowPillow(Dir.East);
 		}
 
 		private void ThrowPillowSouth()
 		{
-			Tile t = Refs.m.TileByLoc(this.loc).OneSouth();
+			MapTile t = Refs.m.TileByLoc(this.loc).OneSouth();
 			if (t.clear) ThrowPillow(Dir.South);
 		}
 
-		private void PlaceItemOnTile(Tile t)
+		private void PlaceItemOnTile(MapTile t)
 		{
 			if (Refs.m.EdgeLoc(t.loc)) return;
 
@@ -280,49 +280,49 @@ namespace Beehive
 
 		private void PlaceItemNorth()
 		{
-			Tile t = Refs.m.TileByLoc(loc).OneNorth();
+			MapTile t = Refs.m.TileByLoc(loc).OneNorth();
 			PlaceItemOnTile(t);
 		}
 
 		private void PlaceItemEast()
 		{
-			Tile t = Refs.m.TileByLoc(loc).OneEast();
+			MapTile t = Refs.m.TileByLoc(loc).OneEast();
 			PlaceItemOnTile(t);
 		}
 
 		private void PlaceItemSouth()
 		{
-			Tile t = Refs.m.TileByLoc(loc).OneSouth();
+			MapTile t = Refs.m.TileByLoc(loc).OneSouth();
 			PlaceItemOnTile(t);
 		}
 
 		private void PlaceItemWest()
 		{
-			Tile t = Refs.m.TileByLoc(loc).OneWest();
+			MapTile t = Refs.m.TileByLoc(loc).OneWest();
 			PlaceItemOnTile(t);
 		}
 
 		private void RunNorth()
 		{
-			Tile t = Refs.m.TileByLoc(loc).OneNorth();
+			MapTile t = Refs.m.TileByLoc(loc).OneNorth();
 			if (t.clear) loc = t.loc;
 		}
 
 		private void RunEast()
 		{
-			Tile t = Refs.m.TileByLoc(loc).OneEast();
+			MapTile t = Refs.m.TileByLoc(loc).OneEast();
 			if (t.clear) loc = t.loc;
 		}
 
 		private void RunSouth()
 		{
-			Tile t = Refs.m.TileByLoc(loc).OneSouth();
+			MapTile t = Refs.m.TileByLoc(loc).OneSouth();
 			if (t.clear) loc = t.loc;
 		}
 
 		private void RunWest()
 		{
-			Tile t = Refs.m.TileByLoc(loc).OneWest();
+			MapTile t = Refs.m.TileByLoc(loc).OneWest();
 			if (t.clear) loc = t.loc;
 		}
 

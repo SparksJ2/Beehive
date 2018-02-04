@@ -13,9 +13,9 @@ namespace Beehive
 {
 	public partial class Map
 	{
-		public HashSet<Tile> GetNextTo(Tile t)
+		public HashSet<MapTile> GetNextTo(MapTile t)
 		{
-			var x = new HashSet<Tile>(new TileComp())
+			var x = new HashSet<MapTile>(new MapTileComp())
 			{ t.OneNorth(), t.OneSouth(), t.OneEast(), t.OneWest() };
 
 			x.RemoveWhere(i => i == null);
@@ -27,10 +27,10 @@ namespace Beehive
 			return x;
 		}
 
-		public HashSet<Tile> GetClosed3Sides(HashSet<Tile> input)
+		public HashSet<MapTile> GetClosed3Sides(HashSet<MapTile> input)
 		{
-			var r = new HashSet<Tile>(new TileComp());
-			foreach (Tile t in input)
+			var r = new HashSet<MapTile>(new MapTileComp());
+			foreach (MapTile t in input)
 			{
 				int sum = 0;
 				if (t.OneNorth() == null || t.OneNorth().clear == false) sum++;
@@ -54,7 +54,7 @@ namespace Beehive
 				t.loc.Y > point1.Y &&
 				t.loc.Y < point2.Y).ToTileHashSet();
 
-			foreach (Tile t in workingList) { t.clear = true; }
+			foreach (MapTile t in workingList) { t.clear = true; }
 		}
 
 		internal void MarkNoTunnel(Loc point1, Loc point2)
@@ -68,13 +68,13 @@ namespace Beehive
 				t.loc.Y > point1.Y &&
 				t.loc.Y < point2.Y).ToTileHashSet();
 
-			foreach (Tile t in workingList) { t.noTunnel = true; }
+			foreach (MapTile t in workingList) { t.noTunnel = true; }
 		}
 
-		public HashSet<Tile> GetClosed5Sides(HashSet<Tile> input)
+		public HashSet<MapTile> GetClosed5Sides(HashSet<MapTile> input)
 		{
-			var r = new HashSet<Tile>(new TileComp());
-			foreach (Tile t in input)
+			var r = new HashSet<MapTile>(new MapTileComp());
+			foreach (MapTile t in input)
 			{
 				int sum = 0;
 				if (t.OneNorth() == null || t.OneNorth().clear == false) sum++;
@@ -93,24 +93,24 @@ namespace Beehive
 		}
 
 		// cached clear tiles list for maze generator. not for general use.
-		private HashSet<Tile> clearCache;
+		private HashSet<MapTile> clearCache;
 
-		public void AddToClearTileCache(Tile t)
+		public void AddToClearTileCache(MapTile t)
 		{
 			clearCache.Add(t);
 		}
 
-		public void DelFromClearTileCache(Tile t)
+		public void DelFromClearTileCache(MapTile t)
 		{
 			clearCache.Remove(t);
 		}
 
 		public void InitClearTilesCache()
 		{
-			clearCache = TileList().Where(t => t.clear).ToHashSet(new TileComp());
+			clearCache = TileList().Where(t => t.clear).ToHashSet(new MapTileComp());
 		}
 
-		public HashSet<Tile> GetClearTilesCache()
+		public HashSet<MapTile> GetClearTilesCache()
 		{
 			return clearCache;
 			//return TileList().Where(t => t.clear).ToList();

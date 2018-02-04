@@ -10,10 +10,10 @@ namespace Beehive
 	{
 		public static void FleeToRing(int distance, Flow ourFlow)
 		{
-			HashSet<FlowSquare> heads = new HashSet<FlowSquare>(new FlowSquareComp());
+			HashSet<FlowTile> heads = new HashSet<FlowTile>(new FlowTileComp());
 			heads.UnionWith(SetUpInitialRing(distance, ourFlow));
 			heads.UnionWith(PlayerNectarTiles(ourFlow));
-			foreach (FlowSquare fs in heads) { fs.flow = 0; }
+			foreach (FlowTile fs in heads) { fs.flow = 0; }
 			ourFlow.RunFlow(maskWalls: true);
 		}
 
@@ -46,13 +46,13 @@ namespace Beehive
 		}
 
 		// utility stuff follows
-		private static HashSet<FlowSquare> SetUpInitialRing(int distance, Flow f)
+		private static HashSet<FlowTile> SetUpInitialRing(int distance, Flow f)
 		{
 			// we'll try to flow to a set distance from the player by
 			//    making a ring of target squares and working from there
 			var allTiles = Refs.m.TileList();
-			var ring = new HashSet<Tile>(new TileComp());
-			foreach (Tile t in allTiles)
+			var ring = new HashSet<MapTile>(new MapTileComp());
+			foreach (MapTile t in allTiles)
 			{
 				double c = Loc.Distance(Refs.p.loc, t.loc);
 				if (c > distance - 1 && c < distance + 1) { ring.Add(t); }
@@ -61,12 +61,12 @@ namespace Beehive
 			return f.FlowSquaresFromTileSet(ring);
 		}
 
-		private static HashSet<FlowSquare> PlayerNectarTiles(Flow f)
+		private static HashSet<FlowTile> PlayerNectarTiles(Flow f)
 		{
 			// tiles containing player nectar are targets too
 			var allTiles = Refs.m.TileList();
-			var nectarTiles = new HashSet<Tile>(new TileComp());
-			foreach (Tile t in allTiles)
+			var nectarTiles = new HashSet<MapTile>(new MapTileComp());
+			foreach (MapTile t in allTiles)
 			{
 				if (t.hasNectar && t.nectarCol == Refs.p.myColor)
 				{

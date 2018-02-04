@@ -17,13 +17,13 @@ namespace Beehive
 		public static HashSet<Tile> ToTileHashSet<Tile>(this IEnumerable<Tile> source)
 		{
 			return new HashSet<Tile>(source,
-				(IEqualityComparer<Tile>)new TileComp());
+				(IEqualityComparer<Tile>)new MapTileComp());
 		}
 
 		public static HashSet<FlowSquare> ToFlowSquareHashSet<FlowSquare>(this IEnumerable<FlowSquare> source)
 		{
 			return new HashSet<FlowSquare>(source,
-				(IEqualityComparer<FlowSquare>)new FlowSquareComp());
+				(IEqualityComparer<FlowSquare>)new FlowTileComp());
 		}
 
 		public static HashSet<Tile> Difference<Tile>(

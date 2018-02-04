@@ -45,7 +45,7 @@ namespace Beehive
 
 		public void AiMove()
 		{
-			Tile here = Refs.m.TileByLoc(loc);
+			MapTile here = Refs.m.TileByLoc(loc);
 
 			// todo bored just slowly goes up for now
 			// todo turned bored off while I work on Ai stuff
@@ -116,10 +116,10 @@ namespace Beehive
 
 		private void AIPathing()
 		{
-			Tile myTile = Refs.m.TileByLoc(loc);
+			MapTile myTile = Refs.m.TileByLoc(loc);
 
 			// places one square away that we could go to
-			var maybeTiles = new HashSet<Tile>(new TileComp())
+			var maybeTiles = new HashSet<MapTile>(new MapTileComp())
 			{
 				myTile.OneEast(),
 				myTile.OneSouth(),
@@ -135,10 +135,10 @@ namespace Beehive
 
 			// or right next to the player!
 			Loc playerLoc = Refs.p.loc;
-			Tile playerTile = Refs.m.TileByLoc(playerLoc);
+			MapTile playerTile = Refs.m.TileByLoc(playerLoc);
 
 			var grabRange = playerTile.GetPossibleMoves(Dir.Cardinals);
-			foreach (Tile g in grabRange)
+			foreach (MapTile g in grabRange)
 			{
 				maybeTiles = maybeTiles.Where(t => t.loc != g.loc).ToTileHashSet();
 			}
@@ -157,10 +157,10 @@ namespace Beehive
 				// first, try to move directly away
 				// todo fairly ugly but will do for now...
 				Loc relative = Loc.SubPts(loc, playerLoc);
-				Tile southTile = myTile.OneSouth();
-				Tile northTile = myTile.OneNorth();
-				Tile eastTile = myTile.OneEast();
-				Tile westTile = myTile.OneWest();
+				MapTile southTile = myTile.OneSouth();
+				MapTile northTile = myTile.OneNorth();
+				MapTile eastTile = myTile.OneEast();
+				MapTile westTile = myTile.OneWest();
 
 				if (Loc.Same(relative, Dir.North)) { IfClearMoveTo(northTile); return; }
 				if (Loc.Same(relative, Dir.South)) { IfClearMoveTo(southTile); return; }
@@ -179,24 +179,24 @@ namespace Beehive
 				Flow myFlow = Refs.m.flows[myIdNo];
 
 				// convert maybe tiles to maybe squares
-				HashSet<FlowSquare> maybeSquares = myFlow.FlowSquaresFromTileSet(maybeTiles);
+				HashSet<FlowTile> maybeSquares = myFlow.FlowSquaresFromTileSet(maybeTiles);
 
 				// is the tile that we're currently on already one of the best tiles?
 				double bestFlow = maybeSquares.Min(sq => sq.flow);
-				FlowSquare hereSquare = myFlow.FlowSquareByLoc(myTile.loc);
+				FlowTile hereSquare = myFlow.FlowSquareByLoc(myTile.loc);
 
 				// if we're not in an optimal place...
 				if (hereSquare.flow > bestFlow)
 				{
 					// make a list of best flowsquares...
-					HashSet<FlowSquare> bestSquares =
+					HashSet<FlowTile> bestSquares =
 						maybeSquares.Where(t => t.flow == bestFlow).ToFlowSquareHashSet();
 
 					// convert back to tiles..
-					HashSet<Tile> bestTiles = myFlow.TileSetFromFlowSquares(bestSquares);
+					HashSet<MapTile> bestTiles = myFlow.TileSetFromFlowSquares(bestSquares);
 
 					// choose randomly between best tiles...
-					Tile newplace = Tile.RandomFromList(bestTiles);
+					MapTile newplace = MapTile.RandomFromList(bestTiles);
 
 					// finally, perform move to selected tile!
 					loc = newplace.loc;
@@ -210,7 +210,7 @@ namespace Beehive
 			}
 		}
 
-		private void IfClearMoveTo(Tile t)
+		private void IfClearMoveTo(MapTile t)
 		{
 			// not wall and not player
 			if (t.clear == true && t.loc != Refs.p.loc) { loc = t.loc; }
