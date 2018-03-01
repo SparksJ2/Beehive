@@ -32,10 +32,7 @@ namespace Beehive
 			Refs.mf = this;
 		}
 
-		private void DenyFocus(object sender, EventArgs e)
-		{
-			this.ActiveControl = null;
-		}
+		private void DenyFocus(object sender, EventArgs e) => this.ActiveControl = null;
 
 		private void MainForm_Shown(object sender, EventArgs e)
 		{

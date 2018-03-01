@@ -321,9 +321,6 @@ namespace Beehive
 			if (t.clear) loc = t.loc;
 		}
 
-		private bool IsVertical(Loc v)
-		{
-			return v.Y != 0;
-		}
+		private bool IsVertical(Loc v) => v.Y != 0;
 	}
 }

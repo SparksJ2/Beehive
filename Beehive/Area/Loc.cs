@@ -17,25 +17,13 @@ namespace Beehive
 			X = xIn; Y = yIn;
 		}
 
-		public static Loc AddPts(Loc a, Loc b)
-		{
-			return new Loc(a.X + b.X, a.Y + b.Y);
-		}
+		public static Loc AddPts(Loc a, Loc b) => new Loc(a.X + b.X, a.Y + b.Y);
 
-		public static Loc AddPts(Loc a, Loc b, Loc c)
-		{
-			return new Loc(a.X + b.X + c.X, a.Y + b.Y + c.Y);
-		}
+		public static Loc AddPts(Loc a, Loc b, Loc c) => new Loc(a.X + b.X + c.X, a.Y + b.Y + c.Y);
 
-		public static Loc SubPts(Loc a, Loc b)
-		{
-			return new Loc(a.X - b.X, a.Y - b.Y);
-		}
+		public static Loc SubPts(Loc a, Loc b) => new Loc(a.X - b.X, a.Y - b.Y);
 
-		public static bool Same(Loc a, Loc b)
-		{
-			return a.X - b.X == 0 && a.Y - b.Y == 0;
-		}
+		public static bool Same(Loc a, Loc b) => a.X - b.X == 0 && a.Y - b.Y == 0;
 
 		public static double Distance(Loc l1, Loc l2)
 		{

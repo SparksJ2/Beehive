@@ -12,9 +12,6 @@ namespace Beehive
 			return ((fs1.loc.X == fs2.loc.X) && (fs1.loc.Y == fs2.loc.Y));
 		}
 
-		public int GetHashCode(FlowTile n)
-		{
-			return n.loc.X + (n.loc.Y << 8);
-		}
+		public int GetHashCode(FlowTile n) => n.loc.X + (n.loc.Y << 8);
 	}
 }

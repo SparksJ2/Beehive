@@ -47,10 +47,7 @@ namespace Beehive
 			return cachedTileList;
 		}
 
-		public bool ClearLoc(Loc p)
-		{
-			return TileByLoc(p).clear == true;
-		}
+		public bool ClearLoc(Loc p) => TileByLoc(p).clear == true;
 
 		public bool EdgeLoc(Loc p)
 		{
@@ -58,10 +55,7 @@ namespace Beehive
 				p.Y == 0 || p.Y == yLen - 1) ? true : false;
 		}
 
-		public bool IsSolid(MapTile t)
-		{
-			return (t == null || t.clear == false);
-		}
+		public bool IsSolid(MapTile t) => (t == null || t.clear == false);
 
 		public bool Touching(Mobile m1, Mobile m2)
 		{
@@ -70,10 +64,7 @@ namespace Beehive
 			return (c < 1.01);
 		}
 
-		public MapTileSet GetClearTilesListNormal()
-		{
-			return TileList().Where(t => t.clear).ToMapTileSet();
-		}
+		public MapTileSet GetClearTilesListNormal() => TileList().Where(t => t.clear).ToMapTileSet();
 
 		public Cubi CubiAt(Loc l)
 		{

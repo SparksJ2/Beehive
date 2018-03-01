@@ -15,10 +15,7 @@ namespace Beehive
 		//	return new HashSet<MapTile>(source, (IEqualityComparer<MapTile>)new MapTileComp());
 		//}
 
-		public static MapTileSet ToMapTileSet(this IEnumerable<MapTile> source)
-		{
-			return new MapTileSet(source);
-		}
+		public static MapTileSet ToMapTileSet(this IEnumerable<MapTile> source) => new MapTileSet(source);
 
 		//public static HashSet<FlowTile> ToFlowTileHashSet<FlowTile>(this IEnumerable<FlowTile> source)
 		//{
@@ -26,10 +23,7 @@ namespace Beehive
 		//		(IEqualityComparer<FlowTile>)new FlowTileComp());
 		//}
 
-		public static FlowTileSet ToFlowTileSet(this IEnumerable<FlowTile> source)
-		{
-			return new FlowTileSet(source);
-		}
+		public static FlowTileSet ToFlowTileSet(this IEnumerable<FlowTile> source) => new FlowTileSet(source);
 
 		//public static HashSet<Tile> Difference<Tile>(
 		//	this HashSet<Tile> source, HashSet<Tile> subtract)

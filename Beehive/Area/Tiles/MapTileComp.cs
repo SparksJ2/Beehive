@@ -12,11 +12,6 @@ namespace Beehive
 			return ((n1.loc.X == n2.loc.X) && (n1.loc.Y == n2.loc.Y));
 		}
 
-		public int GetHashCode(MapTile n)
-		{
-			return n.loc.X + (n.loc.Y << 8);
-		}
-
-		//return base.GetHashCode();
+		public int GetHashCode(MapTile n) => n.loc.X + (n.loc.Y << 8);
 	}
 }

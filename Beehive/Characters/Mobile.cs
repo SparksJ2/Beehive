@@ -18,9 +18,6 @@ namespace Beehive
 			myColor = useColor;
 		}
 
-		public void SetXY(int x, int y)
-		{
-			loc = new Loc(x, y);
-		}
+		public void SetXY(int x, int y) => loc = new Loc(x, y);
 	}
 }

@@ -86,25 +86,12 @@ namespace Beehive
 		// cached clear tiles list for maze generator. not for general use.
 		private MapTileSet clearCache;
 
-		public void AddToClearTileCache(MapTile t)
-		{
-			clearCache.Add(t);
-		}
+		public void AddToClearTileCache(MapTile t) => clearCache.Add(t);
 
-		public void DelFromClearTileCache(MapTile t)
-		{
-			clearCache.Remove(t);
-		}
+		public void DelFromClearTileCache(MapTile t) => clearCache.Remove(t);
 
-		public void InitClearTilesCache()
-		{
-			clearCache = TileList().Where(t => t.clear).ToMapTileSet();
-		}
+		public void InitClearTilesCache() => clearCache = TileList().Where(t => t.clear).ToMapTileSet();
 
-		public MapTileSet GetClearTilesCache()
-		{
-			return clearCache;
-			//return TileList().Where(t => t.clear).ToList();
-		}
+		public MapTileSet GetClearTilesCache() => clearCache;
 	}
 }
