@@ -48,7 +48,7 @@ namespace Beehive
 			Refs.m = new MazeGenerator().Create(65, 25);
 
 			// draw initial map
-			Flow.RemakeAllFlows();
+			FlowMap.RemakeAllFlows();
 			UpdateMap();
 
 			MessageBox.Show(
@@ -98,7 +98,7 @@ namespace Beehive
 				Refs.m.HealWalls();
 				Console.WriteLine("Finished HealWalls at " + sw.ElapsedMilliseconds + "ms in.");
 
-				Flow.RemakeAllFlows();
+				FlowMap.RemakeAllFlows();
 				Console.WriteLine("Finished RemakeAllFlows at " + sw.ElapsedMilliseconds + "ms in.");
 
 				if (timePass == 0)

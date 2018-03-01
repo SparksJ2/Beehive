@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -86,7 +85,7 @@ namespace Beehive
 			{
 				Refs.mf.Announce("Awwww yeah! *splurt*", myAlign, myColor);
 				timepass += 5;
-				Map.SplurtNectar(here, myColor);
+				MainMap.SplurtNectar(here, myColor);
 				horny = 0;
 			}
 
@@ -133,7 +132,7 @@ namespace Beehive
 					MapTile victimTile = Refs.m.TileByLoc(Loc.AddPts(activeTile.loc, vector));
 					Cubi victim = Refs.m.CubiAt(victimTile.loc);
 
-					HashSet<MapTile> escapes = new HashSet<MapTile>(new MapTileComp());
+					MapTileSet escapes = new MapTileSet();
 
 					if (IsVertical(vector))
 					{

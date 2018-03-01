@@ -10,23 +10,32 @@ namespace Beehive
 			return new HashSet<T>(source, comparer);
 		}
 
-		public static HashSet<Tile> ToTileHashSet<Tile>(this IEnumerable<Tile> source)
+		//public static HashSet<MapTile> ToTileHashSet<MapTile>(this IEnumerable<MapTile> source)
+		//{
+		//	return new HashSet<MapTile>(source, (IEqualityComparer<MapTile>)new MapTileComp());
+		//}
+
+		public static MapTileSet ToMapTileSet(this IEnumerable<MapTile> source)
 		{
-			return new HashSet<Tile>(source,
-				(IEqualityComparer<Tile>)new MapTileComp());
+			return new MapTileSet(source);
 		}
 
-		public static HashSet<FlowSquare> ToFlowSquareHashSet<FlowSquare>(this IEnumerable<FlowSquare> source)
+		//public static HashSet<FlowTile> ToFlowTileHashSet<FlowTile>(this IEnumerable<FlowTile> source)
+		//{
+		//	return new HashSet<FlowTile>(source,
+		//		(IEqualityComparer<FlowTile>)new FlowTileComp());
+		//}
+
+		public static FlowTileSet ToFlowTileSet(this IEnumerable<FlowTile> source)
 		{
-			return new HashSet<FlowSquare>(source,
-				(IEqualityComparer<FlowSquare>)new FlowTileComp());
+			return new FlowTileSet(source);
 		}
 
-		public static HashSet<Tile> Difference<Tile>(
-			this HashSet<Tile> source, HashSet<Tile> subtract)
-		{
-			foreach (Tile item in subtract) { source.Remove(item); }
-			return source;
-		}
+		//public static HashSet<Tile> Difference<Tile>(
+		//	this HashSet<Tile> source, HashSet<Tile> subtract)
+		//{
+		//	foreach (Tile item in subtract) { source.Remove(item); }
+		//	return source;
+		//}
 	}
 }

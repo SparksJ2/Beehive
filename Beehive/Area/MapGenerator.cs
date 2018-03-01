@@ -8,12 +8,12 @@ namespace Beehive
 	{
 		private Random rng = new Random();
 
-		public Map Create(int xlen, int ylen)
+		public MainMap Create(int xlen, int ylen)
 		{
 			var sw = new Stopwatch();
 			sw.Start();
 
-			Map NewMap = new Map(xlen, ylen);
+			MainMap NewMap = new MainMap(xlen, ylen);
 			Refs.m = NewMap; // needed for utils
 
 			int xmax = NewMap.GetXLen() - 2;
@@ -76,7 +76,7 @@ namespace Beehive
 				if (candidates.Count > 0)
 				{
 					// ... dig in one of them randomly
-					var picked = candidates.ElementAt(rng.Next(candidates.Count));
+					MapTile picked = candidates.ElementAt(rng.Next(candidates.Count));
 					picked.clear = true;
 					NewMap.AddToClearTileCache(picked);
 				}

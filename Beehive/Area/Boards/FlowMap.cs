@@ -3,33 +3,31 @@ using System.Collections.Generic;
 
 namespace Beehive
 {
-	public class Flow
+	public class FlowMap : BaseMap<FlowTile>
 	{
-		private FlowTile[,] flowMap;
-		private int xLen, yLen;
 		private int level;
 
-		public static void RemakeAllFlows()
-		{
-			//var sw = new Stopwatch(); sw.Start();
-			foreach (Flow f in Refs.m.flows) { f.RemakeFlow(); }
-			//Console.WriteLine("Finished all flows in " + sw.ElapsedMilliseconds + "ms.");
-		}
-
-		public Flow(int xIn, int yIn, int levelIn)
+		public FlowMap(int xIn, int yIn, int levelIn)
 		{
 			xLen = xIn;
 			yLen = yIn;
 			level = levelIn;
-			flowMap = new FlowTile[xLen, yLen];
+			tiles = new FlowTile[xLen, yLen];
 			for (int x = 0; x < xLen; x++)
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					flowMap[x, y] = new FlowTile(new Loc(x, y), this) { flow = 9999 };
+					tiles[x, y] = new FlowTile(new Loc(x, y), this) { flow = 9999 };
 				}
 			}
 			SetToNines();
+		}
+
+		public static void RemakeAllFlows()
+		{
+			//var sw = new Stopwatch(); sw.Start();
+			foreach (FlowMap f in Refs.m.flows) { f.RemakeFlow(); }
+			//Console.WriteLine("Finished all flows in " + sw.ElapsedMilliseconds + "ms.");
 		}
 
 		internal double GetHighest()
@@ -39,9 +37,9 @@ namespace Beehive
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					if (flowMap[x, y].flow > high && flowMap[x, y].flow < 2000)
+					if (tiles[x, y].flow > high && tiles[x, y].flow < 2000)
 					{
-						high = flowMap[x, y].flow;
+						high = tiles[x, y].flow;
 					}
 				}
 			}
@@ -55,18 +53,13 @@ namespace Beehive
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					if (flowMap[x, y].flow < low && flowMap[x, y].flow > -2000)
+					if (tiles[x, y].flow < low && tiles[x, y].flow > -2000)
 					{
-						low = flowMap[x, y].flow;
+						low = tiles[x, y].flow;
 					}
 				}
 			}
 			return low;
-		}
-
-		public FlowTile FlowSquareByLoc(Loc p)
-		{
-			return flowMap[p.X, p.Y];
 		}
 
 		public void SetToNines()
@@ -75,7 +68,7 @@ namespace Beehive
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					flowMap[x, y].flow = 9999;
+					tiles[x, y].flow = 9999;
 				}
 			}
 		}
@@ -86,7 +79,7 @@ namespace Beehive
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					flowMap[x, y].flow *= d;
+					tiles[x, y].flow *= d;
 				}
 			}
 		}
@@ -97,7 +90,7 @@ namespace Beehive
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					flowMap[x, y].flow += d;
+					tiles[x, y].flow += d;
 				}
 			}
 		}
@@ -110,9 +103,9 @@ namespace Beehive
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					v = flowMap[x, y].flow;
+					v = tiles[x, y].flow;
 					v -= half; v = -v; v += half;
-					flowMap[x, y].flow = v;
+					tiles[x, y].flow = v;
 				}
 			}
 		}
@@ -145,7 +138,7 @@ namespace Beehive
 		public HashSet<FlowTile> AllFlowSquares()
 		{
 			var flowList = new HashSet<FlowTile>(new FlowTileComp());
-			foreach (FlowTile fs in flowMap) { flowList.Add(fs); }
+			foreach (FlowTile fs in tiles) { flowList.Add(fs); }
 			return flowList;
 		}
 
@@ -183,8 +176,10 @@ namespace Beehive
 					// ...find the tiles next to it...
 					HashSet<FlowTile> newTiles = new HashSet<FlowTile>(new FlowTileComp())
 					{
-						fs.OneNorth(), fs.OneEast(),
-						fs.OneSouth(), fs.OneWest()
+						fs.OneNorth(),
+						fs.OneEast(),
+						fs.OneSouth(),
+						fs.OneWest()
 					};
 
 					// ... (ignoring any nulls) ...
@@ -212,30 +207,6 @@ namespace Beehive
 
 				if (failsafe == 255) Console.WriteLine("Hit flow failsafe!");
 			}
-		}
-
-		internal HashSet<FlowTile> FlowSquaresFromTileSet(HashSet<MapTile> tiles)
-		{
-			var result = new HashSet<FlowTile>(new FlowTileComp());
-
-			foreach (MapTile t in tiles)
-			{
-				result.Add(FlowSquareByLoc(t.loc));
-			}
-
-			return result;
-		}
-
-		internal HashSet<MapTile> TileSetFromFlowSquares(HashSet<FlowTile> squares)
-		{
-			var result = new HashSet<MapTile>(new MapTileComp());
-
-			foreach (FlowTile fs in squares)
-			{
-				result.Add(Refs.m.TileByLoc(fs.loc));
-			}
-
-			return result;
 		}
 	}
 }

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Beehive
 {
-	public partial class Map
+	public partial class MainMap : IDisposable
 	{
 		private Bitmap SansSerifBitmapFont;
 		private Bitmap SymbolaBitmapFont;
@@ -80,7 +80,7 @@ namespace Beehive
 				{
 					flowCol = Refs.h.roster[showFlow - 1].myColor;
 
-					double flowInt = Refs.m.flows[showFlow].FlowSquareByLoc(t.loc).flow;
+					double flowInt = Refs.m.flows[showFlow].TileByLoc(t.loc).flow;
 
 					int r = ByteLimit(Convert.ToInt32(flowCol.R - flowInt * 4));
 					int g = ByteLimit(Convert.ToInt32(flowCol.G - flowInt * 4));
@@ -311,7 +311,7 @@ namespace Beehive
 				var rowofchars = "";
 				for (int x = 0; x < xLen; x++)
 				{
-					var t = tiles[x, y];
+					MapTile t = tiles[x, y];
 					if (t.clear)
 						rowofchars += " ";
 					else
@@ -320,6 +320,24 @@ namespace Beehive
 				Debug.WriteLine("|" + rowofchars + "|");
 			}
 			Debug.WriteLine("+--------------------+");
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// dispose managed resources here
+				SansSerifBitmapFont.Dispose();
+				SymbolaBitmapFont.Dispose();
+				SymbolaBitmapFontMiscSyms.Dispose();
+			}
+			// free native resources
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Beehive
 {
-	internal class FlowTileComp : IEqualityComparer<FlowTile>
+	public class FlowTileComp : IEqualityComparer<FlowTile>
 	{
 		public bool Equals(FlowTile fs1, FlowTile fs2)
 		{

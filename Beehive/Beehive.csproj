@@ -58,16 +58,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Area\Boards\BaseMap.cs" />
+    <Compile Include="Area\Tiles\BaseTile.cs" />
+    <Compile Include="Area\Tiles\ConvertTiles.cs" />
+    <Compile Include="Area\Tiles\FlowTileSet.cs" />
+    <Compile Include="Area\Tiles\MapTileSet.cs" />
     <Compile Include="Utility\AnnounceStruct.cs" />
-    <Compile Include="Area\FlowTile.cs" />
-    <Compile Include="Area\FlowTileComp.cs" />
+    <Compile Include="Area\Tiles\FlowTile.cs" />
+    <Compile Include="Area\Tiles\FlowTileComp.cs" />
     <Compile Include="Characters\CubiAi.cs" />
-    <Compile Include="Area\Flow.cs" />
+    <Compile Include="Area\Boards\FlowMap.cs" />
     <Compile Include="Area\Loc.cs" />
-    <Compile Include="Area\Map.cs" />
+    <Compile Include="Area\Boards\MainMap.cs" />
     <Compile Include="Area\MapDraw.cs" />
-    <Compile Include="Area\MapTile.cs" />
-    <Compile Include="Area\MapTileComp.cs" />
+    <Compile Include="Area\Tiles\MapTile.cs" />
+    <Compile Include="Area\Tiles\MapTileComp.cs" />
     <Compile Include="Characters\Harem.cs" />
     <Compile Include="Characters\Mobile.cs" />
     <Compile Include="Area\Dir.cs" />

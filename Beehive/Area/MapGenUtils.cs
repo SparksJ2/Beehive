@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Beehive
 {
-	public partial class Map
+	public partial class MainMap
 	{
-		public HashSet<MapTile> GetNextTo(MapTile t)
+		public MapTileSet GetNextTo(MapTile t)
 		{
-			var x = new HashSet<MapTile>(new MapTileComp())
+			var x = new MapTileSet()
 			{ t.OneNorth(), t.OneSouth(), t.OneEast(), t.OneWest() };
 
 			x.RemoveWhere(i => i == null);
@@ -19,9 +18,9 @@ namespace Beehive
 			return x;
 		}
 
-		public HashSet<MapTile> GetClosed3Sides(HashSet<MapTile> input)
+		public MapTileSet GetClosed3Sides(MapTileSet input)
 		{
-			var r = new HashSet<MapTile>(new MapTileComp());
+			var r = new MapTileSet();
 			foreach (MapTile t in input)
 			{
 				int sum = 0;
@@ -37,14 +36,14 @@ namespace Beehive
 		internal void MakeClearArea(Loc point1, Loc point2)
 		{
 			// todo note clears the area inside, not including the boundary
-			var workingList = TileList();
+			MapTileSet workingList = TileList();
 			workingList = workingList.Where(t =>
-				t.loc.X > point1.X &&
-				t.loc.X < point2.X).ToTileHashSet();
+			   t.loc.X > point1.X &&
+			   t.loc.X < point2.X).ToMapTileSet();
 
 			workingList = workingList.Where(t =>
-				t.loc.Y > point1.Y &&
-				t.loc.Y < point2.Y).ToTileHashSet();
+			  t.loc.Y > point1.Y &&
+			  t.loc.Y < point2.Y).ToMapTileSet();
 
 			foreach (MapTile t in workingList) { t.clear = true; }
 		}
@@ -53,19 +52,19 @@ namespace Beehive
 		{
 			var workingList = TileList();
 			workingList = workingList.Where(t =>
-				t.loc.X > point1.X &&
-				t.loc.X < point2.X).ToTileHashSet();
+			   t.loc.X > point1.X &&
+			   t.loc.X < point2.X).ToMapTileSet();
 
 			workingList = workingList.Where(t =>
-				t.loc.Y > point1.Y &&
-				t.loc.Y < point2.Y).ToTileHashSet();
+			   t.loc.Y > point1.Y &&
+			   t.loc.Y < point2.Y).ToMapTileSet();
 
 			foreach (MapTile t in workingList) { t.noTunnel = true; }
 		}
 
-		public HashSet<MapTile> GetClosed5Sides(HashSet<MapTile> input)
+		public MapTileSet GetClosed5Sides(MapTileSet input)
 		{
-			var r = new HashSet<MapTile>(new MapTileComp());
+			var r = new MapTileSet();
 			foreach (MapTile t in input)
 			{
 				int sum = 0;
@@ -85,7 +84,7 @@ namespace Beehive
 		}
 
 		// cached clear tiles list for maze generator. not for general use.
-		private HashSet<MapTile> clearCache;
+		private MapTileSet clearCache;
 
 		public void AddToClearTileCache(MapTile t)
 		{
@@ -99,10 +98,10 @@ namespace Beehive
 
 		public void InitClearTilesCache()
 		{
-			clearCache = TileList().Where(t => t.clear).ToHashSet(new MapTileComp());
+			clearCache = TileList().Where(t => t.clear).ToMapTileSet();
 		}
 
-		public HashSet<MapTile> GetClearTilesCache()
+		public MapTileSet GetClearTilesCache()
 		{
 			return clearCache;
 			//return TileList().Where(t => t.clear).ToList();

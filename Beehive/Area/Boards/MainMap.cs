@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
 namespace Beehive
 {
-	public partial class Map : IDisposable
+	public partial class MainMap : BaseMap<MapTile>
 	{
-		private int xLen;
-		private int yLen;
-		private MapTile[,] tiles;
-		public Flow[] flows;
+		public FlowMap[] flows;
 
-		public Map(int xIn, int yIn)
+		public MainMap(int xIn, int yIn)
 		{
 			xLen = xIn;
 			yLen = yIn;
@@ -23,52 +19,32 @@ namespace Beehive
 			{
 				for (int y = 0; y < yLen; y++)
 				{
-					tiles[x, y] = new MapTile { loc = new Loc(x, y) };
+					tiles[x, y] = new MapTile(new Loc(x, y), this);
 				}
 			}
 
 			// init all flows stuff here
 			var flowsCount = Refs.h.roster.Count + 1; // 0 is for master, eventually
-			flows = new Flow[flowsCount];
+			flows = new FlowMap[flowsCount];
 			for (int fLoop = 0; fLoop < flowsCount; fLoop++)
 			{
-				flows[fLoop] = new Flow(xIn, yIn, fLoop);
+				flows[fLoop] = new FlowMap(xIn, yIn, fLoop);
 			}
 
 			LoadBitmapFonts();
 		}
 
-		public int GetXLen()
-		{
-			return xLen;
-		}
-
-		public int GetYLen()
-		{
-			return yLen;
-		}
-
 		// list of all tiles, never changes.
-		public HashSet<MapTile> cachedTileList;
+		public MapTileSet cachedTileList;
 
-		public HashSet<MapTile> TileList()
+		public MapTileSet TileList()
 		{
 			if (cachedTileList == null)
 			{
-				cachedTileList = new HashSet<MapTile>(new MapTileComp());
+				cachedTileList = new MapTileSet();
 				foreach (MapTile t in tiles) { cachedTileList.Add(t); }
 			}
 			return cachedTileList;
-		}
-
-		public MapTile TileByLoc(Loc p)
-		{
-			return tiles[p.X, p.Y];
-		}
-
-		public bool ValidLoc(Loc p)
-		{
-			return (p.X >= 0 && p.X < xLen && p.Y >= 0 && p.Y < yLen) ? true : false;
 		}
 
 		public bool ClearLoc(Loc p)
@@ -94,9 +70,9 @@ namespace Beehive
 			return (c < 1.01);
 		}
 
-		public HashSet<MapTile> GetClearTilesListNormal()
+		public MapTileSet GetClearTilesListNormal()
 		{
-			return TileList().Where(t => t.clear).ToTileHashSet();
+			return TileList().Where(t => t.clear).ToMapTileSet();
 		}
 
 		public Cubi CubiAt(Loc l)
@@ -163,7 +139,7 @@ namespace Beehive
 
 		public static void SplurtNectar(MapTile here, Color myColor)
 		{
-			HashSet<MapTile> splurtArea = here.GetPossibleMoves(Dir.AllAround);
+			MapTileSet splurtArea = here.GetPossibleMoves(Dir.AllAround);
 			foreach (MapTile t in splurtArea)
 			{
 				if (t.clear)
@@ -172,24 +148,6 @@ namespace Beehive
 					t.nectarCol = myColor;
 				}
 			}
-		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				// dispose managed resources here
-				SansSerifBitmapFont.Dispose();
-				SymbolaBitmapFont.Dispose();
-				SymbolaBitmapFontMiscSyms.Dispose();
-			}
-			// free native resources
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
 		}
 	}
 }

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Beehive
 {
-	public delegate void CubiAiType(int distance, Flow f);
+	public delegate void CubiAiType(int distance, FlowMap f);
 
 	public class Cubi : Mobile
 	{
@@ -91,7 +91,7 @@ namespace Beehive
 				if (horny > 15) // having fun
 				{
 					Refs.mf.Announce("Aieee I'm cumming! *splurt*", myAlign, myColor);
-					Map.SplurtNectar(here, myColor);
+					MainMap.SplurtNectar(here, myColor);
 					spanked += 5;
 					horny = 0;
 				}
@@ -111,7 +111,7 @@ namespace Beehive
 			MapTile myTile = Refs.m.TileByLoc(loc);
 
 			// places one square away that we could go to
-			var maybeTiles = new HashSet<MapTile>(new MapTileComp())
+			var maybeTiles = new MapTileSet()
 			{
 				myTile.OneEast(),
 				myTile.OneSouth(),
@@ -120,10 +120,10 @@ namespace Beehive
 			};
 
 			// filter tiles containing wall
-			maybeTiles = maybeTiles.Where(t => t.clear).ToTileHashSet();
+			maybeTiles = maybeTiles.Where(t => t.clear).ToMapTileSet();
 
 			// don't move directly onto player
-			maybeTiles = maybeTiles.Where(t => t.loc != Refs.p.loc).ToTileHashSet();
+			maybeTiles = maybeTiles.Where(t => t.loc != Refs.p.loc).ToMapTileSet();
 
 			// or right next to the player!
 			Loc playerLoc = Refs.p.loc;
@@ -132,13 +132,13 @@ namespace Beehive
 			var grabRange = playerTile.GetPossibleMoves(Dir.Cardinals);
 			foreach (MapTile g in grabRange)
 			{
-				maybeTiles = maybeTiles.Where(t => t.loc != g.loc).ToTileHashSet();
+				maybeTiles = maybeTiles.Where(t => t.loc != g.loc).ToMapTileSet();
 			}
 
 			// don't move directly onto another cubi
 			foreach (Cubi c in Refs.h.roster)
 			{
-				maybeTiles = maybeTiles.Where(t => t.loc != c.loc).ToTileHashSet();
+				maybeTiles = maybeTiles.Where(t => t.loc != c.loc).ToMapTileSet();
 			}
 
 			if (DistToPlayer() < 1.1) // close range tactical maneuvers!
@@ -168,24 +168,24 @@ namespace Beehive
 			// pick a possibility and go there.
 			if (maybeTiles.Count > 0)
 			{
-				Flow myFlow = Refs.m.flows[myIdNo];
+				FlowMap myFlow = Refs.m.flows[myIdNo];
 
 				// convert maybe tiles to maybe squares
-				HashSet<FlowTile> maybeSquares = myFlow.FlowSquaresFromTileSet(maybeTiles);
+				HashSet<FlowTile> maybeSquares = ConvertTiles.FlowSquaresFromTileSet(maybeTiles, myFlow);
 
 				// is the tile that we're currently on already one of the best tiles?
 				double bestFlow = maybeSquares.Min(sq => sq.flow);
-				FlowTile hereSquare = myFlow.FlowSquareByLoc(myTile.loc);
+				FlowTile hereSquare = myFlow.TileByLoc(myTile.loc);
 
 				// if we're not in an optimal place...
 				if (hereSquare.flow > bestFlow)
 				{
 					// make a list of best flowsquares...
-					HashSet<FlowTile> bestSquares =
-						maybeSquares.Where(t => t.flow == bestFlow).ToFlowSquareHashSet();
+					FlowTileSet bestSquares =
+						maybeSquares.Where(t => t.flow == bestFlow).ToFlowTileSet();
 
 					// convert back to tiles..
-					HashSet<MapTile> bestTiles = myFlow.TileSetFromFlowSquares(bestSquares);
+					MapTileSet bestTiles = ConvertTiles.TileSetFromFlowSquares(bestSquares);
 
 					// choose randomly between best tiles...
 					MapTile newplace = MapTile.RandomFromList(bestTiles);
