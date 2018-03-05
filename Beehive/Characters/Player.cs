@@ -9,6 +9,7 @@ namespace Beehive
 		public int heldCubiId = 0;
 		public int viewFlow = 0;
 		public Loc lastMove;
+		private bool throwmode, placemode;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
@@ -19,6 +20,8 @@ namespace Beehive
 
 		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
+			// returns number of round passed, 0 for free actions, 1 for normal moves.
+
 			Loc lastPos = loc;
 			// visualise flows
 			if (e.KeyCode == Keys.D0) { viewFlow = 0; return 0; }
@@ -28,43 +31,53 @@ namespace Beehive
 			if (e.KeyCode == Keys.D4) { viewFlow = 4; return 0; }
 
 			int timepass = 1;
-			if (e.Shift)
+			if (e.KeyCode == Keys.Space)
 			{
-				// time doesn't progress when moving pillows, for now
-				timepass = 0;
+				return 1; // allow waiting at any time
+			}
+
+			if (placemode || e.Shift)
+			{
+				timepass = 0; // place / pickup is a free action for now
 				switch (e.KeyCode)
 				{
-					case Keys.Down: case Keys.S: PlaceItemSouth(); break;
-					case Keys.D: case Keys.Right: PlaceItemEast(); break;
-					case Keys.Up: case Keys.W: PlaceItemNorth(); break;
-					case Keys.Left: case Keys.A: PlaceItemWest(); break;
-					case Keys.Space: break; // allow waiting
-					default: timepass = 0; break;
+					case Keys.Down: case Keys.S: PlaceItemSouth(); FinishMode(); break;
+					case Keys.Right: case Keys.D: PlaceItemEast(); FinishMode(); break;
+					case Keys.Up: case Keys.W: PlaceItemNorth(); FinishMode(); break;
+					case Keys.Left: case Keys.A: PlaceItemWest(); FinishMode(); break;
+					case Keys.Escape: CancelModes(); break;
+					default: break;
 				}
 			}
-			else if (e.Control)
+			else if (throwmode || e.Control)
 			{
-				// time doesn't progress when throwing pillows either, for now
-				timepass = 0;
+				timepass = 0; // throw is a free action for now
 				switch (e.KeyCode)
 				{
-					case Keys.Down: case Keys.S: ThrowPillowSouth(); break;
-					case Keys.D: case Keys.Right: ThrowPillowEast(); break;
-					case Keys.Up: case Keys.W: ThrowPillowNorth(); break;
-					case Keys.Left: case Keys.A: ThrowPillowWest(); break;
-					case Keys.Space: break; // allow waiting
-					default: timepass = 0; break;
+					case Keys.Down: case Keys.S: ThrowPillowSouth(); FinishMode(); break;
+					case Keys.Right: case Keys.D: ThrowPillowEast(); FinishMode(); break;
+					case Keys.Up: case Keys.W: ThrowPillowNorth(); FinishMode(); break;
+					case Keys.Left: case Keys.A: ThrowPillowWest(); FinishMode(); break;
+					case Keys.Escape: CancelModes(); break;
+					default: break;
 				}
 			}
 			else
 			{
+				timepass = 1;
 				switch (e.KeyCode)
 				{
-					case Keys.S: case Keys.Down: RunSouth(); break;
-					case Keys.D: case Keys.Right: RunEast(); break;
-					case Keys.W: case Keys.Up: RunNorth(); break;
-					case Keys.A: case Keys.Left: RunWest(); break;
-					case Keys.Space: break; // allow waiting
+					// moves cost 1 turn
+					case Keys.Down: case Keys.S: RunSouth(); break;
+					case Keys.Right: case Keys.D: RunEast(); break;
+					case Keys.Up: case Keys.W: RunNorth(); break;
+					case Keys.Left: case Keys.A: RunWest(); break;
+
+					// mode changes are free actions
+					case Keys.T: SetThrowMode(); timepass = 0; break;
+					case Keys.P: SetPlaceMode(); timepass = 0; break;
+					case Keys.Escape: CancelModes(); timepass = 0; break;
+
 					default: timepass = 0; break;
 				}
 			}
@@ -72,7 +85,7 @@ namespace Beehive
 			MapTile here = Refs.m.TileByLoc(loc);
 
 			Loc newpos = loc;
-			this.lastMove = Loc.SubPts(newpos, lastPos);
+			lastMove = Loc.SubPts(newpos, lastPos);
 
 			if (here.hasNectar && here.nectarCol != myColor) // yum
 			{
@@ -89,6 +102,32 @@ namespace Beehive
 			}
 
 			return timepass;
+		}
+
+		private void FinishMode()
+		{
+			Refs.mf.Announce("Back to the chase!", myAlign, myColor);
+			placemode = false;
+			throwmode = false;
+		}
+
+		private void CancelModes()
+		{
+			placemode = false;
+			throwmode = false;
+			Refs.mf.Announce("Never mind! Back to the chase!", myAlign, myColor);
+		}
+
+		private void SetPlaceMode()
+		{
+			placemode = true;
+			Refs.mf.Announce("Place/pickup where? (esc to cancel)", myAlign, myColor);
+		}
+
+		private void SetThrowMode()
+		{
+			throwmode = true;
+			Refs.mf.Announce("Throw which way? (esc to cancel)", myAlign, myColor);
 		}
 
 		public void UpdateInventory()

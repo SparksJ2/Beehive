@@ -56,7 +56,10 @@ namespace Beehive
 				"Keys:\n" +
 				"\tWASD or arrow keys to move.\n" +
 				"\tShift+Direction to pick up or put down various things.\n" +
-				"\tCtrl+Direction to throw pillows!\n");
+				"\tCtrl+Direction to throw pillows!\n\n" +
+				"Alternate controls:\n\n" +
+				"\t'P' then Direction to place/pickup.\n" +
+				"\t'T' then Direction to throw.");
 
 			Player p = Refs.p;
 			Cubi c = Refs.h.roster[0];
