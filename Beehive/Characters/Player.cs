@@ -54,10 +54,10 @@ namespace Beehive
 				timepass = 0; // throw is a free action for now
 				switch (e.KeyCode)
 				{
-					case Keys.Down: case Keys.S: ThrowPillowSouth(); FinishMode(); break;
-					case Keys.Right: case Keys.D: ThrowPillowEast(); FinishMode(); break;
-					case Keys.Up: case Keys.W: ThrowPillowNorth(); FinishMode(); break;
-					case Keys.Left: case Keys.A: ThrowPillowWest(); FinishMode(); break;
+					case Keys.Down: case Keys.S: ThrowSouth(); FinishMode(); break;
+					case Keys.Right: case Keys.D: ThrowEast(); FinishMode(); break;
+					case Keys.Up: case Keys.W: ThrowNorth(); FinishMode(); break;
+					case Keys.Left: case Keys.A: ThrowWest(); FinishMode(); break;
 					case Keys.Escape: CancelModes(); break;
 					default: break;
 				}

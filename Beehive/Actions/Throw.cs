@@ -4,45 +4,31 @@ namespace Beehive
 {
 	partial class Player
 	{
-		private void ThrowPillowNorth()
+		private void ThrowNorth()
 		{
 			MapTile t = Refs.m.TileByLoc(this.loc).OneNorth();
-			if (t.clear) ThrowPillow(Dir.North);
+			if (t.clear) ThrowDirection(Dir.North);
 		}
 
-		private void ThrowPillowWest()
+		private void ThrowWest()
 		{
 			MapTile t = Refs.m.TileByLoc(this.loc).OneWest();
-			if (t.clear) ThrowPillow(Dir.West);
+			if (t.clear) ThrowDirection(Dir.West);
 		}
 
-		private void ThrowPillowEast()
+		private void ThrowEast()
 		{
 			MapTile t = Refs.m.TileByLoc(this.loc).OneEast();
-			if (t.clear) ThrowPillow(Dir.East);
+			if (t.clear) ThrowDirection(Dir.East);
 		}
 
-		private void ThrowPillowSouth()
+		private void ThrowSouth()
 		{
 			MapTile t = Refs.m.TileByLoc(this.loc).OneSouth();
-			if (t.clear) ThrowPillow(Dir.South);
+			if (t.clear) ThrowDirection(Dir.South);
 		}
 
-		private void Animate(MapTile activeTile, string pillowGlyph)
-		{
-			// todo animation code is a bit makeshift and needs to be cleaned up andmoved to Map.cs
-			activeTile.clear = false;
-			activeTile.gly = pillowGlyph;
-
-			Refs.mf.UpdateMap();
-
-			Thread.Sleep(75);
-			activeTile.clear = true;
-			activeTile.gly = " ";
-			Refs.mf.UpdateMap();
-		}
-
-		private void ThrowPillow(Loc vector)
+		private void ThrowDirection(Loc vector)
 		{
 			Refs.mf.Announce("You throw a pillow!", myAlign, myColor);
 			// can't throw without pillow!
@@ -52,6 +38,7 @@ namespace Beehive
 			{ heldPillows--; UpdateInventory(); }
 
 			// determine release point of throw
+			// todo check for hit on very first tile -- where to put pillow?
 			Loc startloc = Loc.AddPts(this.loc, vector);
 			MapTile activeTile = Refs.m.TileByLoc(startloc);
 			string pillowGlyph = "O";
@@ -117,6 +104,20 @@ namespace Beehive
 			// leave pillow on ground to form new obstruction
 			activeTile.clear = false;
 			Refs.m.HealWalls();
+			Refs.mf.UpdateMap();
+		}
+
+		private void Animate(MapTile activeTile, string pillowGlyph)
+		{
+			// todo animation code is a bit makeshift and needs to be cleaned up andmoved to Map.cs
+			activeTile.clear = false;
+			activeTile.gly = pillowGlyph;
+
+			Refs.mf.UpdateMap();
+
+			Thread.Sleep(75);
+			activeTile.clear = true;
+			activeTile.gly = " ";
 			Refs.mf.UpdateMap();
 		}
 
