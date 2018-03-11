@@ -41,10 +41,10 @@ namespace Beehive
 				timepass = 0; // place / pickup is a free action for now
 				switch (e.KeyCode)
 				{
-					case Keys.Down: case Keys.S: PlaceItemSouth(); FinishMode(); break;
-					case Keys.Right: case Keys.D: PlaceItemEast(); FinishMode(); break;
-					case Keys.Up: case Keys.W: PlaceItemNorth(); FinishMode(); break;
-					case Keys.Left: case Keys.A: PlaceItemWest(); FinishMode(); break;
+					case Keys.Down: case Keys.S: ActionSouth(); FinishMode(); break;
+					case Keys.Right: case Keys.D: ActionEast(); FinishMode(); break;
+					case Keys.Up: case Keys.W: ActionNorth(); FinishMode(); break;
+					case Keys.Left: case Keys.A: ActionWest(); FinishMode(); break;
 					case Keys.Escape: CancelModes(); break;
 					default: break;
 				}
@@ -106,7 +106,7 @@ namespace Beehive
 
 		private void FinishMode()
 		{
-			Refs.mf.Announce("Back to the chase!", myAlign, myColor);
+			//Refs.mf.Announce("Back to the chase!", myAlign, myColor);
 			placemode = false;
 			throwmode = false;
 		}
