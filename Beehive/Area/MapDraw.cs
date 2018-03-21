@@ -303,6 +303,36 @@ namespace Beehive
 			return result;
 		}
 
+		public void CubiSingleTileUpdate(Cubi c)
+		{
+			Image img = Refs.mf.MainBitmap.Image;
+			AddCharMobile(img, c);
+		}
+
+		internal void ResetTile(Loc loc)
+		{
+			Image img = Refs.mf.MainBitmap.Image;
+			SetBlank(img, Refs.m.TileByLoc(loc));
+			AddBackgroundOrWalls(img, Refs.m.TileByLoc(loc));
+		}
+
+		public void SetBlank(Image img, MapTile t)
+		{
+			int x1 = (t.loc.X * multX) + edgeX;
+			int y1 = (t.loc.Y * multY) + edgeY;
+			Color useCol = Color.DarkSlateBlue;
+
+			using (var gFlow = Graphics.FromImage(img))
+			{
+				// Create a rectangle for the working area on the map
+				RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
+				using (var flowBrush = new SolidBrush(useCol))
+				{
+					gFlow.FillRectangle(flowBrush, tileRect);
+				}
+			}
+		}
+
 		public void ConsoleDump()
 		{
 			Debug.WriteLine("+--------------------+");
