@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -7,6 +8,7 @@ namespace Beehive
 	public partial class MainMap : BaseMap<MapTile>
 	{
 		public FlowMap[] flows;
+		public List<Loc> pens;
 
 		public MainMap(int xIn, int yIn)
 		{
@@ -22,6 +24,9 @@ namespace Beehive
 					tiles[x, y] = new MapTile(new Loc(x, y), this);
 				}
 			}
+
+			// holding pens
+			pens = new List<Loc>();
 
 			// init all flows stuff here
 			var flowsCount = Refs.h.roster.Count + 1; // 0 is for master, eventually

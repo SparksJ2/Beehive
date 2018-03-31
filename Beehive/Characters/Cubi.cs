@@ -100,10 +100,8 @@ namespace Beehive
 
 		private bool OnBed()
 		{
-			// todo fix hardcoded location
-			return ((loc.X == 31 && loc.Y == 12) ||
-				(loc.X == 31 + 3 && loc.Y == 12) ||
-				(loc.X == 31 + 6 && loc.Y == 12));
+			foreach (Loc pen in Refs.m.pens) { if (Loc.Same(pen, loc)) { return true; } }
+			return false;
 		}
 
 		private void AIPathing()

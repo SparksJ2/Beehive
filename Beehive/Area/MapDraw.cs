@@ -131,21 +131,17 @@ namespace Beehive
 			{
 				using (var gBed = Graphics.FromImage(img))
 				{
-					int bedx1 = (30 * multX) + edgeX;
-					int bedy1 = (11 * multY) + edgeY;
-					int bedx2 = multX * 3;
-					int bedy2 = multY * 3;
-					RectangleF tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
 					Bitmap bedBitmap = GetTileBitmapOld("⛤", tripSize);
-					gBed.DrawImage(bedBitmap, bedx1, bedy1);
 
-					bedx1 = (33 * multX) + edgeX;
-					tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
-					gBed.DrawImage(bedBitmap, bedx1, bedy1);
-
-					bedx1 = (36 * multX) + edgeX;
-					tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
-					gBed.DrawImage(bedBitmap, bedx1, bedy1);
+					foreach (Loc pen in Refs.m.pens)
+					{
+						int bedx1 = ((pen.X - 1) * multX) + edgeX;
+						int bedy1 = ((pen.Y - 1) * multY) + edgeY;
+						int bedx2 = multX * 3;
+						int bedy2 = multY * 3;
+						RectangleF tileBed = new RectangleF(bedx1, bedy1, bedx2, bedy2);
+						gBed.DrawImage(bedBitmap, bedx1, bedy1);
+					}
 				}
 			}
 		}

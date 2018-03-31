@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -26,8 +27,8 @@ namespace Beehive
 			NewMap.TileByLoc(new Loc(xmax, ymax)).clear = true;
 
 			// set up central area
-			var homeStartClear = new Loc(29, 10);
-			var homeEndClear = new Loc(39, 14);
+			var homeStartClear = new Loc(29, 8);
+			var homeEndClear = new Loc(38, 15);
 			NewMap.MakeClearArea(homeStartClear, homeEndClear);
 
 			// mark home walls not to be tunneled away
@@ -36,14 +37,25 @@ namespace Beehive
 			NewMap.MarkNoTunnel(homeStartWall, homeEndWall);
 
 			// todo hardcoded doorway
-			var doorStartClear = new Loc(32, 9);
-			var doorEndClear = new Loc(36, 11);
+			var doorStartClear = new Loc(31, 7);
+			var doorEndClear = new Loc(36, 9);
 			NewMap.MakeClearArea(doorStartClear, doorEndClear);
 
 			// todo hardcoded initial departure area
-			var spawnStartClear = new Loc(29, 7);
-			var spawnEndClear = new Loc(39, 10);
+			var spawnStartClear = new Loc(29, 6);
+			var spawnEndClear = new Loc(38, 8);
 			NewMap.MakeClearArea(spawnStartClear, spawnEndClear);
+
+			// todo new hardcoded holding pens
+			int penBaseX = 32;
+			int penBaseY = 10;
+			NewMap.pens = new List<Loc>
+			{
+				new Loc(penBaseX + 0, penBaseY),
+				new Loc(penBaseX + 3, penBaseY),
+				new Loc(penBaseX + 0, penBaseY + 3),
+				new Loc(penBaseX + 3, penBaseY + 3)
+			};
 
 			//NewMap.TileByLoc(new Loc(35, homeStartClear.Y)).clear = true;
 			//NewMap.TileByLoc(new Loc(34, homeStartClear.Y)).clear = true;
