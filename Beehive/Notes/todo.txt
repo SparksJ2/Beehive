@@ -7,6 +7,8 @@ issues:
 todo list:
 ```````````
 fix dodgy animation coding
+	(throwing has glitches when going over holding pens,
+	also needs to redraw player char after release)
 
 adjust pickup / throw interface to be more angband/nethack-esq
 

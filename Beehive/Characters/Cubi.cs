@@ -72,7 +72,7 @@ namespace Beehive
 				loc = Refs.p.loc;
 				return;
 			}
-			else if (OnBed())
+			else if (OnPent())
 			{
 				return;
 			}
@@ -98,9 +98,9 @@ namespace Beehive
 			}
 		}
 
-		private bool OnBed()
+		private bool OnPent()
 		{
-			foreach (Loc pen in Refs.m.pens) { if (Loc.Same(pen, loc)) { return true; } }
+			foreach (Loc pent in Refs.m.pents) { if (Loc.Same(pent, loc)) { return true; } }
 			return false;
 		}
 

@@ -8,7 +8,7 @@ namespace Beehive
 	public partial class MainMap : BaseMap<MapTile>
 	{
 		public FlowMap[] flows;
-		public List<Loc> pens;
+		public List<Loc> pents;
 
 		public MainMap(int xIn, int yIn)
 		{
@@ -26,7 +26,7 @@ namespace Beehive
 			}
 
 			// holding pens
-			pens = new List<Loc>();
+			pents = new List<Loc>();
 
 			// init all flows stuff here
 			var flowsCount = Refs.h.roster.Count + 1; // 0 is for master, eventually

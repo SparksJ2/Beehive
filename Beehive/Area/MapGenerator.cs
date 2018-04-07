@@ -47,14 +47,14 @@ namespace Beehive
 			NewMap.MakeClearArea(spawnStartClear, spawnEndClear);
 
 			// todo new hardcoded holding pens
-			int penBaseX = 32;
-			int penBaseY = 10;
-			NewMap.pens = new List<Loc>
+			int pentBaseX = 32;
+			int pentBaseY = 10;
+			NewMap.pents = new List<Loc>
 			{
-				new Loc(penBaseX + 0, penBaseY),
-				new Loc(penBaseX + 3, penBaseY),
-				new Loc(penBaseX + 0, penBaseY + 3),
-				new Loc(penBaseX + 3, penBaseY + 3)
+				new Loc(pentBaseX + 0, pentBaseY),
+				new Loc(pentBaseX + 3, pentBaseY),
+				new Loc(pentBaseX + 0, pentBaseY + 3),
+				new Loc(pentBaseX + 3, pentBaseY + 3)
 			};
 
 			//NewMap.TileByLoc(new Loc(35, homeStartClear.Y)).clear = true;

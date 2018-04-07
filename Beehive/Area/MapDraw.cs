@@ -133,7 +133,7 @@ namespace Beehive
 				{
 					Bitmap bedBitmap = GetTileBitmapOld("⛤", tripSize);
 
-					foreach (Loc pen in Refs.m.pens)
+					foreach (Loc pen in Refs.m.pents)
 					{
 						int bedx1 = ((pen.X - 1) * multX) + edgeX;
 						int bedy1 = ((pen.Y - 1) * multY) + edgeY;
