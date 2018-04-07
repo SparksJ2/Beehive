@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ThrowCubi.cs" />
+    <Compile Include="Actions\ThrowPillow.cs" />
     <Compile Include="Area\Boards\BaseMap.cs" />
     <Compile Include="Area\Tiles\BaseTile.cs" />
     <Compile Include="Area\Tiles\ConvertTiles.cs" />
