@@ -165,6 +165,7 @@ namespace Beehive
 			}
 		}
 
+		[Serializable()]
 		private struct TileDesc // for TileBitmapCache only
 		{
 			private string s;

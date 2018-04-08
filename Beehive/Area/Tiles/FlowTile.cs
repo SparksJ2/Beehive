@@ -1,5 +1,8 @@
-﻿namespace Beehive
+﻿using System;
+
+namespace Beehive
 {
+	[Serializable()]
 	public class FlowTile : BaseTile<FlowMap, FlowTile>
 	{
 		public double flow;

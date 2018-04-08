@@ -9,6 +9,7 @@ namespace Beehive
 {
 	public delegate void CubiAiType(int distance, FlowMap f);
 
+	[Serializable()]
 	public class Cubi : Mobile
 	{
 		private int spanked = 0; // or other wise incapped, e.g. orgasm throes

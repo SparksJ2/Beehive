@@ -1,8 +1,12 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace Beehive
 {
+	[Serializable()]
 	public partial class Player : Mobile
 	{
 		public int heldPillows = 0;
@@ -20,6 +24,20 @@ namespace Beehive
 
 		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
+			if (e.KeyCode == Keys.F6)
+			{
+				Refs.mf.Announce("Saving game...", myAlign, myColor);
+				SaveGame();
+				return 0;
+			}
+
+			if (e.KeyCode == Keys.F9)
+			{
+				Refs.mf.Announce("Loading game...", myAlign, myColor);
+				LoadGame();
+				return 0;
+			}
+
 			// returns number of round passed, 0 for free actions, 1 for normal moves.
 
 			Loc lastPos = loc;
@@ -102,6 +120,54 @@ namespace Beehive
 			}
 
 			return timepass;
+		}
+
+		private void SaveGame()
+		{
+			Stream TestFileStream = File.Create("map.bin");
+			BinaryFormatter serializer = new BinaryFormatter();
+			serializer.Serialize(TestFileStream, Refs.m);
+			TestFileStream.Close();
+
+			Stream TestFileStream2 = File.Create("player.bin");
+			BinaryFormatter serializer2 = new BinaryFormatter();
+			serializer2.Serialize(TestFileStream2, Refs.p);
+			TestFileStream2.Close();
+
+			Stream TestFileStream3 = File.Create("harem.bin");
+			BinaryFormatter serializer3 = new BinaryFormatter();
+			serializer3.Serialize(TestFileStream3, Refs.h);
+			TestFileStream3.Close();
+		}
+
+		private void LoadGame()
+		{
+			string FileName = "map.bin";
+			if (File.Exists(FileName))
+			{
+				Stream TestFileStream = File.OpenRead(FileName);
+				BinaryFormatter deserializer = new BinaryFormatter();
+				Refs.m = (MainMap)deserializer.Deserialize(TestFileStream);
+				TestFileStream.Close();
+			}
+
+			FileName = "player.bin";
+			if (File.Exists(FileName))
+			{
+				Stream TestFileStream = File.OpenRead(FileName);
+				BinaryFormatter deserializer = new BinaryFormatter();
+				Refs.p = (Player)deserializer.Deserialize(TestFileStream);
+				TestFileStream.Close();
+			}
+
+			FileName = "harem.bin";
+			if (File.Exists(FileName))
+			{
+				Stream TestFileStream = File.OpenRead(FileName);
+				BinaryFormatter deserializer = new BinaryFormatter();
+				Refs.h = (Harem)deserializer.Deserialize(TestFileStream);
+				TestFileStream.Close();
+			}
 		}
 
 		private void FinishMode()

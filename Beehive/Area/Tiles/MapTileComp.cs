@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Beehive
 {
+	[Serializable()]
 	internal class MapTileComp : IEqualityComparer<MapTile>
 	{
 		public bool Equals(MapTile n1, MapTile n2)

@@ -59,7 +59,8 @@ namespace Beehive
 				"\tCtrl+Direction to throw pillows!\n\n" +
 				"Alternate controls:\n\n" +
 				"\t'P' then Direction to place/pickup.\n" +
-				"\t'T' then Direction to throw.");
+				"\t'T' then Direction to throw.\n\n" +
+				"F6 and F9 to quicksave and quickload (unlikely to work between version changes!)");
 
 			Player p = Refs.p;
 			Cubi c = Refs.h.roster[0];

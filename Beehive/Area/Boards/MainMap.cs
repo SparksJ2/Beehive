@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Beehive
 {
+	[Serializable()]
 	public partial class MainMap : BaseMap<MapTile>
 	{
 		public FlowMap[] flows;

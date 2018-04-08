@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Beehive
 {
+	[Serializable()]
 	public class FlowTileComp : IEqualityComparer<FlowTile>
 	{
 		public bool Equals(FlowTile fs1, FlowTile fs2)

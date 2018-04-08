@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Beehive
 {
+	[Serializable()]
 	public class FlowMap : BaseMap<FlowTile>
 	{
 		private int level;

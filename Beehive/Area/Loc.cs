@@ -2,6 +2,7 @@
 
 namespace Beehive
 {
+	[Serializable()]
 	public class Loc
 	{
 		public int X;
@@ -17,6 +18,10 @@ namespace Beehive
 			X = xIn; Y = yIn;
 		}
 
+		public static bool operator ==(Loc l, Loc m) => Same(l, m);
+
+		public static bool operator !=(Loc l, Loc m) => !Same(l, m);
+
 		public static Loc AddPts(Loc a, Loc b) => new Loc(a.X + b.X, a.Y + b.Y);
 
 		public static Loc AddPts(Loc a, Loc b, Loc c) => new Loc(a.X + b.X + c.X, a.Y + b.Y + c.Y);
@@ -31,6 +36,20 @@ namespace Beehive
 			double b = Math.Pow(l1.Y - l2.Y, 2);
 			double c = Math.Sqrt(a + b);
 			return c;
+		}
+
+		public override bool Equals(object obj)
+		{
+			var loc = obj as Loc;
+			return loc != null && X == loc.X && Y == loc.Y;
+		}
+
+		public override int GetHashCode()
+		{
+			var hashCode = 1861411795;
+			hashCode = hashCode * -1521134295 + X.GetHashCode();
+			hashCode = hashCode * -1521134295 + Y.GetHashCode();
+			return hashCode;
 		}
 	}
 }

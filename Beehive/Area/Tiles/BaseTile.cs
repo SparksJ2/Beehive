@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Beehive
 {
+	[Serializable()]
 	public class BaseTile<M, T>
 	{
 		public BaseMap<T> myMap;

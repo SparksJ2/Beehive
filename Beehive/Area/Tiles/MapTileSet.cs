@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Beehive
 {
-	// hack: we're not going to be bothering with that right now
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable")]
+	[Serializable()]
 	public class MapTileSet : HashSet<MapTile>
 	{
 		public MapTileSet() : base(new MapTileComp())
@@ -12,6 +13,11 @@ namespace Beehive
 
 		public MapTileSet(IEnumerable<MapTile> source) : base(source, new MapTileComp())
 		{
+		}
+
+		protected MapTileSet(SerializationInfo info, StreamingContext context) : base(info, context)
+		{
+			Console.WriteLine("note: we were probably supposed to do something serialisation related in MapTileSet...");
 		}
 	}
 }

@@ -1,5 +1,8 @@
-﻿namespace Beehive
+﻿using System;
+
+namespace Beehive
 {
+	[Serializable()]
 	public class BaseMap<T>
 	{
 		protected int xLen, yLen;

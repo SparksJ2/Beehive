@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
 namespace Beehive
 {
+	[Serializable()]
 	public class Harem
 	{
 		public List<Cubi> roster;

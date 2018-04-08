@@ -1,7 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Beehive
 {
+	[Serializable()]
 	public class Mobile
 	{
 		public Loc loc;
