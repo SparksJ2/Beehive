@@ -120,6 +120,7 @@ namespace Beehive
 
 						Console.WriteLine("Finished UpdateMap at " + sw.ElapsedMilliseconds + "ms in.");
 						timePass--;
+						Refs.p.turnCounter++;
 					}
 				}
 			}

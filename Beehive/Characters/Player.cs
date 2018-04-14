@@ -14,6 +14,7 @@ namespace Beehive
 		public int viewFlow = 0;
 		public Loc lastMove;
 		private bool throwmode, placemode;
+		public int turnCounter = 0;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
 
@@ -35,6 +36,7 @@ namespace Beehive
 			{
 				Refs.mf.Announce("Loading game...", myAlign, myColor);
 				LoadGame();
+				Refs.mf.Announce("Loaded game at " + turnCounter + " turns in.", myAlign, myColor);
 				return 0;
 			}
 
