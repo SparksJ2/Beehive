@@ -13,7 +13,7 @@ namespace Beehive
 		public int heldCubiId = 0;
 		public int viewFlow = 0;
 		public Loc lastMove;
-		private bool throwmode, placemode;
+		private bool throwmode = false, placemode = false, victory = false;
 		public int turnCounter = 0;
 
 		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
@@ -119,6 +119,28 @@ namespace Beehive
 				timepass += 5;
 				MainMap.SplurtNectar(here, myColor);
 				horny = 0;
+			}
+
+			if (!victory)
+			{
+				// todo we're duplicating this location scanning code a lot...
+
+				// get list of capture tiles
+				MapTileSet jails = new MapTileSet();
+				foreach (Loc l in Refs.m.pents) { jails.Add(Refs.m.TileByLoc(l)); }
+
+				// get list of cubi locations
+				MapTileSet breaker = new MapTileSet();
+				foreach (Cubi c in Refs.h.roster) { breaker.Add(Refs.m.TileByLoc(c.loc)); }
+
+				// IntersectWith to get occupied jails
+				jails.IntersectWith(breaker);
+
+				if (jails.Count == Refs.m.pents.Count)
+				{
+					victory = true;
+					Refs.mf.Announce("Gotcha all! And in only " + turnCounter + " turns!", myAlign, myColor);
+				}
 			}
 
 			return timepass;
