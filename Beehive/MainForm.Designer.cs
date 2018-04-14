@@ -52,7 +52,7 @@
 			this.feedbackBox.Name = "feedbackBox";
 			this.feedbackBox.ReadOnly = true;
 			this.feedbackBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-			this.feedbackBox.Size = new System.Drawing.Size(593, 95);
+			this.feedbackBox.Size = new System.Drawing.Size(693, 151);
 			this.feedbackBox.TabIndex = 2;
 			this.feedbackBox.TabStop = false;
 			this.feedbackBox.Text = "derp feedback box not initialized.";
@@ -61,7 +61,7 @@
 			// 
 			this.inventoryLabel.AutoSize = true;
 			this.inventoryLabel.ForeColor = System.Drawing.Color.White;
-			this.inventoryLabel.Location = new System.Drawing.Point(611, 418);
+			this.inventoryLabel.Location = new System.Drawing.Point(711, 420);
 			this.inventoryLabel.Name = "inventoryLabel";
 			this.inventoryLabel.Size = new System.Drawing.Size(91, 13);
 			this.inventoryLabel.TabIndex = 4;
@@ -72,11 +72,11 @@
 			this.miniInventory.BackColor = System.Drawing.Color.Black;
 			this.miniInventory.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.miniInventory.ForeColor = System.Drawing.Color.White;
-			this.miniInventory.Location = new System.Drawing.Point(614, 435);
+			this.miniInventory.Location = new System.Drawing.Point(714, 437);
 			this.miniInventory.Name = "miniInventory";
 			this.miniInventory.ReadOnly = true;
 			this.miniInventory.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-			this.miniInventory.Size = new System.Drawing.Size(198, 69);
+			this.miniInventory.Size = new System.Drawing.Size(98, 132);
 			this.miniInventory.TabIndex = 5;
 			this.miniInventory.TabStop = false;
 			this.miniInventory.Text = "derp mini inventory not set";
@@ -84,7 +84,7 @@
 			// MainForm
 			// 
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(828, 540);
+			this.ClientSize = new System.Drawing.Size(828, 581);
 			this.Controls.Add(this.miniInventory);
 			this.Controls.Add(this.inventoryLabel);
 			this.Controls.Add(this.feedbackBox);

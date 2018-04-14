@@ -144,7 +144,7 @@ namespace Beehive
 				if (annLines == null) annLines = new List<AnnounceStruct>();
 
 				annLines.Add(new AnnounceStruct(say, align, col));
-				if (annLines.Count > 6) annLines.RemoveAt(0);
+				if (annLines.Count > 10) annLines.RemoveAt(0);
 
 				//feedbackBox.Text = "";
 				feedbackBox.Clear();
