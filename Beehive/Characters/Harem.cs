@@ -18,22 +18,26 @@ namespace Beehive
 			// todo simple AI while we refactor flow stuff
 			Cubi a = new Cubi("Ai'nana", 1, Color.HotPink);
 			a.SetXY(33, 9);
-			a.myAi = new CubiAiType(CubiAi.FleeToRing);
+			a.myStdAi = new CubiStdAi(CubiAi.FleeToRing);
+			a.myJbAi = new CubiJailBreak(CubiAi.JailBreak);
 			roster.Add(a);
 
 			Cubi b = new Cubi("Bel'lona ", 2, Color.RosyBrown);
 			b.SetXY(34, 9);
-			b.myAi = new CubiAiType(CubiAi.FlowOutAndBack);
+			b.myStdAi = new CubiStdAi(CubiAi.FlowOutAndBack);
+			b.myJbAi = new CubiJailBreak(CubiAi.JailBreak);
 			roster.Add(b);
 
 			Cubi c = new Cubi("Cy'rene", 3, Color.MediumVioletRed);
 			c.SetXY(35, 9);
-			c.myAi = new CubiAiType(CubiAi.FleeToRing);
+			c.myStdAi = new CubiStdAi(CubiAi.FleeToRing);
+			c.myJbAi = new CubiJailBreak(CubiAi.JailBreak);
 			roster.Add(c);
 
 			Cubi d = new Cubi("Del'ta", 4, Color.SeaGreen);
 			d.SetXY(34, 8);
-			d.myAi = new CubiAiType(CubiAi.FleeToRing);
+			d.myStdAi = new CubiStdAi(CubiAi.FleeToRing);
+			d.myJbAi = new CubiJailBreak(CubiAi.JailBreak);
 			roster.Add(d);
 		}
 

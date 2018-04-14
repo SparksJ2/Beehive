@@ -14,6 +14,30 @@ namespace Beehive
 			ourFlow.RunFlow(maskWalls: true);
 		}
 
+		public static void JailBreak(int distance, FlowMap ourFlow)
+		{
+			// note perhaps we could integrate this into the larger flow
+			//  system after it's working well?
+			// todo change to using FlowTileSet here
+
+			// get list of capture tiles
+			HashSet<FlowTile> jails = new HashSet<FlowTile>(new FlowTileComp());
+			foreach (Loc l in Refs.m.pents) { jails.Add(ourFlow.TileByLoc(l)); }
+
+			// get list of cubi locations
+			HashSet<FlowTile> breaker = new HashSet<FlowTile>(new FlowTileComp());
+			foreach (Cubi c in Refs.h.roster) { breaker.Add(ourFlow.TileByLoc(c.loc)); }
+
+			// IntersectWith to get occupied jails
+			jails.IntersectWith(breaker);
+
+			// set jails as heads
+			foreach (FlowTile fs in jails) { fs.flow = 0; }
+
+			// just flow to them
+			ourFlow.RunFlow(maskWalls: true);
+		}
+
 		public static void FlowOutAndBack(int distance, FlowMap ourFlow)
 		{
 			// ref http://www.roguebasin.com/index.php?title=Dijkstra_Maps_Visualized
@@ -35,6 +59,7 @@ namespace Beehive
 			ourFlow.AdjustFactor(-25);
 		}
 
+		// utility stuff follows
 		private static void ReportHighAndLow(FlowMap ourFlow, string s)
 		{
 			double high = ourFlow.GetHighest();
@@ -42,7 +67,6 @@ namespace Beehive
 			Console.WriteLine(s + ", low =" + low + " , high =" + high);
 		}
 
-		// utility stuff follows
 		private static HashSet<FlowTile> SetUpInitialRing(int distance, FlowMap f)
 		{
 			// we'll try to flow to a set distance from the player by

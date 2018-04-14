@@ -21,7 +21,7 @@ namespace Beehive
 					tiles[x, y] = new FlowTile(new Loc(x, y), this) { flow = 9999 };
 				}
 			}
-			SetToNines();
+			SetToNines(); // todo didn't we just do this above?
 		}
 
 		public static void RemakeAllFlows()
@@ -129,7 +129,10 @@ namespace Beehive
 				// which cubi are we doing this for?
 				Cubi c = Harem.GetId(level);
 
-				c.myAi(c.teaseDistance, this);
+				if (c.doJailBreak)
+				{ c.myJbAi(c.teaseDistance, this); }
+				else
+				{ c.myStdAi(c.teaseDistance, this); }
 			}
 
 			// report time
