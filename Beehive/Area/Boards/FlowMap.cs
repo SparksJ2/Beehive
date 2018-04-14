@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Beehive
 {
@@ -139,16 +138,16 @@ namespace Beehive
 			//Console.WriteLine("Finished this flow in " + sw.ElapsedMilliseconds + "ms.");
 		}
 
-		public HashSet<FlowTile> AllFlowSquares()
+		public FlowTileSet AllFlowSquares()
 		{
-			var flowList = new HashSet<FlowTile>(new FlowTileComp());
+			var flowList = new FlowTileSet();
 			foreach (FlowTile fs in tiles) { flowList.Add(fs); }
 			return flowList;
 		}
 
 		public void RunFlow(Boolean maskWalls)
 		{
-			HashSet<FlowTile> heads = AllFlowSquares();
+			FlowTileSet heads = AllFlowSquares();
 
 			if (maskWalls)
 			{
@@ -172,13 +171,13 @@ namespace Beehive
 			{
 				changes = false; failsafe++;
 
-				HashSet<FlowTile> newHeads = new HashSet<FlowTile>(new FlowTileComp());
+				FlowTileSet newHeads = new FlowTileSet();
 
 				// for each active head tile...
 				foreach (FlowTile fs in heads)
 				{
 					// ...find the tiles next to it...
-					HashSet<FlowTile> newTiles = new HashSet<FlowTile>(new FlowTileComp())
+					FlowTileSet newTiles = new FlowTileSet()
 					{
 						fs.OneNorth(),
 						fs.OneEast(),

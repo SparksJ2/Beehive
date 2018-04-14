@@ -213,7 +213,7 @@ namespace Beehive
 				FlowMap myFlow = Refs.m.flows[myIdNo];
 
 				// convert maybe tiles to maybe squares
-				HashSet<FlowTile> maybeSquares = ConvertTiles.FlowSquaresFromTileSet(maybeTiles, myFlow);
+				FlowTileSet maybeSquares = ConvertTiles.FlowSquaresFromTileSet(maybeTiles, myFlow);
 
 				// is the tile that we're currently on already one of the best tiles?
 				double bestFlow = maybeSquares.Min(sq => sq.flow);

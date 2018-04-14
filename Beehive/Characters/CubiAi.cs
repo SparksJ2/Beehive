@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Beehive
 {
@@ -7,7 +6,7 @@ namespace Beehive
 	{
 		public static void FleeToRing(int distance, FlowMap ourFlow)
 		{
-			HashSet<FlowTile> heads = new HashSet<FlowTile>(new FlowTileComp());
+			FlowTileSet heads = new FlowTileSet();
 			heads.UnionWith(SetUpInitialRing(distance, ourFlow));
 			heads.UnionWith(PlayerNectarTiles(ourFlow));
 			foreach (FlowTile fs in heads) { fs.flow = 0; }
@@ -21,11 +20,11 @@ namespace Beehive
 			// todo change to using FlowTileSet here
 
 			// get list of capture tiles
-			HashSet<FlowTile> jails = new HashSet<FlowTile>(new FlowTileComp());
+			FlowTileSet jails = new FlowTileSet();
 			foreach (Loc l in Refs.m.pents) { jails.Add(ourFlow.TileByLoc(l)); }
 
 			// get list of cubi locations
-			HashSet<FlowTile> breaker = new HashSet<FlowTile>(new FlowTileComp());
+			FlowTileSet breaker = new FlowTileSet();
 			foreach (Cubi c in Refs.h.roster) { breaker.Add(ourFlow.TileByLoc(c.loc)); }
 
 			// IntersectWith to get occupied jails
@@ -67,7 +66,7 @@ namespace Beehive
 			Console.WriteLine(s + ", low =" + low + " , high =" + high);
 		}
 
-		private static HashSet<FlowTile> SetUpInitialRing(int distance, FlowMap f)
+		private static FlowTileSet SetUpInitialRing(int distance, FlowMap f)
 		{
 			// we'll try to flow to a set distance from the player by
 			//    making a ring of target squares and working from there
@@ -82,7 +81,7 @@ namespace Beehive
 			return ConvertTiles.FlowSquaresFromTileSet(ring, f);
 		}
 
-		private static HashSet<FlowTile> PlayerNectarTiles(FlowMap f)
+		private static FlowTileSet PlayerNectarTiles(FlowMap f)
 		{
 			// tiles containing player nectar are targets too
 			var allTiles = Refs.m.TileList();
