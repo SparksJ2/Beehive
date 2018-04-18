@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -82,11 +81,10 @@ namespace Beehive
 			// being close to player makes for horny cubi
 			if (DistToPlayer() < 5.0) { horny++; }
 
-			// leave nectar trail, overlay previous trails
+			// leave nectar trail, color overlays previous trails
 			if (horny > 0)
 			{
-				here.hasNectar = true;
-				here.nectarCol = myColor;
+				here.nectarLevel[myIdNo]++;
 				horny--;
 			}
 
@@ -115,17 +113,17 @@ namespace Beehive
 				AIPathing();
 
 				// consume player nectar
-				if (here.hasNectar && here.nectarCol == Refs.p.myColor)
+				if (here.nectarLevel[0] > 0) // 0 for player
 				{
 					Refs.mf.Announce("Yes, masters nectar! *lap lap*", myAlign, myColor);
-					here.hasNectar = false;
-					horny += 5;
+					horny += here.nectarLevel[0] * 5;
+					here.nectarLevel[0] = 0;
 				}
 
 				if (horny > 15) // having fun
 				{
 					Refs.mf.Announce("Aieee I'm cumming! *splurt*", myAlign, myColor);
-					MainMap.SplurtNectar(here, myColor);
+					MainMap.SplurtNectar(here, myIdNo);
 					spanked += 5;
 					horny = 0;
 				}

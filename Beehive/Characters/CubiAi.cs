@@ -88,7 +88,7 @@ namespace Beehive
 			var nectarTiles = new MapTileSet();
 			foreach (MapTile t in allTiles)
 			{
-				if (t.hasNectar && t.nectarCol == Refs.p.myColor)
+				if (t.nectarLevel[0] > 0) // 0 for player
 				{
 					nectarTiles.Add(t);
 				}

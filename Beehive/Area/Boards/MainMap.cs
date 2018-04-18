@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace Beehive
@@ -10,6 +9,7 @@ namespace Beehive
 	{
 		public FlowMap[] flows;
 		public List<Loc> pents;
+		private Random rng = new Random();
 
 		public MainMap(int xIn, int yIn)
 		{
@@ -134,16 +134,35 @@ namespace Beehive
 			}
 		} // end healwalls
 
-		public static void SplurtNectar(MapTile here, Color myColor)
+		internal void SpreadNectar()
+		{
+			foreach (MapTile t in tiles)
+			{
+				if (t.clear && t.TotalNectar() > 1)
+				{
+					Console.WriteLine("Nectar heavy tile detected, spreading...");
+					MapTileSet spreadArea = t.GetPossibleMoves(Dir.AllAround);
+
+					MapTile spreadTo = MapTile.RandomFromList(spreadArea);
+					if (spreadTo.clear)
+					{
+						int randomNectar = rng.Next() % Harem.MaxId() + 1;
+						if (spreadTo.nectarLevel[randomNectar] < t.nectarLevel[randomNectar])
+						{
+							spreadTo.nectarLevel[randomNectar]++;
+							t.nectarLevel[randomNectar]--;
+						}
+					}
+				}
+			}
+		}
+
+		public static void SplurtNectar(MapTile here, int myIndex)
 		{
 			MapTileSet splurtArea = here.GetPossibleMoves(Dir.AllAround);
 			foreach (MapTile t in splurtArea)
 			{
-				if (t.clear)
-				{
-					t.hasNectar = true;
-					t.nectarCol = myColor;
-				}
+				if (t.clear) { t.nectarLevel[myIndex]++; }
 			}
 		}
 	}

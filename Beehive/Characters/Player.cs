@@ -107,17 +107,20 @@ namespace Beehive
 			Loc newpos = loc;
 			lastMove = Loc.SubPts(newpos, lastPos);
 
-			if (here.hasNectar && here.nectarCol != myColor) // yum
+			for (int nLoop = 0; nLoop < here.nectarLevel.Length; nLoop++) // skip player nectar
 			{
-				horny++;
-				here.hasNectar = false;
+				if (here.nectarLevel[nLoop] > 0)
+				{
+					horny += here.nectarLevel[nLoop];
+					here.nectarLevel[nLoop] = 0;
+				}
 			}
 
 			if (horny > 15) // having fun
 			{
 				Refs.mf.Announce("Awwww yeah! *splurt*", myAlign, myColor);
 				timepass += 5;
-				MainMap.SplurtNectar(here, myColor);
+				MainMap.SplurtNectar(here, myIndex: 0);
 				horny = 0;
 			}
 

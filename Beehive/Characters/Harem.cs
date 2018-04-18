@@ -8,7 +8,7 @@ namespace Beehive
 	[Serializable()]
 	public class Harem
 	{
-		public List<Cubi> roster;
+		public List<Cubi> roster; // secure this, use GetId() instead.
 
 		public Harem()
 		{
@@ -44,6 +44,11 @@ namespace Beehive
 		public static Cubi GetId(int id)
 		{
 			return Refs.h.roster.Where(x => x.myIdNo == id).ToList().First();
+		}
+
+		public static int MaxId()
+		{
+			return Refs.h.roster.Count; // todo dodgy way of working it out...
 		}
 	}
 }

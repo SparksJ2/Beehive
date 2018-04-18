@@ -13,8 +13,8 @@ namespace Beehive
 		private Bitmap SymbolaBitmapFont;
 		private Bitmap SymbolaBitmapFontMiscSyms;
 
-		private string nectarChar = "・"; // katakana middle dot
-										 //private string nectarChar = "•"; // list bullet point
+		private string nectarCharMed = "・"; // katakana middle dot
+		private string nectarCharLarge = "•"; // list bullet point
 
 		private int multX = 12;
 		private int multY = 15;
@@ -70,7 +70,7 @@ namespace Beehive
 			int x1 = (t.loc.X * multX) + edgeX;
 			int y1 = (t.loc.Y * multY) + edgeY;
 
-			if (t.clear) // set flow as background only
+			if (t.clear)  // set flow as background only
 			{
 				int showFlow = Refs.p.viewFlow;
 
@@ -78,7 +78,7 @@ namespace Beehive
 
 				if (showFlow > 0)
 				{
-					flowCol = Refs.h.roster[showFlow - 1].myColor;
+					flowCol = Harem.GetId(showFlow).myColor;
 
 					double flowInt = Refs.m.flows[showFlow].TileByLoc(t.loc).flow;
 
@@ -99,16 +99,38 @@ namespace Beehive
 					}
 				}
 
-				// add nectar drops
-				if (t.hasNectar)
+				// display nectar drops using deepest level
+				int deepestLevel = 0;
+				int deepestAmt = 0;
+				int sumAmt = 0;
+				for (int nLoop = 0; nLoop < t.nectarLevel.Length; nLoop++)
+				{
+					sumAmt += t.nectarLevel[nLoop];
+					if (t.nectarLevel[nLoop] > deepestAmt)
+					{
+						deepestAmt = t.nectarLevel[nLoop];
+						deepestLevel = nLoop;
+					}
+				}
+				if (deepestAmt > 0)
 				{
 					using (var gNectar = Graphics.FromImage(img))
 					{
-						gNectar.DrawImage(GetTileBitmap(nectarChar, stdSize, t.nectarCol), x1, y1);
+						Color nectarCol;
+						if (deepestLevel == 0) { nectarCol = Refs.p.myColor; }
+						else { nectarCol = Harem.GetId(deepestLevel).myColor; }
+
+						// Color mixedCol = GetColorMix(t);
+
+						string useNectarChar = nectarCharMed;
+						if (sumAmt > 1) { useNectarChar = nectarCharLarge; }
+
+						gNectar.DrawImage(GetTileBitmap(nectarCharMed, stdSize, nectarCol), x1, y1);
 					}
 				}
+				// todo bigger blob for more nectar maybe?
 			}
-			else // or add walls
+			else // it's not marked as clear, so draw the wall
 			{
 				Bitmap singleTileImage = GetTileBitmapOld(t.gly, stdSize);
 				using (var gChar = Graphics.FromImage(img))
@@ -116,6 +138,25 @@ namespace Beehive
 					gChar.DrawImage(singleTileImage, x1, y1);
 				}
 			}
+		}
+
+		private static Color GetColorMix(MapTile mt)
+		{
+			// speculative -- not sure if I like nectar mixing
+			Int32 mergeR = Refs.p.myColor.R;
+			Int32 mergeG = Refs.p.myColor.G;
+			Int32 mergeB = Refs.p.myColor.B;
+			for (int nLoop = 1; nLoop < mt.nectarLevel.Length - 1; nLoop++) // skip player nectar
+			{
+				mergeR += Harem.GetId(nLoop).myColor.R;
+				mergeG += Harem.GetId(nLoop).myColor.G;
+				mergeB += Harem.GetId(nLoop).myColor.B;
+			}
+			double factor = 1 + Refs.h.roster.Count;
+			mergeR = (Int32)(mergeR / factor);
+			mergeG = (Int32)(mergeG / factor);
+			mergeB = (Int32)(mergeB / factor);
+			return Color.FromArgb(0, mergeR, mergeG, mergeB);
 		}
 
 		private int ByteLimit(int x)
@@ -211,7 +252,7 @@ namespace Beehive
 					useColour = c;
 				}
 
-				if (s == "☿" || s == nectarChar)
+				if (s == "☿" || s == nectarCharMed)
 				{
 					useBitmapFont = SymbolaBitmapFont;
 					useColour = c;

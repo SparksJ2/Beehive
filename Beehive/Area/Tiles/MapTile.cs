@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace Beehive
@@ -11,13 +10,13 @@ namespace Beehive
 		public bool clear = false;
 		public string gly = "#";
 
-		public bool hasNectar = false;
-		public Color nectarCol;
+		public int[] nectarLevel; // 0 is for master, cubis start as 1 (same as flows)
 
 		public bool noTunnel = false; // only for maze gen
 
 		public MapTile(Loc p, MainMap f) : base(p, f)
 		{
+			nectarLevel = new int[1 + Harem.MaxId()];
 		}
 
 		// for use with KnightMoves(), DodgeMoves(), LeapMoves()
@@ -44,6 +43,16 @@ namespace Beehive
 		public static MapTileSet Tunnelable(MapTileSet ts)
 		{
 			return ts.Where(t => t.noTunnel == false).ToMapTileSet();
+		}
+
+		internal int TotalNectar()
+		{
+			int sumAmt = 0;
+			for (int nLoop = 0; nLoop < nectarLevel.Length; nLoop++)
+			{
+				sumAmt += nectarLevel[nLoop];
+			}
+			return sumAmt;
 		}
 	}
 }
