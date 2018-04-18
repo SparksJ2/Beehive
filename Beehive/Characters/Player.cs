@@ -107,7 +107,7 @@ namespace Beehive
 			Loc newpos = loc;
 			lastMove = Loc.SubPts(newpos, lastPos);
 
-			for (int nLoop = 0; nLoop < here.nectarLevel.Length; nLoop++) // skip player nectar
+			for (int nLoop = 1; nLoop < here.nectarLevel.Length; nLoop++) // actually skip player nectar
 			{
 				if (here.nectarLevel[nLoop] > 0)
 				{
