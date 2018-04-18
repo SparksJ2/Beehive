@@ -10,13 +10,7 @@ fix dodgy animation coding
 	(throwing has glitches when going over holding pens,
 	also needs to redraw player char after release)
 
-adjust pickup / throw interface to be more angband/nethack-esq
-
-add throwing 'cubi (they have wings, they'll be fine!)
-
-'amusing bug: pillow-dodging frees ms. 'cubi from the bed' - 'motivation!'
-
-'...though she has the tendency to blunder back in and be caught again - 'yeah, that needs an 'oops' message.'
+'...though she has the tendency to blunder back in and be caught again.' - 'yeah, that needs an 'oops' message.'
 
 'it should be possible to pillow-spank her into the bed' - 'I agree, added to todos list.
 
@@ -28,23 +22,15 @@ cubi AI
 
 navigation via mouse clicks
 
-'puppet strings'
+add 'puppet strings' to pull cubi towards you
 
-other todos (see window)
+other todos (see IDE task list window)
 
 pacman nectar drops for powerup?
 
-carry 'cubi back to bed for 'win condition' ;)
+slippery when wet: "oops... your lover escapes your grip, keep trying!"
 
-"oops... your lover escapes your grip, keep trying!"
-
-sexy lines / descriptions for feedback box
-
-add a stopwatch for how long the current 'frame' took
-
-always use Dir rather than adding groups of dimensions manually
-
-find a RichTextBox substitute if possible
+more & better sexy lines / descriptions for feedback box
 
 low priority:
 ``````````````
@@ -53,6 +39,7 @@ weight allowance
 2 player mode
 learn javascript, lol
 line of sight stuff maybe, if it's fun
+find a RichTextBox substitute if possible
 
 further notes
 ``````````````
@@ -66,3 +53,7 @@ tease theory
 while player is distant or not closing in 'cubi bored++
 when subtract bored from target distance to player
 when too close, spook, set bored = 0 and set target distance far again
+
+for reference
+`````````````
+amusing bug: pillow-dodging frees ms. 'cubi from the bed' - 'motivation!'
