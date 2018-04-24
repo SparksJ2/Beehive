@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Beehive
@@ -13,8 +14,11 @@ namespace Beehive
 		private Bitmap SymbolaBitmapFont;
 		private Bitmap SymbolaBitmapFontMiscSyms;
 
-		private string nectarCharMed = "・"; // katakana middle dot
-		private string nectarCharLarge = "•"; // list bullet point
+		//private string nectarCharMed = "・"; // katakana middle dot
+		//private string nectarCharLarge = "•"; // list bullet point
+
+		private string[] nectarChars =
+			{" ","⠂", "⡂", "⡡", "⢕", "⢝", "⣝", "⣟", "⣿" };
 
 		private int multX = 12;
 		private int multY = 15;
@@ -122,10 +126,11 @@ namespace Beehive
 
 						// Color mixedCol = GetColorMix(t);
 
-						string useNectarChar = nectarCharMed;
-						if (sumAmt > 1) { useNectarChar = nectarCharLarge; }
+						if (sumAmt > 8) { sumAmt = 8; }
+						string useNectarChar = nectarChars[sumAmt];
+						//if (sumAmt > 1) { useNectarChar = nectarCharLarge; }
 
-						gNectar.DrawImage(GetTileBitmap(nectarCharMed, stdSize, nectarCol), x1, y1);
+						gNectar.DrawImage(GetTileBitmap(useNectarChar, stdSize, nectarCol), x1, y1);
 					}
 				}
 				// todo bigger blob for more nectar maybe?
@@ -251,8 +256,13 @@ namespace Beehive
 					useBitmapFont = SymbolaBitmapFont;
 					useColour = c;
 				}
+				if (nectarChars.Contains(s))
+				{
+					useBitmapFont = SansSerifBitmapFont;
+					useColour = c;
+				}
 
-				if (s == "☿" || s == nectarCharMed)
+				if (s == "☿" || nectarChars.Contains(s))
 				{
 					useBitmapFont = SymbolaBitmapFont;
 					useColour = c;

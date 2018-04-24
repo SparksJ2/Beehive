@@ -143,14 +143,17 @@ namespace Beehive
 					Console.WriteLine("Nectar heavy tile detected, spreading...");
 					MapTileSet spreadArea = t.GetPossibleMoves(Dir.AllAround);
 
-					MapTile spreadTo = MapTile.RandomFromList(spreadArea);
-					if (spreadTo.clear)
+					// todo : note this will bias spread direction but okay for now
+					foreach (MapTile spreadTo in spreadArea)
 					{
-						int randomNectar = rng.Next() % Harem.MaxId() + 1;
-						if (spreadTo.nectarLevel[randomNectar] < t.nectarLevel[randomNectar])
+						if (spreadTo.clear && spreadTo.TotalNectar() < t.TotalNectar())
 						{
-							spreadTo.nectarLevel[randomNectar]++;
-							t.nectarLevel[randomNectar]--;
+							int randType = rng.Next() % Harem.MaxId() + 1;
+							if (spreadTo.nectarLevel[randType] < t.nectarLevel[randType])
+							{
+								spreadTo.nectarLevel[randType]++;
+								t.nectarLevel[randType]--;
+							}
 						}
 					}
 				}

@@ -25,6 +25,13 @@ namespace Beehive
 
 		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
+			MapTile here = Refs.m.TileByLoc(loc);
+
+			// debugging nectar report
+			Console.Write("Nectar here is ");
+			foreach (int i in here.nectarLevel) { Console.Write(i + ", "); }
+			Console.Write(".");
+
 			if (e.KeyCode == Keys.F6)
 			{
 				Refs.mf.Announce("Saving game...", myAlign, myColor);
@@ -101,8 +108,6 @@ namespace Beehive
 					default: timepass = 0; break;
 				}
 			}
-
-			MapTile here = Refs.m.TileByLoc(loc);
 
 			Loc newpos = loc;
 			lastMove = Loc.SubPts(newpos, lastPos);
