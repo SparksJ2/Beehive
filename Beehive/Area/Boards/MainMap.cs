@@ -136,24 +136,37 @@ namespace Beehive
 
 		internal void SpreadNectar()
 		{
+			// todo : see final nectar spreading goals txt
+
 			foreach (MapTile t in tiles)
 			{
-				if (t.clear && t.TotalNectar() > 1)
+				if (t.clear && (t.TotalNectar() > 8 || t.StackedNectar()))
 				{
-					Console.WriteLine("Nectar heavy tile detected, spreading...");
+					//Console.WriteLine("Nectar heavy tile (drips>8) detected, spreading...");
 					MapTileSet spreadArea = t.GetPossibleMoves(Dir.AllAround);
+					spreadArea = spreadArea.Where(x => x.clear).ToMapTileSet();
+					spreadArea = spreadArea.Where(x => !x.StackedNectar()).ToMapTileSet();
+					spreadArea = spreadArea.Where(x => x.TotalNectar() <= t.TotalNectar()).ToMapTileSet();
+
+					int lightestLevel = -1;
+					int lightestAmt = 99;
+					for (int nLoop = 0; nLoop < t.nectarLevel.Length; nLoop++)
+					{
+						if ((t.nectarLevel[nLoop] > 0) && (t.nectarLevel[nLoop] < lightestAmt))
+						{
+							lightestAmt = t.nectarLevel[nLoop];
+							lightestLevel = nLoop;
+						}
+					}
 
 					// todo : note this will bias spread direction but okay for now
 					foreach (MapTile spreadTo in spreadArea)
 					{
-						if (spreadTo.clear && spreadTo.TotalNectar() < t.TotalNectar())
+						if ((spreadTo.nectarLevel[lightestLevel] < t.nectarLevel[lightestLevel]) &&
+								(t.nectarLevel[lightestLevel] > 0))
 						{
-							int randType = rng.Next() % Harem.MaxId() + 1;
-							if (spreadTo.nectarLevel[randType] < t.nectarLevel[randType])
-							{
-								spreadTo.nectarLevel[randType]++;
-								t.nectarLevel[randType]--;
-							}
+							spreadTo.nectarLevel[lightestLevel]++;
+							t.nectarLevel[lightestLevel]--;
 						}
 					}
 				}

@@ -1,0 +1,18 @@
+﻿
+nectar spreading rules
+```````````````````````
+
+goal state:
+	max of 8 nectar total per tile (not 'overloaded')
+	no more than one type of nectar per tile (not 'stacked')
+
+combined mechanism:
+	if this tile is 'overloaded' or 'stacked':
+		look at the surrounding tiles
+		and from the rarest nectar type here, 
+		push a dot out to a randomly chosen suitable tile
+
+key:
+	overloaded = (more than 8 nectar total)
+	suitable = (empty || (unstacked && correct color))
+	stacked = (more than one type of nectar here)

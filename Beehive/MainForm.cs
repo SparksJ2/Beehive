@@ -97,7 +97,7 @@ namespace Beehive
 				int timePass = Refs.p.HandlePlayerInput(e);
 
 				Refs.m.HealWalls();
-				Refs.m.SpreadNectar();
+
 				Console.WriteLine("Finished HealWalls at " + sw.ElapsedMilliseconds + "ms in.");
 
 				FlowMap.RemakeAllFlows();
@@ -116,6 +116,7 @@ namespace Beehive
 						foreach (Cubi c in Refs.h.roster) { c.AiMove(); }
 						Console.WriteLine("Finished AiMove at " + sw.ElapsedMilliseconds + "ms in.");
 
+						Refs.m.SpreadNectar();
 						UpdateMap();
 						Thread.Sleep(75);
 
@@ -133,7 +134,7 @@ namespace Beehive
 			}
 
 			Console.WriteLine("Total time this update = " + sw.ElapsedMilliseconds + "ms. or " +
-				1000 / sw.ElapsedMilliseconds + " fps if it mattered.");
+						1000 / sw.ElapsedMilliseconds + " fps if it mattered.");
 		}
 
 		private List<AnnounceStruct> annLines;

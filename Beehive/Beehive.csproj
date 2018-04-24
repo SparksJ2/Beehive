@@ -122,6 +122,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Notes\nectar.txt" />
     <Content Include="Notes\personality.txt" />
     <Content Include="Notes\notes.txt" />
     <Content Include="Area\walls.txt" />

@@ -54,5 +54,14 @@ namespace Beehive
 			}
 			return sumAmt;
 		}
+
+		internal bool StackedNectar()
+		{
+			int clash = 0;
+			for (int nLoop = 0; nLoop < nectarLevel.Length; nLoop++)
+			{ if (nectarLevel[nLoop] > 0) { clash++; } }
+
+			return (clash >= 2);
+		}
 	}
 }
