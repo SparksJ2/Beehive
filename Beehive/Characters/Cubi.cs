@@ -234,7 +234,7 @@ namespace Beehive
 					MapTileSet bestTiles = ConvertTiles.TileSetFromFlowSquares(bestSquares);
 
 					// choose randomly between best tiles...
-					MapTile newplace = MapTile.RandomFromList(bestTiles);
+					MapTile newplace = MainMap.RandomFromList(bestTiles);
 
 					// finally, perform move to selected tile!
 					loc = newplace.loc;
@@ -283,7 +283,7 @@ namespace Beehive
 			if (maybeTiles.Count > 0)
 			{
 				// choose randomly between tiles...
-				loc = MapTile.RandomFromList(maybeTiles).loc;
+				loc = MainMap.RandomFromList(maybeTiles).loc;
 			}
 		}
 

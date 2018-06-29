@@ -26,8 +26,27 @@ namespace Beehive
 		public static void RemakeAllFlows()
 		{
 			//var sw = new Stopwatch(); sw.Start();
-			foreach (FlowMap f in Refs.m.flows) { f.RemakeFlow(); }
+			if (Refs.m.flows == null)
+			{
+				MainMap m = Refs.m;
+				Init(ref m.flows, m.xLen, m.yLen);
+			}
+			foreach (FlowMap f in Refs.m.flows)
+			{
+				f.RemakeFlow();
+			}
 			//Console.WriteLine("Finished all flows in " + sw.ElapsedMilliseconds + "ms.");
+		}
+
+		internal static void Init(ref FlowMap[] flows, int xLen, int yLen)
+		{
+			// init all flows stuff here
+			var flowsCount = Refs.h.roster.Count + 1; // 0 is for master, eventually
+			flows = new FlowMap[flowsCount];
+			for (int fLoop = 0; fLoop < flowsCount; fLoop++)
+			{
+				flows[fLoop] = new FlowMap(xLen, yLen, fLoop);
+			}
 		}
 
 		internal double GetHighest()

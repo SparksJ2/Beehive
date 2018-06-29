@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Beehive
 {
@@ -62,13 +60,6 @@ namespace Beehive
 		{
 			var newLoc = Loc.AddPts(loc, Dir.SouthWest);
 			return (myMap.ValidLoc(newLoc)) ? myMap.TileByLoc(newLoc) : default(T);
-		}
-
-		private static Random rng = new Random();
-
-		public static T RandomFromList(HashSet<T> tileList)
-		{
-			return tileList.ElementAt(rng.Next(tileList.Count));
 		}
 	}
 }

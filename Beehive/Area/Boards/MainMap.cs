@@ -7,9 +7,10 @@ namespace Beehive
 	[Serializable()]
 	public partial class MainMap : BaseMap<MapTile>
 	{
+		[NonSerialized()] // don't put flows in savefile
 		public FlowMap[] flows;
+
 		public List<Loc> pents;
-		private Random rng = new Random();
 
 		public MainMap(int xIn, int yIn)
 		{
@@ -29,18 +30,14 @@ namespace Beehive
 			// holding pens
 			pents = new List<Loc>();
 
-			// init all flows stuff here
-			var flowsCount = Refs.h.roster.Count + 1; // 0 is for master, eventually
-			flows = new FlowMap[flowsCount];
-			for (int fLoop = 0; fLoop < flowsCount; fLoop++)
-			{
-				flows[fLoop] = new FlowMap(xIn, yIn, fLoop);
-			}
+			FlowMap.Init(ref flows, xLen, yLen);
 
 			LoadBitmapFonts();
 		}
 
 		// list of all tiles, never changes.
+		// don't include in save file
+		[NonSerialized()]
 		public MapTileSet cachedTileList;
 
 		public MapTileSet TileList()

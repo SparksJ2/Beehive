@@ -73,7 +73,7 @@ namespace Beehive
 
 					if (escapes.Count > 0)
 					{
-						victim.loc = MapTile.RandomFromList(escapes).loc;
+						victim.loc = MainMap.RandomFromList(escapes).loc;
 						Refs.mf.Announce("Nyahhh missed me!", victim.myAlign, victim.myColor);
 						moveClear = "clear";
 					}

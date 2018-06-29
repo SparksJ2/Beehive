@@ -10,8 +10,14 @@ namespace Beehive
 {
 	public partial class MainMap : IDisposable
 	{
+		// don't include fonts in save file
+		[NonSerialized()]
 		private Bitmap SansSerifBitmapFont;
+
+		[NonSerialized()]
 		private Bitmap SymbolaBitmapFont;
+
+		[NonSerialized()]
 		private Bitmap SymbolaBitmapFontMiscSyms;
 
 		//private string nectarCharMed = "・"; // katakana middle dot
@@ -28,7 +34,7 @@ namespace Beehive
 		private Size stdSize = new Size(12, 15);
 		private Size tripSize = new Size(12 * 3, 15 * 3);
 
-		private void LoadBitmapFonts()
+		public void LoadBitmapFonts()
 		{
 			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
 			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
@@ -224,6 +230,7 @@ namespace Beehive
 			}
 		}
 
+		[NonSerialized()] // don't include dictionary in save file
 		private Dictionary<TileDesc, Bitmap> TileBitmapCache;
 
 		private Bitmap GetTileBitmapOld(string s, Size z)

@@ -93,5 +93,7 @@ namespace Beehive
 		public void InitClearTilesCache() => clearCache = TileList().Where(t => t.clear).ToMapTileSet();
 
 		public MapTileSet GetClearTilesCache() => clearCache;
+
+		public void DoneWithClearTileCache() => clearCache = null;
 	}
 }

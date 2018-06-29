@@ -102,6 +102,8 @@ namespace Beehive
 				//Refs.mf.UpdateMap(); // for debugging visualization
 				rounds++;
 			}
+			NewMap.DoneWithClearTileCache();
+
 			NewMap.ConsoleDump();
 			NewMap.HealWalls();
 			NewMap.ConsoleDump();

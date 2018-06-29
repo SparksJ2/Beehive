@@ -43,6 +43,7 @@ namespace Beehive
 			{
 				Refs.mf.Announce("Loading game...", myAlign, myColor);
 				LoadGame();
+				Refs.m.LoadBitmapFonts();
 				Refs.mf.Announce("Loaded game at " + turnCounter + " turns in.", myAlign, myColor);
 				return 0;
 			}
