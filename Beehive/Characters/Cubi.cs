@@ -8,7 +8,7 @@ namespace Beehive
 {
 	public delegate void CubiStdAi(int distance, FlowMap f);
 
-	public delegate void CubiJailBreak(int distance, FlowMap f);
+	public delegate void CubiJbAi(int distance, FlowMap f);
 
 	[Serializable()]
 	public class Cubi : Mobile
@@ -19,7 +19,7 @@ namespace Beehive
 
 		public CubiStdAi myStdAi;
 		public bool doJailBreak = false;
-		public CubiJailBreak myJbAi;
+		public CubiJbAi myJbAi;
 
 		public double bored = 0.0;
 		public int teaseDistance = 11;
@@ -27,6 +27,12 @@ namespace Beehive
 		public HorizontalAlignment myAlign = HorizontalAlignment.Right;
 
 		private static Random rng = new Random();
+
+		public Cubi(int id) : base()
+		{
+			myIdNo = id;
+			rng = new Random();
+		}
 
 		public Cubi(string name, int id, Color useColor) : base(name, useColor)
 		{

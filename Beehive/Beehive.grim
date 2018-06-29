@@ -1,0 +1,27 @@
+﻿
+[todo: still in development!]
+[todo: how to better handle strings with quotes in?]
+
+CubiName1 = Ai`nana
+CubiChar1 = ☿
+CubiColor1 = HotPink
+CubiStdAi1 = CubiAi.FleeToRing
+CubiJbAi1 = CubiAi.JailBreak
+
+CubiName2 = Bel`lona
+CubiChar2 = ☿
+CubiColor2 = RosyBrown
+CubiStdAi2 = CubiAi.FlowOutAndBack
+CubiJbAi2 = CubiAi.JailBreak
+
+CubiName3 =  Cy`rene
+CubiChar3 = ☿
+CubiColor3 = MediumVioletRed
+CubiStdAi3 = CubiAi.FleeToRing
+CubiJbAi3 = CubiAi.JailBreak
+
+CubiName4 = Del`ta
+CubiChar4 = ☿
+CubiColor4 = SeaGreen
+CubiStdAi4 = CubiAi.FleeToRing
+CubiJbAi4 = CubiAi.JailBreak

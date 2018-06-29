@@ -67,6 +67,7 @@
     <Compile Include="Area\Tiles\MapTileSet.cs" />
     <Compile Include="Actions\Place.cs" />
     <Compile Include="Actions\Throw.cs" />
+    <Compile Include="Utility\Grimoire.cs" />
     <Compile Include="Utility\AnnounceStruct.cs" />
     <Compile Include="Area\Tiles\FlowTile.cs" />
     <Compile Include="Area\Tiles\FlowTileComp.cs" />
@@ -103,6 +104,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Beehive.grim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

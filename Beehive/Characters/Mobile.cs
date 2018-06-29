@@ -13,6 +13,11 @@ namespace Beehive
 
 		protected int horny = 0;
 
+		public Mobile()
+		{
+			loc = new Loc();
+		}
+
 		public Mobile(string nameIn, Color useColor)
 		{
 			loc = new Loc();

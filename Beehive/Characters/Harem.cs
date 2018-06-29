@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace Beehive
@@ -13,31 +12,29 @@ namespace Beehive
 		public Harem()
 		{
 			roster = new List<Cubi>();
+			Grimoire.Load("Beehive.grim");
 
 			// todo fix hardcoded numbers
 			// todo simple AI while we refactor flow stuff
-			Cubi a = new Cubi("Ai'nana", 1, Color.HotPink);
+
+			Cubi a = new Cubi(1);
+			Grimoire.FillCubi(a);
 			a.SetXY(33, 9);
-			a.myStdAi = new CubiStdAi(CubiAi.FleeToRing);
-			a.myJbAi = new CubiJailBreak(CubiAi.JailBreak);
 			roster.Add(a);
 
-			Cubi b = new Cubi("Bel'lona ", 2, Color.RosyBrown);
+			Cubi b = new Cubi(2);
+			Grimoire.FillCubi(b);
 			b.SetXY(34, 9);
-			b.myStdAi = new CubiStdAi(CubiAi.FlowOutAndBack);
-			b.myJbAi = new CubiJailBreak(CubiAi.JailBreak);
 			roster.Add(b);
 
-			Cubi c = new Cubi("Cy'rene", 3, Color.MediumVioletRed);
+			Cubi c = new Cubi(3);
+			Grimoire.FillCubi(c);
 			c.SetXY(35, 9);
-			c.myStdAi = new CubiStdAi(CubiAi.FleeToRing);
-			c.myJbAi = new CubiJailBreak(CubiAi.JailBreak);
 			roster.Add(c);
 
-			Cubi d = new Cubi("Del'ta", 4, Color.SeaGreen);
+			Cubi d = new Cubi(4);
+			Grimoire.FillCubi(d);
 			d.SetXY(34, 8);
-			d.myStdAi = new CubiStdAi(CubiAi.FleeToRing);
-			d.myJbAi = new CubiJailBreak(CubiAi.JailBreak);
 			roster.Add(d);
 		}
 
