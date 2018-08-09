@@ -76,6 +76,7 @@ namespace Beehive
 			// leave pillow on ground to form new obstruction
 			activeTile.clear = false;
 			Refs.m.HealWalls();
+			Refs.m.RunLos();
 			Refs.mf.UpdateMap();
 		}
 

@@ -9,6 +9,7 @@ namespace Beehive
 	{
 		public bool clear = false;
 		public string gly = "#";
+		public bool los = false;
 
 		public int[] nectarLevel; // 0 is for master, cubis start as 1 (same as flows)
 

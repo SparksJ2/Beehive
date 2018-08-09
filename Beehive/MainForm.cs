@@ -97,8 +97,10 @@ namespace Beehive
 				int timePass = Refs.p.HandlePlayerInput(e);
 
 				Refs.m.HealWalls();
-
 				Console.WriteLine("Finished HealWalls at " + sw.ElapsedMilliseconds + "ms in.");
+
+				Refs.m.RunLos();
+				Console.WriteLine("Finished RunLos at " + sw.ElapsedMilliseconds + "ms in.");
 
 				FlowMap.RemakeAllFlows();
 				Console.WriteLine("Finished RemakeAllFlows at " + sw.ElapsedMilliseconds + "ms in.");

@@ -178,5 +178,21 @@ namespace Beehive
 				if (t.clear) { t.nectarLevel[myIndex]++; }
 			}
 		}
+
+		internal void RunLos()
+		{
+			ResetLos();
+			MapTile pt = TileByLoc(Refs.p.loc);
+
+			foreach (MapTile t in tiles)
+			{
+				if (MapTile.Distance(pt, t) <= 6) { t.los = true; }
+			}
+		}
+
+		internal void ResetLos()
+		{
+			foreach (MapTile t in tiles) { t.los = false; }
+		}
 	}
 }

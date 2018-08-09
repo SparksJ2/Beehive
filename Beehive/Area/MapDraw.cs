@@ -84,11 +84,9 @@ namespace Beehive
 			{
 				int showFlow = Refs.p.viewFlow;
 
-				Color flowCol = Color.Black;
-
 				if (showFlow > 0)
 				{
-					flowCol = Harem.GetId(showFlow).myColor;
+					Color flowCol = Harem.GetId(showFlow).myColor;
 
 					double flowInt = Refs.m.flows[showFlow].TileByLoc(t.loc).flow;
 
@@ -97,6 +95,23 @@ namespace Beehive
 					int b = ByteLimit(Convert.ToInt32(flowCol.B - flowInt * 4));
 
 					Color useCol = Color.FromArgb(r, g, b);
+
+					using (var gFlow = Graphics.FromImage(img))
+					{
+						// Create a rectangle for the working area on the map
+						RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
+						using (var flowBrush = new SolidBrush(useCol))
+						{
+							gFlow.FillRectangle(flowBrush, tileRect);
+						}
+					}
+				}
+				else // show player los instead
+				{
+					Color losCol = Color.DarkSlateBlue;
+					Color hidCol = Color.DarkBlue;
+
+					Color useCol = t.los ? losCol : hidCol;
 
 					using (var gFlow = Graphics.FromImage(img))
 					{
@@ -201,17 +216,17 @@ namespace Beehive
 		public void AddCharMobile(Image img, Mobile m)
 		{
 			string s = m.glyph;
-			int x1 = (m.loc.X * multX) + edgeX;
-			int y1 = (m.loc.Y * multY) + edgeY;
 
 			// begin foreground
-			if (s == "♂" || s == "☿")
+			if ((s == "♂" || s == "☿") && Refs.m.TileByLoc(m.loc).los)
 			{
 				Bitmap singleTileImage = GetTileBitmap(s, stdSize, m.myColor);
 
 				// paste symbol onto map
 				using (var gChar = Graphics.FromImage(img))
 				{
+					int x1 = (m.loc.X * multX) + edgeX;
+					int y1 = (m.loc.Y * multY) + edgeY;
 					gChar.DrawImage(singleTileImage, x1, y1);
 				}
 			}
