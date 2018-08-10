@@ -49,18 +49,35 @@ namespace Beehive
 		private static void AddGlow(Loc l, Color glowCol)
 		{
 			// todo what about overlapping glows?
+			MapTileSet done = new MapTileSet();
 
 			MapTile source = Refs.m.TileByLoc(l);
 
 			source.backCol = GlowColOffset(source.backCol, glowCol, 0.5);
+			done.Add(source);
+			Glowinator(glowCol, done, source, 0.25);
+		}
 
-			MapTileSet surround = source.GetPossibleMoves(Dir.AllAround);
-			foreach (MapTile t in surround)
+		private static void Glowinator(Color glowCol, MapTileSet done, MapTile from, double amt)
+		{
+			MapTileSet surround = from.GetPossibleMoves(Dir.AllAround);
+
+			while (amt > 0.1)
 			{
-				if (t.clear)
+				MapTileSet newSurround = new MapTileSet();
+				foreach (MapTile t in surround)
 				{
-					t.backCol = GlowColOffset(t.backCol, glowCol, 0.25);
+					if (t.clear && !done.Contains(t))
+					{
+						t.backCol = GlowColOffset(t.backCol, glowCol, amt);
+						done.Add(t);
+
+						MapTileSet more = t.GetPossibleMoves(Dir.AllAround);
+						foreach (MapTile m in more) { newSurround.Add(m); }
+					}
 				}
+				surround = newSurround;
+				amt -= 0.1;
 			}
 		}
 
