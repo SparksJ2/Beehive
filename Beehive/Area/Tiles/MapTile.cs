@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace Beehive
@@ -10,6 +11,7 @@ namespace Beehive
 		public bool clear = false;
 		public string gly = "#";
 		public bool los = false;
+		public Color backCol = Color.DarkSlateBlue;
 
 		public int[] nectarLevel; // 0 is for master, cubis start as 1 (same as flows)
 

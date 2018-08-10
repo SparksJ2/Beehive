@@ -6,6 +6,19 @@ issues:
 
 todo list:
 ```````````
+
+unified background drawing?
+	add glow!
+		for mobiles
+		for 'beds'
+
+victory facesitting move? :D
+
+random chase questions:
+	can BE detect pet via any 6th sense?
+	can pet be tracked around corners by her glow?
+	can pet dynamic entry if she gets excited enough?
+
 fix dodgy animation coding
 	(throwing has glitches when going over holding pens,
 	also needs to redraw player char after release)

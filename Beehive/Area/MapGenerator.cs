@@ -106,7 +106,7 @@ namespace Beehive
 
 			NewMap.ConsoleDump();
 			NewMap.HealWalls();
-			NewMap.RunLos();
+
 			NewMap.ConsoleDump();
 
 			// typ old time 230ms, new time 110ms

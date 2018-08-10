@@ -60,22 +60,24 @@ namespace Beehive
 				gr.DrawRectangle(whitePen, rc);
 			}
 
-			// add flow and walls stuff
-			foreach (MapTile t in tiles) { AddBackgroundOrWallsOrNectar(bmp, t); }
+			// do all backgrounds here (includes flow, los, glow effects)
+			Refs.m.RunLos();
+			Refs.m.RunGlows();
+			foreach (MapTile t in tiles) { AddBackgroundStuff(bmp, t); }
 
-			// specials and mobiles
+			// add walls, nectar
+			foreach (MapTile t in tiles) { AddForegroundStuff(bmp, t); }
+
+			// add specials and mobiles
 			AddCharSpecial(bmp, "⛤");
 
 			AddCharMobile(bmp, Refs.p);
-			foreach (Cubi c in Refs.h.roster)
-			{
-				AddCharMobile(bmp, c);
-			}
+			foreach (Cubi c in Refs.h.roster) { AddCharMobile(bmp, c); }
 
 			return bmp;
 		}
 
-		public void AddBackgroundOrWallsOrNectar(Image img, MapTile t)
+		public void AddForegroundStuff(Image img, MapTile t)
 		{
 			int x1 = (t.loc.X * multX) + edgeX;
 			int y1 = (t.loc.Y * multY) + edgeY;
@@ -83,46 +85,6 @@ namespace Beehive
 			if (t.clear)  // set flow as background only
 			{
 				int showFlow = Refs.p.viewFlow;
-
-				if (showFlow > 0)
-				{
-					Color flowCol = Harem.GetId(showFlow).myColor;
-
-					double flowInt = Refs.m.flows[showFlow].TileByLoc(t.loc).flow;
-
-					int r = ByteLimit(Convert.ToInt32(flowCol.R - flowInt * 4));
-					int g = ByteLimit(Convert.ToInt32(flowCol.G - flowInt * 4));
-					int b = ByteLimit(Convert.ToInt32(flowCol.B - flowInt * 4));
-
-					Color useCol = Color.FromArgb(r, g, b);
-
-					using (var gFlow = Graphics.FromImage(img))
-					{
-						// Create a rectangle for the working area on the map
-						RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
-						using (var flowBrush = new SolidBrush(useCol))
-						{
-							gFlow.FillRectangle(flowBrush, tileRect);
-						}
-					}
-				}
-				else // show player los instead
-				{
-					Color losCol = Color.DarkSlateBlue;
-					Color hidCol = Color.DarkBlue;
-
-					Color useCol = t.los ? losCol : hidCol;
-
-					using (var gFlow = Graphics.FromImage(img))
-					{
-						// Create a rectangle for the working area on the map
-						RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
-						using (var flowBrush = new SolidBrush(useCol))
-						{
-							gFlow.FillRectangle(flowBrush, tileRect);
-						}
-					}
-				}
 
 				// display nectar drops using deepest level
 				int deepestLevel = 0;
@@ -162,6 +124,57 @@ namespace Beehive
 				using (var gChar = Graphics.FromImage(img))
 				{
 					gChar.DrawImage(singleTileImage, x1, y1);
+				}
+			}
+		}
+
+		public void AddBackgroundStuff(Image img, MapTile t)
+		{
+			int x1 = (t.loc.X * multX) + edgeX;
+			int y1 = (t.loc.Y * multY) + edgeY;
+
+			if (t.clear)  // set flow as background only
+			{
+				int showFlow = Refs.p.viewFlow;
+
+				if (showFlow > 0)
+				{
+					Color flowCol = Harem.GetId(showFlow).myColor;
+
+					double flowInt = Refs.m.flows[showFlow].TileByLoc(t.loc).flow;
+
+					int r = ByteLimit(Convert.ToInt32(flowCol.R - flowInt * 4));
+					int g = ByteLimit(Convert.ToInt32(flowCol.G - flowInt * 4));
+					int b = ByteLimit(Convert.ToInt32(flowCol.B - flowInt * 4));
+
+					Color useCol = Color.FromArgb(r, g, b);
+
+					using (var gFlow = Graphics.FromImage(img))
+					{
+						// Create a rectangle for the working area on the map
+						RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
+						using (var flowBrush = new SolidBrush(useCol))
+						{
+							gFlow.FillRectangle(flowBrush, tileRect);
+						}
+					}
+				}
+				else // show player los instead
+				{
+					Color losCol = t.backCol;
+					Color hidCol = Color.DarkBlue;
+
+					Color useCol = t.los ? losCol : hidCol;
+
+					using (var gFlow = Graphics.FromImage(img))
+					{
+						// Create a rectangle for the working area on the map
+						RectangleF tileRect = new RectangleF(x1, y1, multX, multY);
+						using (var flowBrush = new SolidBrush(useCol))
+						{
+							gFlow.FillRectangle(flowBrush, tileRect);
+						}
+					}
 				}
 			}
 		}
@@ -383,7 +396,7 @@ namespace Beehive
 		{
 			Image img = Refs.mf.MainBitmap.Image;
 			SetBlank(img, Refs.m.TileByLoc(loc));
-			AddBackgroundOrWallsOrNectar(img, Refs.m.TileByLoc(loc));
+			AddForegroundStuff(img, Refs.m.TileByLoc(loc));
 		}
 
 		public void SetBlank(Image img, MapTile t)

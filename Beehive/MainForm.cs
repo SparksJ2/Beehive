@@ -47,6 +47,7 @@ namespace Beehive
 			// draw initial map
 			FlowMap.RemakeAllFlows();
 			UpdateMap();
+			GlowTest();
 
 			MessageBox.Show(
 				"In your vast bed, tucked deep in a dreamworld, far outside time and space,\n" +
@@ -78,6 +79,22 @@ namespace Beehive
 			Refs.p.UpdateInventory();
 		}
 
+		private static void GlowTest()
+		{
+			// check glow system is commutative
+			Color c1 = Color.SlateBlue;
+			Color c2 = Color.HotPink;
+			Color c3 = Color.FromArgb(0, 71, 171);
+
+			Color m1a = MainMap.GlowColOffset(c1, c2, 0.5);
+			Color m1b = MainMap.GlowColOffset(m1a, c3, 0.5);
+
+			Color m2a = MainMap.GlowColOffset(c1, c3, 0.5);
+			Color m2b = MainMap.GlowColOffset(m2a, c2, 0.5);
+
+			//MessageBox.Show(m1b + "\n" + m2b);
+		}
+
 		public void UpdateMap()
 		{
 			Refs.mf.MainBitmap.Image = Refs.m.AsBitmap();
@@ -99,7 +116,6 @@ namespace Beehive
 				Refs.m.HealWalls();
 				Console.WriteLine("Finished HealWalls at " + sw.ElapsedMilliseconds + "ms in.");
 
-				Refs.m.RunLos();
 				Console.WriteLine("Finished RunLos at " + sw.ElapsedMilliseconds + "ms in.");
 
 				FlowMap.RemakeAllFlows();
