@@ -142,4 +142,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"C:\Program Files\7-Zip\7z.exe" a -t7z  beehive.zip beehive.exe beehive.grim</PostBuildEvent>
+  </PropertyGroup>
 </Project>
