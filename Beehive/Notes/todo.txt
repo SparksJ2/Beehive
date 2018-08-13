@@ -7,6 +7,11 @@ issues:
 todo list:
 ```````````
 
+bug report: arrow keys can lose main window focus?
+	``Interesting. Somehow hitting ← got me into one of the display-text-boxes, and now I can't control the interface anymore``
+
+misfeature: do something with ctrl/shift key chording?
+
 unified background drawing?
 	add glow!
 		for mobiles
