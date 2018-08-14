@@ -10,8 +10,8 @@ namespace Beehive
 	public partial class MainForm : Form
 	{
 		public PreviewKeyDownEventHandler eh;
-
 		public Stopwatch turnTimer;
+		private Control defaultFocus;
 
 		public MainForm()
 		{
@@ -30,6 +30,7 @@ namespace Beehive
 			miniInventory.Enter += DenyFocus;
 
 			Refs.mf = this;
+			defaultFocus = this.ActiveControl;
 		}
 
 		private void DenyFocus(object sender, EventArgs e) => this.ActiveControl = null;
@@ -103,6 +104,8 @@ namespace Beehive
 
 		public void PreviewKeyDownHandler(object sender, PreviewKeyDownEventArgs e)
 		{
+			this.ActiveControl = defaultFocus;
+
 			var sw = new Stopwatch(); sw.Start();
 			Console.WriteLine("Key " + e.KeyCode + " Pressed");
 			Console.WriteLine("Starting new frame.");
@@ -153,6 +156,8 @@ namespace Beehive
 
 			Console.WriteLine("Total time this update = " + sw.ElapsedMilliseconds + "ms. or " +
 						1000 / sw.ElapsedMilliseconds + " fps if it mattered.");
+
+			this.ActiveControl = defaultFocus;
 		}
 
 		private List<AnnounceStruct> annLines;
