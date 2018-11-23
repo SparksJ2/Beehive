@@ -9,8 +9,14 @@ todo list:
 
 bug report: arrow keys can lose main window focus?
 	``Interesting. Somehow hitting ← got me into one of the display-text-boxes, and now I can't control the interface anymore``
+	``Mono probably has a bug around this. I noticed intermittent weirdness around the feedback box last time I ran (won't build right now, will debug later) that I couldn't make clear enough to give you a bug report about.``
 
 misfeature: do something with ctrl/shift key chording?
+
+add menus
+	f1 help
+	load/save
+	options?
 
 unified background drawing?
 	add glow!

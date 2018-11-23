@@ -1,23 +1,25 @@
 ﻿
-Fire/wands/Griffindor/Blinky(red-ghost)/(energetic)
-"Ai'nana" / Color.HotPink
-Just runs directly away. 
-Horny as hell, nectar everywhere.
-Will try to wiggle out of your grip.
+"Ai'nana" / Color.HotPink / Fire / Wands / Griffindor / Blinky(red-ghost) / (energetic)
+move AI: Just runs directly away. 
+horny AI: Loves being chased.
+carry AI: Will grope you while being carried.
+special AI: Can jump walls.
 
-Air/sword/Ravenclaw/Pinky(pink-ghost)/(fast/smart)
-"Bel'lona" / Color.MediumVioletRed
-Runs away but tries to stay behind you.
-Masochist, spanking just encourages her.
-Fast? Jumps? Better at dodging?
+"Bel'lona" / Color.MediumVioletRed / Air / Swords / Ravenclaw / Pinky(pink-ghost) / (smart)
+move AI: Runs away but tries to stay behind you.
+horny AI: Loves being carried.
+carry AI: Will grope *herself* while being carried.
+special AI: Can dodge with a knights-move (with cooldown).
 
-Water/cups/Slytherin/Inky(blue-ghost)/(sly/sneaky)
-"Cy'rene" / Color.SeaGreen
-Prefers to stay behind you.
-Tries to mirror Ai'nana's moves on your other side.
-Can hide under pillows.
+"Cy'rene" / Color.SeaGreen / Water / Cups / Slytherin / Inky(blue-ghost) / (sneaky / naughty)
+move AI: Prefers to stay behind player OR tries to mirror Ai'nana's moves on your other side.
+horny AI: Loves being spanked.
+grab AI: slippery, chance to get away
+carry AI: Will put her hands over your eyes and/or try to wiggle away.
+special AI: Will try to hide underneath pillows.
 
-Earth/pents/Hufflepuff/Clyde(orange-ghost)/(derp)
-"Del'ta" / Color.RosyBrown
-Big on tease, runs towards and away.
-Tough gal, too big to lift, but can be spanked into going home.
+"Del'ta" / Color.RosyBrown / Earth / Pentacles / Hufflepuff / Clyde(orange-ghost) / (derp)
+move AI: Big on tease, runs towards and away.
+horny AI:  
+carry AI: Too big to lift. She can carry YOU? 
+special AI: Can be spanked into going home.
