@@ -23,6 +23,7 @@ namespace Beehive
 			glyph = "♂";
 		}
 
+		// returns number of round passed, 0 for free actions, 1 for normal moves.
 		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
 			MapTile here = Refs.m.TileByLoc(loc);
@@ -58,7 +59,11 @@ namespace Beehive
 			{
 				return BoinkHeld();
 			}
-			// returns number of round passed, 0 for free actions, 1 for normal moves.
+
+			if (e.KeyCode == Keys.C && heldCubiId != 0)
+			{
+				return CaneHeld();
+			}
 
 			Loc lastPos = loc;
 			// visualise flows

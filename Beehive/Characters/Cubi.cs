@@ -102,6 +102,10 @@ namespace Beehive
 				// pain ==> pleasure
 				horny++;
 				noMove = true; // too oww to move.
+				if (spanked == 0)
+				{
+					Refs.mf.Announce("That was intense... but time to get going again!", myAlign, myColor);
+				}
 			}
 
 			if (beingCarried)

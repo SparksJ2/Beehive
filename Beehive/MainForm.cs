@@ -83,7 +83,9 @@ namespace Beehive
 				"\t'T' then Direction to throw.\n\n" +
 				"F6 and F9 to quicksave and quickload (unlikely to work between version changes!)\n" +
 				"F1 to view this help again.\n\n" +
-				"\tBeta feature: 'F' to boink held Cubi."
+				"\tBeta features:\n" +
+				"\t\t'F' to boink held Cubi.\n" +
+				"\t\t'C' to discipline them. ;)"
 				);
 		}
 

@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\Boink.cs" />
+    <Compile Include="Actions\Cane.cs" />
     <Compile Include="Actions\ThrowCubi.cs" />
     <Compile Include="Actions\ThrowPillow.cs" />
     <Compile Include="Area\Boards\BaseMap.cs" />
