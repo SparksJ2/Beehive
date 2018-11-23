@@ -50,8 +50,7 @@ namespace Beehive
 
 			if (e.KeyCode == Keys.F && heldCubiId != 0)
 			{
-				BoinkHeld();
-				return 1;
+				return BoinkHeld();
 			}
 			// returns number of round passed, 0 for free actions, 1 for normal moves.
 

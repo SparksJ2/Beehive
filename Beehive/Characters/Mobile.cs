@@ -11,7 +11,7 @@ namespace Beehive
 		public Color myColor;
 		public string glyph;
 
-		protected int horny = 0;
+		public int horny = 0;
 
 		public Mobile()
 		{
