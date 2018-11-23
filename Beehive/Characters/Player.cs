@@ -48,6 +48,11 @@ namespace Beehive
 				return 0;
 			}
 
+			if (e.KeyCode == Keys.F && heldCubiId != 0)
+			{
+				BoinkHeld();
+				return 1;
+			}
 			// returns number of round passed, 0 for free actions, 1 for normal moves.
 
 			Loc lastPos = loc;
