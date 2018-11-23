@@ -62,8 +62,8 @@ namespace Beehive
 				"Alternate controls:\n\n" +
 				"\t'P' then Direction to place/pickup.\n" +
 				"\t'T' then Direction to throw.\n\n" +
-				"F6 and F9 to quicksave and quickload (unlikely to work between version changes!)\n" +
-				"\tbeta feature: 'F' to boink held Cubi."
+				"F6 and F9 to quicksave and quickload (unlikely to work between version changes!)\n\n" +
+				"\tBeta feature: 'F' to boink held Cubi."
 				);
 
 			Player p = Refs.p;
