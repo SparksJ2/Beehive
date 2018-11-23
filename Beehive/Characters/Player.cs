@@ -32,6 +32,12 @@ namespace Beehive
 			foreach (int i in here.nectarLevel) { Console.Write(i + ", "); }
 			Console.Write(".");
 
+			if (e.KeyCode == Keys.F1)
+			{
+				MainForm.HelpPopup();
+				return 0;
+			}
+
 			if (e.KeyCode == Keys.F6)
 			{
 				Refs.mf.Announce("Saving game...", myAlign, myColor);
