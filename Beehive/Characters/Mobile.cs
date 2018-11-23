@@ -11,7 +11,7 @@ namespace Beehive
 		public Color myColor;
 		public string glyph;
 
-		public int horny = 0;
+		protected int horny = 0;
 
 		public Mobile()
 		{
@@ -26,5 +26,11 @@ namespace Beehive
 		}
 
 		public void SetXY(int x, int y) => loc = new Loc(x, y);
+
+		public void AddHorny(int h) => horny += h;
+
+		public void SetHorny(int h) => horny = h;
+
+		public int GetHorny() => horny;
 	}
 }

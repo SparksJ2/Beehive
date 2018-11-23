@@ -34,12 +34,13 @@ namespace Beehive
 			rng = new Random();
 		}
 
-		public Cubi(string name, int id, Color useColor) : base(name, useColor)
-		{
-			rng = new Random();
-			myIdNo = id;
-			glyph = "☿";
-		}
+		// not currently used, stats filled instead using Grimoire.
+		//public Cubi(string name, int id, Color useColor) : base(name, useColor)
+		//{
+		//	rng = new Random();
+		//	myIdNo = id;
+		//	glyph = "☿";
+		//}
 
 		public void Spank(int i)
 		{
