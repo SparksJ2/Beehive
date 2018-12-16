@@ -27,6 +27,8 @@ other comments
 
 display stuff
 	interface
+		fix inventory (mis-count! shows holding 2 cubi?)
+			add color & cubi name
 		add menus
 			f1 help
 			load/save
