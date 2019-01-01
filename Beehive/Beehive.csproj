@@ -70,7 +70,6 @@
     <Compile Include="Area\Tiles\MapTileSet.cs" />
     <Compile Include="Actions\Place.cs" />
     <Compile Include="Actions\Throw.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Utility\Grimoire.cs" />
     <Compile Include="Utility\AnnounceStruct.cs" />
     <Compile Include="Area\Tiles\FlowTile.cs" />
