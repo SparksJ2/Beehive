@@ -9,8 +9,11 @@ namespace Beehive
 		[STAThread]
 		public static void Main()
 		{
+			// important windows forms setup stuff.
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+
+			// everthing runs from here
 			Application.Run(new MainForm());
 		}
 	}

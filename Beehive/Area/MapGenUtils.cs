@@ -4,6 +4,9 @@ namespace Beehive
 {
 	public partial class MainMap
 	{
+		/// map generator specific tools
+		// has cached data sets that should only be used at mapgen time!
+
 		public MapTileSet GetNextTo(MapTile t)
 		{
 			var x = new MapTileSet()

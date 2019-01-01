@@ -10,6 +10,8 @@ namespace Beehive
 {
 	public partial class MainMap : IDisposable
 	{
+		/// turns map data into a bitmap. complicated.
+
 		// don't include fonts in save file
 		[NonSerialized()]
 		private Bitmap SansSerifBitmapFont;

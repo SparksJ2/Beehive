@@ -6,6 +6,8 @@ namespace Beehive
 	[Serializable()]
 	internal class MapTileComp : IEqualityComparer<MapTile>
 	{
+		/// standard compare interface
+
 		public bool Equals(MapTile n1, MapTile n2)
 		{
 			if (n1 == null && n2 == null) return true;

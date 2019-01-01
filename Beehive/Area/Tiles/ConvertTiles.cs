@@ -2,6 +2,9 @@
 {
 	internal class ConvertTiles
 	{
+		/// turns MapTileSets into FlowTileSets and back again, used by AI.
+		// todo can these classes be better integrated?
+
 		static internal FlowTileSet FlowSquaresFromTileSet(MapTileSet tiles, FlowMap fm)
 		{
 			var result = new FlowTileSet();

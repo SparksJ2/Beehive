@@ -6,6 +6,8 @@ namespace Beehive
 	[Serializable()]
 	public class FlowTileComp : IEqualityComparer<FlowTile>
 	{
+		/// standard compare interface
+
 		public bool Equals(FlowTile fs1, FlowTile fs2)
 		{
 			if (fs1 == null && fs2 == null) return true;

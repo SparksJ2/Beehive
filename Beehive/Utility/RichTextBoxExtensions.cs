@@ -6,6 +6,8 @@ namespace Beehive
 {
 	public static class RichTextBoxExtensions
 	{
+		/// custom text box interface for dealing with color, alighment, and mono bugs
+
 		public static void FancyAppendText(this RichTextBox box, string text,
 			Color color, HorizontalAlignment align)
 		{
@@ -24,7 +26,7 @@ namespace Beehive
 			try
 			{
 				// Mono frequently throws an exception on setting colors in
-				//    RichTextBoxs, but does it anyway, so here is the workaround.
+				//    RichTextBoxes, but does it anyway, so here is the workaround.
 				box.SelectionColor = color;
 			}
 			catch (Exception ex)

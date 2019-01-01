@@ -5,6 +5,8 @@ namespace Beehive
 	[Serializable()]
 	public class Loc
 	{
+		/// a 2d X/Y vector location, with utility stuff
+
 		public int X;
 		public int Y;
 

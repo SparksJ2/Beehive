@@ -8,6 +8,8 @@ namespace Beehive
 {
 	partial class Player
 	{
+		/// fun class for fucking a held cubi
+
 		private int BoinkHeld()
 		{
 			MapTile here = Refs.m.TileByLoc(loc);
@@ -28,7 +30,7 @@ namespace Beehive
 				MainMap.SplurtNectar(here, partner.myIdNo);
 				MainMap.SplurtNectar(here, myIndex: 0);
 
-				partner.AddHorny(-10);		
+				partner.AddHorny(-10);
 				AddHorny(-10);
 			}
 			else if (partner.GetHorny() > 15) // partner only orgasm

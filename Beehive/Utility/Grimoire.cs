@@ -11,6 +11,8 @@ namespace Beehive
 {
 	public static class Grimoire
 	{
+		/// for loading and saving game options
+
 		private static Dictionary<string, string> lore = new Dictionary<string, string>();
 
 		public static void Load(string fileName)

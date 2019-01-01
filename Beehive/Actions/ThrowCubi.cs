@@ -4,6 +4,8 @@ namespace Beehive
 {
 	partial class Player
 	{
+		/// player-throwing-a-cubi trajectory logic
+
 		private void ThrowCubiMain(Loc vector)
 		{
 			// todo lots of duplication here

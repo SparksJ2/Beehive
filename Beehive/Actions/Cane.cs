@@ -8,6 +8,8 @@ namespace Beehive
 {
 	partial class Player
 	{
+		/// fun class for manually spanking a held cubi
+
 		private int CaneHeld()
 		{
 			MapTile here = Refs.m.TileByLoc(loc);

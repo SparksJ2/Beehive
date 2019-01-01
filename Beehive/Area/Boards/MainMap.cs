@@ -7,6 +7,8 @@ namespace Beehive
 	[Serializable()]
 	public partial class MainMap : BaseMap<MapTile>
 	{
+		/// holds main map data etc
+
 		[NonSerialized()] // don't put flows in savefile
 		public FlowMap[] flows;
 
@@ -178,7 +180,5 @@ namespace Beehive
 				if (t.clear) { t.nectarLevel[myIndex]++; }
 			}
 		}
-
-		
 	}
 }

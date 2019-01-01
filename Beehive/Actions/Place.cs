@@ -2,7 +2,9 @@
 {
 	partial class Player
 	{
-		// todo fix duplication?
+		/// for players picky-uppy and putty-downy inventory actions
+
+		// todo fix direction duplication?
 		private void ActionNorth()
 		{
 			MapTile t = Refs.m.TileByLoc(loc).OneNorth();

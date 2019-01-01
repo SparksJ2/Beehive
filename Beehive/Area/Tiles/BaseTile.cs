@@ -62,7 +62,7 @@ namespace Beehive
 			return (myMap.ValidLoc(newLoc)) ? myMap.TileByLoc(newLoc) : default(T);
 		}
 
-		// todo make generic
+		// todo use loc class distance calculator
 		public static double Distance(MapTile t1, MapTile t2)
 		{
 			double a = Math.Pow(t1.loc.X - t2.loc.X, 2);

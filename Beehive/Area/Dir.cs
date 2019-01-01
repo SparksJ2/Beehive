@@ -4,6 +4,8 @@ namespace Beehive
 {
 	public static class Dir
 	{
+		/// provides Locs and hashsets of Locs to locate various nearby tiles, all nearby tiles, knight-moves, etc.
+
 		public static Loc North = new Loc(0, -1);
 		public static Loc East = new Loc(1, 0);
 		public static Loc South = new Loc(0, 1);

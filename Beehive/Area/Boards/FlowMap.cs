@@ -5,6 +5,8 @@ namespace Beehive
 	[Serializable()]
 	public class FlowMap : BaseMap<FlowTile>
 	{
+		/// holds flowmaps used in cubi AI pathfinding
+
 		// VS says this should be readonly? it seems to work ok.
 		private readonly int level;
 

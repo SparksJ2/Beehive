@@ -7,6 +7,8 @@ namespace Beehive
 	[Serializable()]
 	public class BaseMap<T>
 	{
+		/// base class for mainmaps and flowmaps
+
 		public int xLen, yLen;
 		protected T[,] tiles;
 

@@ -5,6 +5,8 @@ namespace Beehive
 {
 	public partial class MainMap : BaseMap<MapTile>
 	{
+		/// line-of-sight calculations and glow effects
+
 		internal void RunLos()
 		{
 			ResetLos();

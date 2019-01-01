@@ -4,6 +4,8 @@ namespace Beehive
 {
 	partial class Player
 	{
+		/// player-throwing-pillow trajectory logic
+
 		private void ThrowPillowMain(Loc vector)
 		{
 			Refs.mf.Announce("You throw a pillow!", myAlign, myColor);

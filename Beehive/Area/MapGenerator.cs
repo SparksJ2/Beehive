@@ -7,6 +7,8 @@ namespace Beehive
 {
 	public class MazeGenerator
 	{
+		/// runs once at game start to set up the map walls etc.
+
 		private Random rng = new Random();
 
 		public MainMap Create(int xlen, int ylen)

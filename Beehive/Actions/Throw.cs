@@ -2,6 +2,8 @@
 {
 	partial class Player
 	{
+		/// for player throwing actions
+
 		private void ThrowNorth()
 		{
 			MapTile t = Refs.m.TileByLoc(this.loc).OneNorth();
