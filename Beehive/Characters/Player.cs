@@ -50,6 +50,7 @@ namespace Beehive
 				Refs.mf.Announce("Loading game...", myAlign, myColor);
 				LoadGame();
 				Refs.m.LoadBitmapFonts();
+				Refs.p.UpdateInventory();
 				Refs.mf.Announce("Loaded game at " + turnCounter + " turns in.", myAlign, myColor);
 				return 0;
 			}
@@ -247,7 +248,7 @@ namespace Beehive
 		{
 			Refs.mf.miniInventory.Text =
 				"pillows: " + heldPillows + "\n" +
-				"succubi: " + heldCubiId;
+				"succubi: " + (heldCubiId == 0 ? 0 : 1);
 		}
 
 		private void RunNorth()
