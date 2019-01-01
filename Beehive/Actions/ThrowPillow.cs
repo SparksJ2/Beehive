@@ -29,7 +29,7 @@ namespace Beehive
 				Cubi victim = Refs.m.CubiAt(victimTile.loc);
 
 				Refs.mf.Announce("POINT BLANK PILLOW SPANK!", myAlign, myColor);
-				victim.Spank(5);
+				victim.Spanked += 5;
 				Refs.mf.Announce("oww! *moan*", victim.myAlign, victim.myColor);
 			}
 
@@ -60,7 +60,7 @@ namespace Beehive
 					}
 					else
 					{
-						victim.Spank(5);
+						victim.Spanked += 5;
 						Refs.mf.Announce("Owwwww!", victim.myAlign, victim.myColor);
 					}
 				}

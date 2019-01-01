@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Beehive
 {
@@ -12,6 +13,8 @@ namespace Beehive
 		public string glyph;
 
 		protected int horny = 0;
+
+		public HorizontalAlignment myAlign;
 
 		public Mobile()
 		{

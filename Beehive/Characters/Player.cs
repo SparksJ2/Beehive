@@ -16,11 +16,10 @@ namespace Beehive
 		private bool throwmode = false, placemode = false, victory = false;
 		public int turnCounter = 0;
 
-		public HorizontalAlignment myAlign = HorizontalAlignment.Left;
-
 		public Player(string name, Color useColor) : base(name, useColor)
 		{
 			glyph = "♂";
+			myAlign = HorizontalAlignment.Left;
 		}
 
 		// returns number of round passed, 0 for free actions, 1 for normal moves.

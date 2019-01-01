@@ -5,7 +5,8 @@ namespace Beehive
 	[Serializable()]
 	public class FlowMap : BaseMap<FlowTile>
 	{
-		private int level;
+		// VS says this should be readonly? it seems to work ok.
+		private readonly int level;
 
 		public FlowMap(int xIn, int yIn, int levelIn)
 		{
@@ -148,9 +149,9 @@ namespace Beehive
 				Cubi c = Harem.GetId(level);
 
 				if (c.doJailBreak)
-				{ c.myJbAi(c.teaseDistance, this); }
+				{ c.myJbAi(c.TeaseDistance, this); }
 				else
-				{ c.myStdAi(c.teaseDistance, this); }
+				{ c.myStdAi(c.TeaseDistance, this); }
 			}
 
 			// report time

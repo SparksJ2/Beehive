@@ -13,49 +13,58 @@ namespace Beehive
 	[Serializable()]
 	public class Cubi : Mobile
 	{
-		private int spanked = 0; // or other wise incapped, e.g. orgasm throes
-		public bool beingCarried = false;
 		public int myIdNo;
 
+		public bool beingCarried = false;
+
+		private int spanked; // or other wise incapped, e.g. orgasm throes
+
+		public int Spanked
+		{
+			get => spanked;
+			set
+			{
+				// all spanking should be input here
+				spanked = value;
+				bored = 0;
+			}
+		}
+
+		private double bored;
+		public double Bored { get => bored; set => bored = value; }
+
+		private int teaseDistance;
+		public int TeaseDistance { get => teaseDistance; set => teaseDistance = value; }
+
 		public CubiStdAi myStdAi;
-		public bool doJailBreak = false;
 		public CubiJbAi myJbAi;
-
-		public double bored = 0.0;
-		public int teaseDistance = 11;
-
-		public HorizontalAlignment myAlign = HorizontalAlignment.Right;
+		public bool doJailBreak = false;
 
 		private static Random rng = new Random();
 
 		public Cubi(int id) : base()
 		{
+			/// freshly hatched!
 			myIdNo = id;
 			rng = new Random();
-		}
-
-		// not currently used, stats filled instead using Grimoire.
-		//public Cubi(string name, int id, Color useColor) : base(name, useColor)
-		//{
-		//	rng = new Random();
-		//	myIdNo = id;
-		//	glyph = "☿";
-		//}
-
-		public void Spank(int i)
-		{
-			spanked += i;
-			bored = 0;
+			Bored = 0;
+			Spanked = 0;
+			TeaseDistance = 11;
+			myAlign = HorizontalAlignment.Right;
 		}
 
 		public void AiMove()
 		{
+			/// our turn! what do we do?
+
 			MapTile here = Refs.m.TileByLoc(loc);
 
 			// decide if we're going to attempt a jailbreak
 			//  note: has no effect until next turn due to the
 			//  flows already being made at this point
-			bool oldJB = doJailBreak;
+
+			// jailbreak status reporting disabled
+			//bool oldJB = doJailBreak;
 
 			doJailBreak = (AnyCubiCaught() && !OnPent() && !beingCarried && DistToPlayer() > 10);
 
@@ -79,11 +88,11 @@ namespace Beehive
 
 			// todo 'bored' just slowly goes up for now
 			// todo turned 'bored' off while I work on Ai stuff
-			// if (bored < 11.0) { bored += 0.1; }
-			// teaseDistance = Convert.ToInt32(11 - bored);
+			//if (bored < 11.0) { bored += 0.1; }
+			//teaseDistance = Convert.ToInt32(11 - bored);
 
 			// being carried resets boredom
-			if (beingCarried) { bored = 0; }
+			if (beingCarried) { Bored = 0; }
 
 			// being close to player makes for horny cubi
 			if (DistToPlayer() < 5.0) { horny++; }
@@ -95,14 +104,14 @@ namespace Beehive
 				horny--;
 			}
 
-			var noMove = false;
-			if (spanked > 0)
+			var spankNoMove = false;
+			if (Spanked > 0) // todo integrate this with the if/else chain below
 			{
-				spanked--;
+				Spanked--;
 				// pain ==> pleasure
 				horny++;
-				noMove = true; // too oww to move.
-				if (spanked == 0)
+				spankNoMove = true; // too oww to move.
+				if (Spanked == 0)
 				{
 					Refs.mf.Announce("That was intense... but time to get going again!", myAlign, myColor);
 				}
@@ -119,12 +128,13 @@ namespace Beehive
 				// trapped!
 				return;
 			}
-			else if (!noMove)
+			else if (!spankNoMove)
 			{
+				// make a move!
 				AIPathing();
 
 				// consume player nectar
-				if (here.nectarLevel[0] > 0) // 0 for player
+				if (here.nectarLevel[0] > 0) // level [0] for player nectar
 				{
 					Refs.mf.Announce("Yes, masters nectar! *lap lap*", myAlign, myColor);
 					horny += here.nectarLevel[0] * 5;
@@ -135,7 +145,7 @@ namespace Beehive
 				{
 					Refs.mf.Announce("Aieee I'm cumming! *splurt*", myAlign, myColor);
 					MainMap.SplurtNectar(here, myIdNo);
-					spanked += 5;
+					Spanked += 5;
 					horny = 0;
 				}
 			}
@@ -143,12 +153,15 @@ namespace Beehive
 
 		private bool OnPent()
 		{
+			/// are we sitting on a pent?
 			foreach (Loc pent in Refs.m.pents) { if (Loc.Same(pent, loc)) { return true; } }
 			return false;
 		}
 
 		private void AIPathing()
 		{
+			/// we get to move! yay! but where to?
+
 			MapTile myTile = Refs.m.TileByLoc(loc);
 
 			// places one square away that we could go to
@@ -255,12 +268,16 @@ namespace Beehive
 
 		private void IfClearMoveTo(MapTile t)
 		{
-			// not wall and not player
+			/// used for last second tactical evasion
+
+			// if (not wall and not player), move there
 			if (t.clear == true && t.loc != Refs.p.loc) { loc = t.loc; }
 		}
 
 		private void FreeMoveToNearbySafeSquare()
 		{
+			/// used when jailbreaking a cubi, to move it out of the pent
+
 			// todo a fair bit of duplication here could be moved into map utility funcions
 
 			// where are we?
@@ -275,7 +292,7 @@ namespace Beehive
 			// don't move directly onto player
 			maybeTiles = maybeTiles.Where(t => t.loc != Refs.p.loc).ToMapTileSet();
 
-			// or right next to the player!
+			// or into players grab range!
 			Loc playerLoc = Refs.p.loc;
 			MapTile playerTile = Refs.m.TileByLoc(playerLoc);
 
@@ -285,6 +302,7 @@ namespace Beehive
 				maybeTiles = maybeTiles.Where(t => t.loc != g.loc).ToMapTileSet();
 			}
 
+			// move if we can
 			if (maybeTiles.Count > 0)
 			{
 				// choose randomly between tiles...
@@ -302,5 +320,13 @@ namespace Beehive
 			{ if (c.OnPent()) return true; }
 			return false;
 		}
+
+		// not currently used, stats filled instead using Grimoire.
+		//public Cubi(string name, int id, Color useColor) : base(name, useColor)
+		//{
+		//	rng = new Random();
+		//	myIdNo = id;
+		//	glyph = "☿";
+		//}
 	}
 }

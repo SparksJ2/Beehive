@@ -38,10 +38,10 @@ namespace Beehive
 				Cubi victim = Refs.m.CubiAt(victimTile.loc);
 
 				Refs.mf.Announce("Owf!", cubiThrown.myAlign, cubiThrown.myColor);
-				victim.Spank(5);
+				victim.Spanked += 5;
 
 				Refs.mf.Announce("Oof too!", cubiThrown.myAlign, cubiThrown.myColor);
-				cubiThrown.Spank(5); // and a good time was had by both
+				cubiThrown.Spanked += 5; // and a good time was had by both
 			}
 			else if (moveClear == "pent")
 			{
@@ -79,7 +79,7 @@ namespace Beehive
 					}
 					else
 					{
-						victim.Spank(5);
+						victim.Spanked += 5;
 						Refs.mf.Announce("Owwwww!", victim.myAlign, victim.myColor);
 					}
 
