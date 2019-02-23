@@ -47,5 +47,13 @@ namespace Beehive
 		{
 			return Refs.h.roster.Count; // todo dodgy way of working it out...
 		}
+
+		public void MaxJumpEnergy()
+		{
+			foreach (Cubi c in roster)
+			{
+				c.MaxEnergy();
+			}
+		}
 	}
 }

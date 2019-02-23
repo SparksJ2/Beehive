@@ -45,6 +45,13 @@ namespace Beehive
 				return 0;
 			}
 
+			if (e.KeyCode == Keys.F3)
+			{
+				Refs.mf.Announce("Cheat: topped off cubi jump energy...", myAlign, myColor);
+				Refs.h.MaxJumpEnergy();
+				return 0;
+			}
+
 			if (e.KeyCode == Keys.F6)
 			{
 				Refs.mf.Announce("Saving game...", myAlign, myColor);

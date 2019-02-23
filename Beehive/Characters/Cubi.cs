@@ -107,7 +107,7 @@ namespace Beehive
 			}
 
 			// charge the jump drives
-			if (jumpEnergy < 10) { jumpEnergy++; }
+			if (jumpEnergy < 12) { jumpEnergy++; }
 
 			var spankNoMove = false;
 			if (Spanked > 0) // todo integrate this with the if/else chain below
@@ -184,11 +184,12 @@ namespace Beehive
 					//  e.g. getting stuck in a little dead end corner typically
 					Console.WriteLine("--" + name + " tactical evading!");
 
-					if (jumpEnergy > 20)
+					if (jumpEnergy >= 12)
 					{
 						var knightTiles = myTile.GetPossibleMoves(Dir.KnightMoves);
 						maybeTiles.UnionWith(knightTiles);
 						Console.WriteLine("--" + name + " can jump!");
+						jumpEnergy -= 10;
 					}
 
 					maybeTiles.FilterNavHazards(maybeTiles);
@@ -319,6 +320,11 @@ namespace Beehive
 			foreach (Cubi c in Refs.h.roster)
 			{ if (c.OnPent()) return true; }
 			return false;
+		}
+
+		public void MaxEnergy()
+		{
+			jumpEnergy = 12;
 		}
 
 		// not currently used, stats filled instead using Grimoire.
