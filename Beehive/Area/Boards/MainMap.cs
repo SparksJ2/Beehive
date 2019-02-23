@@ -180,5 +180,16 @@ namespace Beehive
 				if (t.clear) { t.nectarLevel[myIndex]++; }
 			}
 		}
+
+		public void ClearNectar()
+		{
+			foreach (MapTile t in tiles)
+			{
+				for (int levelIter = 0; levelIter <= 4; levelIter++)
+				{
+					t.nectarLevel[levelIter] = 0;
+				}
+			}
+		}
 	}
 }

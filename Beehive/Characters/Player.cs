@@ -38,6 +38,13 @@ namespace Beehive
 				return 0;
 			}
 
+			if (e.KeyCode == Keys.F2)
+			{
+				Refs.mf.Announce("Cheat: clearing nectar...", myAlign, myColor);
+				Refs.m.ClearNectar();
+				return 0;
+			}
+
 			if (e.KeyCode == Keys.F6)
 			{
 				Refs.mf.Announce("Saving game...", myAlign, myColor);
