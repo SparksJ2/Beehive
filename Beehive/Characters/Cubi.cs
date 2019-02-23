@@ -18,6 +18,7 @@ namespace Beehive
 		public bool beingCarried = false;
 
 		private int spanked; // or other wise incapped, e.g. orgasm throes
+		private int jumpEnergy;
 
 		public int Spanked
 		{
@@ -50,6 +51,7 @@ namespace Beehive
 			Bored = 0;
 			Spanked = 0;
 			TeaseDistance = 11;
+			jumpEnergy = 6;
 			myAlign = HorizontalAlignment.Right;
 		}
 
@@ -165,103 +167,84 @@ namespace Beehive
 			MapTile myTile = Refs.m.TileByLoc(loc);
 
 			// places one square away that we could go to
-			// todo use GetPossibleMoves here
-			var maybeTiles = new MapTileSet()
-			{
-				myTile.OneEast(),
-				myTile.OneSouth(),
-				myTile.OneNorth(),
-				myTile.OneWest()
-			};
+			var maybeTiles = myTile.GetPossibleMoves(Dir.Cardinals);
 
-			// filter tiles containing wall
-			maybeTiles = maybeTiles.Where(t => t.clear).ToMapTileSet();
-
-			// don't move directly onto player
-			maybeTiles = maybeTiles.Where(t => t.loc != Refs.p.loc).ToMapTileSet();
-
-			// or right next to the player!
-			Loc playerLoc = Refs.p.loc;
-			MapTile playerTile = Refs.m.TileByLoc(playerLoc);
-
-			var grabRange = playerTile.GetPossibleMoves(Dir.Cardinals);
-			foreach (MapTile g in grabRange)
-			{
-				maybeTiles = maybeTiles.Where(t => t.loc != g.loc).ToMapTileSet();
-			}
-
-			// don't move directly onto another cubi
-			foreach (Cubi c in Refs.h.roster)
-			{
-				maybeTiles = maybeTiles.Where(t => t.loc != c.loc).ToMapTileSet();
-			}
-
-			// and don't move directly onto a pent!
-			foreach (Loc pent in Refs.m.pents)
-			{
-				maybeTiles = maybeTiles.Where(t => t.loc != pent).ToMapTileSet();
-			}
-
-			if (DistToPlayer() < 1.1) // close range tactical maneuvers!
-			{
-				Console.WriteLine(name + " tactical evading!");
-				// last second evasion, our hope is to move tactically to avoid a foolish mistake
-
-				// first, try to move directly away
-				// todo fairly ugly but will do for now...
-				Loc relative = Loc.SubPts(loc, playerLoc);
-				MapTile southTile = myTile.OneSouth();
-				MapTile northTile = myTile.OneNorth();
-				MapTile eastTile = myTile.OneEast();
-				MapTile westTile = myTile.OneWest();
-
-				if (Loc.Same(relative, Dir.North)) { IfClearMoveTo(northTile); return; }
-				if (Loc.Same(relative, Dir.South)) { IfClearMoveTo(southTile); return; }
-				if (Loc.Same(relative, Dir.East)) { IfClearMoveTo(eastTile); return; }
-				if (Loc.Same(relative, Dir.West)) { IfClearMoveTo(westTile); return; }
-				Console.WriteLine(name + " away move evasion failed, todo attemptinging sideways move...");
-
-				// todo - secondly, try to move to the square diagonal to the player
-
-				// todo decision making still a problem, we shouldn't move directly away when diagonally would be better...
-
-				// note it's possible to tactially evade onto
-				//  a pentagram but I'll leave it because it's hilarious
-			}
+			// filter player grab range, walls, other cubi, pents, etc...
+			maybeTiles.FilterNavHazards(maybeTiles);
 
 			// pick a possibility and go there.
 			if (maybeTiles.Count > 0)
 			{
-				FlowMap myFlow = Refs.m.flows[myIdNo];
-
-				// convert maybe tiles to maybe squares
-				FlowTileSet maybeSquares = ConvertTiles.FlowSquaresFromTileSet(maybeTiles, myFlow);
-
-				// is the tile that we're currently on already one of the best tiles?
-				double bestFlow = maybeSquares.Min(sq => sq.flow);
-				FlowTile hereSquare = myFlow.TileByLoc(myTile.loc);
-
-				// if we're not in an optimal place...
-				if (hereSquare.flow > bestFlow)
+				if (DistToPlayer() < 1.5) // close range tactical maneuvers!
 				{
-					// make a list of best flowsquares...
-					FlowTileSet bestSquares =
-						maybeSquares.Where(t => t.flow == bestFlow).ToFlowTileSet();
+					// last second evasion, our hope is to move tactically to avoid a foolish mistake
+					//  e.g. getting stuck in a little dead end corner typically
+					Console.WriteLine("--" + name + " tactical evading!");
 
-					// convert back to tiles..
-					MapTileSet bestTiles = ConvertTiles.TileSetFromFlowSquares(bestSquares);
+					if (jumpEnergy > 20)
+					{
+						var knightTiles = myTile.GetPossibleMoves(Dir.KnightMoves);
+						maybeTiles.UnionWith(knightTiles);
+						Console.WriteLine("--" + name + " can jump!");
+					}
 
-					// choose randomly between best tiles...
-					MapTile newplace = MainMap.RandomFromList(bestTiles);
+					maybeTiles.FilterNavHazards(maybeTiles);
 
-					// finally, perform move to selected tile!
-					loc = newplace.loc;
+					// select squares by > 1 distance from player
+					MapTileSet safeSquares =
+						maybeTiles.Where(
+							t => Loc.Distance(t.loc, Refs.p.loc) > 1)
+								.ToMapTileSet();
+
+					if (safeSquares.Count > 0)
+					{
+						// choose randomly between best tiles...
+						MapTile newplace = MainMap.RandomFromList(safeSquares);
+
+						// finally, perform move to selected tile!
+						loc = newplace.loc;
+						Console.WriteLine("--" + name + " evaded ok?");
+					}
+					else
+					{
+						Console.WriteLine("--" + name + " couldn't find square to evade to!");
+					}
+
+					// final note: it's possible to tactially evade onto
+					//  a pentagram but I'll leave it because it's hilarious
 				}
-				else
+				else // follow the flow
 				{
-					// not moving is a viable option
-					// don't vibrate between good tiles
-					//    (at least not in this way)
+					// convert maybe tiles to maybe squares
+					FlowMap myFlow = Refs.m.flows[myIdNo];
+					FlowTileSet maybeSquares = ConvertTiles.FlowSquaresFromTileSet(maybeTiles, myFlow);
+
+					// is the tile that we're currently on already one of the best tiles?
+					double bestFlow = maybeSquares.Min(sq => sq.flow);
+					FlowTile hereSquare = myFlow.TileByLoc(myTile.loc);
+
+					// if we're not in an optimal place...
+					if (hereSquare.flow > bestFlow)
+					{
+						// make a list of best flowsquares...
+						FlowTileSet bestSquares =
+							maybeSquares.Where(t => t.flow == bestFlow).ToFlowTileSet();
+
+						// convert back to tiles..
+						MapTileSet bestTiles = ConvertTiles.TileSetFromFlowSquares(bestSquares);
+
+						// choose randomly between best tiles...
+						MapTile newplace = MainMap.RandomFromList(bestTiles);
+
+						// finally, perform move to selected tile!
+						loc = newplace.loc;
+					}
+					else
+					{
+						// not moving is a viable option
+						// don't vibrate between good tiles
+						//    (at least not in this way)
+					}
 				}
 			}
 		}
