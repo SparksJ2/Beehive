@@ -106,6 +106,9 @@ namespace Beehive
 				horny--;
 			}
 
+			// charge the jump drives
+			if (jumpEnergy < 10) { jumpEnergy++; }
+
 			var spankNoMove = false;
 			if (Spanked > 0) // todo integrate this with the if/else chain below
 			{
@@ -190,20 +193,34 @@ namespace Beehive
 
 					maybeTiles.FilterNavHazards(maybeTiles);
 
-					// select squares by > 1 distance from player
-					MapTileSet safeSquares =
-						maybeTiles.Where(
-							t => Loc.Distance(t.loc, Refs.p.loc) > 1)
-								.ToMapTileSet();
-
-					if (safeSquares.Count > 0)
+					if (maybeTiles.Count > 0)
 					{
-						// choose randomly between best tiles...
-						MapTile newplace = MainMap.RandomFromList(safeSquares);
+						Console.WriteLine("--" + name + " choosing between " + maybeTiles.Count + " tiles");
 
-						// finally, perform move to selected tile!
-						loc = newplace.loc;
-						Console.WriteLine("--" + name + " evaded ok?");
+						// find tile furthest from player
+						MapTile furthest;
+						double distance = 0;
+						furthest = null;
+						foreach (MapTile t in maybeTiles)
+						{
+							double tmpDist = Loc.Distance(t.loc, Refs.p.loc);
+							if (tmpDist > distance)
+							{
+								distance = tmpDist;
+								furthest = t;
+							}
+						}
+
+						if (furthest != null)
+						{
+							// finally, perform move to selected tile!
+							loc = furthest.loc;
+							Console.WriteLine("--" + name + " evaded ok?");
+						}
+						else
+						{
+							Console.WriteLine("--" + name + " ended up holding a null? :(");
+						}
 					}
 					else
 					{
