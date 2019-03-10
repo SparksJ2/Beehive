@@ -1,4 +1,12 @@
 ﻿
+colours subject to change.
+inclined to go with classic pacman colours red/pink/cyan/orange 
+	+ yellow for player maybe
+although that's a bit unsuble maybe try to find something better
+colour shoud at least hint at type
+
+pandermonoium typ ccolorts blue orange purple green
+
 "Ai'nana" / Color.HotPink / Fire / Wands / Griffindor / Blinky(red-ghost) / (energetic)
 move AI: Just runs directly away. 
 horny AI: Loves being chased.

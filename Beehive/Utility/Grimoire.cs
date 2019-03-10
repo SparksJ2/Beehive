@@ -77,6 +77,7 @@ namespace Beehive
 			c.myColor = GetValueColor(idStr, "CubiColor");
 			c.myStdAi = GetValueStdAi(idStr, "CubiStdAi");
 			c.myJbAi = GetValueJbAi(idStr, "CubiJbAi");
+			c.myHome = GetValueHome(idStr, "CubiHome");
 		}
 
 		public static string GetValueString(string id, string key)
@@ -140,6 +141,20 @@ namespace Beehive
 				MessageBox.Show("Warning didn't find ini key named " + key + id);
 				return null;
 			}
+		}
+
+		public static Home GetValueHome(string id, string key)
+		{
+			string result = lore[key + id];
+			if (lore[key + id] == null)
+			{
+				MessageBox.Show("Warning didn't find ini key named " + key + id);
+			}
+			else if (result == "Fire") { return Home.Fire; }
+			else if (result == "Air") { return Home.Air; }
+			else if (result == "Water") { return Home.Water; }
+			else if (result == "Earth") { return Home.Earth; }
+			return Home.None;
 		}
 
 		public static void SetValue(string key, object value)

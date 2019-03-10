@@ -10,15 +10,21 @@ namespace Beehive
 
 	public delegate void CubiJbAi(int distance, FlowMap f);
 
+	public enum Home
+	{ None, Fire, Air, Water, Earth };
+
 	[Serializable()]
 	public class Cubi : Mobile
 	{
 		public int myIdNo;
 
+		public Home myHome = Home.None;
+
 		public bool beingCarried = false;
+		public bool hiding = false;
 
 		private int spanked; // or other wise incapped, e.g. orgasm throes
-		private int jumpEnergy;
+		private int specialEnergy;
 
 		public int Spanked
 		{
@@ -51,7 +57,7 @@ namespace Beehive
 			Bored = 0;
 			Spanked = 0;
 			TeaseDistance = 11;
-			jumpEnergy = 6;
+			specialEnergy = 6;
 			myAlign = HorizontalAlignment.Right;
 		}
 
@@ -77,6 +83,7 @@ namespace Beehive
 			//{ Refs.mf.Announce(name + " cancelling jailbreak! (debug)", myAlign, myColor); }
 
 			// spring a fellow cubi free if they're bound next to us
+			// (this is a free action yay)
 			foreach (Cubi c in Refs.h.roster)
 			{
 				if (c != this && c.OnPent() && Loc.Distance(loc, c.loc) < 1.5)
@@ -107,7 +114,7 @@ namespace Beehive
 			}
 
 			// charge the jump drives
-			if (jumpEnergy < 12) { jumpEnergy++; }
+			if (specialEnergy < 12) { specialEnergy++; }
 
 			var spankNoMove = false;
 			if (Spanked > 0) // todo integrate this with the if/else chain below
@@ -133,8 +140,26 @@ namespace Beehive
 				// trapped!
 				return;
 			}
+			else if (hiding)
+			{
+				// todo do hiding stuff
+			}
 			else if (!spankNoMove)
 			{
+				if (specialEnergy > 50 && hiding == false)
+				{
+					// todo find place to hide
+					if (false && myHome == Home.Water)
+					{
+						// todo move under a pillow
+						hiding = true;
+					}
+				}
+				else if (hiding == true)
+				{
+					// todo sneak around under pillows
+				}
+
 				// make a move!
 				AIPathing();
 
@@ -184,12 +209,13 @@ namespace Beehive
 					//  e.g. getting stuck in a little dead end corner typically
 					Console.WriteLine("--" + name + " tactical evading!");
 
-					if (jumpEnergy >= 12)
+					// with enough energy, air types can knights-move
+					if (specialEnergy >= 12 & myHome == Home.Air)
 					{
 						var knightTiles = myTile.GetPossibleMoves(Dir.KnightMoves);
 						maybeTiles.UnionWith(knightTiles);
 						Console.WriteLine("--" + name + " can jump!");
-						jumpEnergy -= 10;
+						specialEnergy -= 10;
 					}
 
 					maybeTiles.FilterNavHazards(maybeTiles);
@@ -324,7 +350,7 @@ namespace Beehive
 
 		public void MaxEnergy()
 		{
-			jumpEnergy = 12;
+			specialEnergy = 12;
 		}
 
 		// not currently used, stats filled instead using Grimoire.
