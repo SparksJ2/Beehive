@@ -42,6 +42,12 @@ namespace TileExperiments
 			bg = Brushes.DarkOrange;
 			PrintLine(bmp, s, useFont, rect, br, bg);
 
+			// now try transparent
+			// todo generate transparent bitmap
+
+			// todo paste into locations
+
+
 			PictureBoxExperimental.Image = bmp;
 		}
 
