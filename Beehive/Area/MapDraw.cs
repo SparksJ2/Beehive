@@ -459,47 +459,47 @@ namespace Beehive
 		//	return singleTileImage;
 		//}
 
-		public Bitmap ColorTint(Bitmap source, Color col)
-		{
-			double colBlue = col.B / 256.0;
-			double colGreen = col.G / 256.0;
-			double colRed = col.R / 256.0;
+		//public Bitmap ColorTint(Bitmap source, Color col)
+		//{
+		//	double colBlue = col.B / 256.0;
+		//	double colGreen = col.G / 256.0;
+		//	double colRed = col.R / 256.0;
 
-			BitmapData sourceData = source.LockBits(
-				new Rectangle(0, 0, source.Width, source.Height),
-				ImageLockMode.ReadOnly,
-				PixelFormat.Format32bppArgb);
+		//	BitmapData sourceData = source.LockBits(
+		//		new Rectangle(0, 0, source.Width, source.Height),
+		//		ImageLockMode.ReadOnly,
+		//		PixelFormat.Format32bppArgb);
 
-			byte[] buffer = new byte[sourceData.Stride * sourceData.Height];
-			Marshal.Copy(sourceData.Scan0, buffer, 0, buffer.Length);
-			source.UnlockBits(sourceData);
+		//	byte[] buffer = new byte[sourceData.Stride * sourceData.Height];
+		//	Marshal.Copy(sourceData.Scan0, buffer, 0, buffer.Length);
+		//	source.UnlockBits(sourceData);
 
-			double red = 0; double green = 0; double blue = 0;
-			for (int k = 0; k + 4 < buffer.Length; k += 4)
-			{
-				blue = buffer[k + 0] * colBlue;
-				green = buffer[k + 1] * colGreen;
-				red = buffer[k + 2] * colRed;
+		//	double red = 0; double green = 0; double blue = 0;
+		//	for (int k = 0; k + 4 < buffer.Length; k += 4)
+		//	{
+		//		blue = buffer[k + 0] * colBlue;
+		//		green = buffer[k + 1] * colGreen;
+		//		red = buffer[k + 2] * colRed;
 
-				if (blue < 0) { blue = 0; }
-				if (green < 0) { green = 0; }
-				if (red < 0) { red = 0; }
+		//		if (blue < 0) { blue = 0; }
+		//		if (green < 0) { green = 0; }
+		//		if (red < 0) { red = 0; }
 
-				buffer[k + 0] = (byte)blue;
-				buffer[k + 1] = (byte)green;
-				buffer[k + 2] = (byte)red;
-			}
+		//		buffer[k + 0] = (byte)blue;
+		//		buffer[k + 1] = (byte)green;
+		//		buffer[k + 2] = (byte)red;
+		//	}
 
-			Bitmap result = new Bitmap(source.Width, source.Height);
+		//	Bitmap result = new Bitmap(source.Width, source.Height);
 
-			BitmapData resultData = result.LockBits(
-				new Rectangle(0, 0, result.Width, result.Height),
-				ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+		//	BitmapData resultData = result.LockBits(
+		//		new Rectangle(0, 0, result.Width, result.Height),
+		//		ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-			Marshal.Copy(buffer, 0, resultData.Scan0, buffer.Length);
-			result.UnlockBits(resultData);
-			return result;
-		}
+		//	Marshal.Copy(buffer, 0, resultData.Scan0, buffer.Length);
+		//	result.UnlockBits(resultData);
+		//	return result;
+		//}
 
 		public void CubiSingleTileUpdate(Cubi c)
 		{
