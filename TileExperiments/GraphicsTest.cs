@@ -21,21 +21,23 @@ namespace TileExperiments
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			Bitmap bmp = new Bitmap(350, 250);
+			Bitmap bmp = new Bitmap(600, 250);
 
 			string s = "♂ ☿  ├─┼┤  ╠═╬╣  ╟─╫╢  ╞═╪╡";
-			Font useFont = new Font("Symbola", 11);
-			Rectangle rect = new Rectangle(0, 0, 325, 30);
+			Font useFont = new Font("Symbola", 20);
+			//Font useFont = new Font("Microsoft Sans Serif",20);
+
+			Rectangle rect = new Rectangle(0, 0, 575, 60);
 			Brush br = Brushes.White;
 			Brush bg = Brushes.Crimson;
 			PrintLine(bmp, s, useFont, rect, br, bg);
 
-			rect = new Rectangle(0, 30, 325, 30);
-			br = Brushes.DarkOliveGreen;
+			rect = new Rectangle(0, 60, 575, 60);
+			br = Brushes.LawnGreen;
 			bg = Brushes.BlueViolet;
 			PrintLine(bmp, s, useFont, rect, br, bg);
 
-			rect = new Rectangle(0, 60, 325, 30);
+			rect = new Rectangle(0, 120, 575, 60);
 			br = Brushes.Black;
 			bg = Brushes.DarkOrange;
 			PrintLine(bmp, s, useFont, rect, br, bg);

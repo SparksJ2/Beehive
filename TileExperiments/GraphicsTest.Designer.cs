@@ -43,18 +43,18 @@
 			this.label1.TabIndex = 1;
 			this.label1.Text = "Hello World!";
 			// 
-			// pictureBox1
+			// PictureBoxExperimental
 			// 
 			this.PictureBoxExperimental.Location = new System.Drawing.Point(12, 25);
-			this.PictureBoxExperimental.Name = "pictureBox1";
-			this.PictureBoxExperimental.Size = new System.Drawing.Size(350, 250);
+			this.PictureBoxExperimental.Name = "PictureBoxExperimental";
+			this.PictureBoxExperimental.Size = new System.Drawing.Size(600, 250);
 			this.PictureBoxExperimental.TabIndex = 2;
 			this.PictureBoxExperimental.TabStop = false;
 			// 
 			// CloseButton
 			// 
 			this.CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.CloseButton.Location = new System.Drawing.Point(368, 246);
+			this.CloseButton.Location = new System.Drawing.Point(12, 281);
 			this.CloseButton.Name = "CloseButton";
 			this.CloseButton.Size = new System.Drawing.Size(75, 29);
 			this.CloseButton.TabIndex = 3;
@@ -66,7 +66,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(456, 291);
+			this.ClientSize = new System.Drawing.Size(627, 319);
 			this.Controls.Add(this.CloseButton);
 			this.Controls.Add(this.PictureBoxExperimental);
 			this.Controls.Add(this.label1);
