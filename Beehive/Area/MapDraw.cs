@@ -278,66 +278,71 @@ namespace Beehive
 			}
 			else
 			{
-				// because symbola gets nicer planet symbols
-				Bitmap useBitmapFont = SansSerifBitmapFont;
-				Color useColour = Color.White;
-
-				if (s == "♂")
-				{
-					useBitmapFont = SymbolaBitmapFont;
-					useColour = c;
-				}
-				if (nectarChars.Contains(s))
-				{
-					useBitmapFont = SansSerifBitmapFont;
-					useColour = c;
-				}
-
-				if (s == "☿" || nectarChars.Contains(s))
-				{
-					useBitmapFont = SymbolaBitmapFont;
-					useColour = c;
-				}
-
-				int FontCodePointOffset = 0;
-				if (s == "⛤")
-				{
-					useBitmapFont = SymbolaBitmapFontMiscSyms;
-					useColour = Color.Purple;
-					FontCodePointOffset = 0x2600;
-				}
-
-				// find our symbol in this tileset
-				int codePoint = s[0] - FontCodePointOffset;
-				int codeX = codePoint % 64;
-				int codeY = codePoint / 64;
-
-				// we'll cut from this rectangle
-				Rectangle cloneRect = new Rectangle(
-					codeX * z.Width, codeY * z.Height,
-					z.Width - 1, z.Height - 1);
-
-				// extract this symbols as a tiny bitmap, old style
-				PixelFormat format = useBitmapFont.PixelFormat;
-				var singleTileImage = useBitmapFont.Clone(cloneRect, format);
-
-				//// extract this symbols as a tiny bitmap, new style
-				//// bit blurry though...
-				//Bitmap singleTileImage = new Bitmap(z.Width, z.Height);
-				//using (var g = Graphics.FromImage(singleTileImage))
-				//{
-				//	g.InterpolationMode = InterpolationMode.Default;
-				//	var singleTileRect = new Rectangle(0, 0, z.Width, z.Height);
-				//	g.DrawImage(useBitmapFont, singleTileRect, cloneRect, GraphicsUnit.Pixel);
-				//}
-
-				// change color
-				singleTileImage = ColorTint(singleTileImage, useColour);
-
-				// we cache these bitmaps
-				TileBitmapCache.Add(key, singleTileImage);
-				return singleTileImage;
+				return CreateTileBitmapFromSpriteSheet(s, z, c, key);
 			}
+		}
+
+		private Bitmap CreateTileBitmapFromSpriteSheet(string s, Size z, Color c, TileDesc key)
+		{
+			// because symbola gets nicer planet symbols
+			Bitmap useBitmapFont = SansSerifBitmapFont;
+			Color useColour = Color.White;
+
+			if (s == "♂")
+			{
+				useBitmapFont = SymbolaBitmapFont;
+				useColour = c;
+			}
+			if (nectarChars.Contains(s))
+			{
+				useBitmapFont = SansSerifBitmapFont;
+				useColour = c;
+			}
+
+			if (s == "☿" || nectarChars.Contains(s))
+			{
+				useBitmapFont = SymbolaBitmapFont;
+				useColour = c;
+			}
+
+			int FontCodePointOffset = 0;
+			if (s == "⛤")
+			{
+				useBitmapFont = SymbolaBitmapFontMiscSyms;
+				useColour = Color.Purple;
+				FontCodePointOffset = 0x2600;
+			}
+
+			// find our symbol in this tileset
+			int codePoint = s[0] - FontCodePointOffset;
+			int codeX = codePoint % 64;
+			int codeY = codePoint / 64;
+
+			// we'll cut from this rectangle
+			Rectangle cloneRect = new Rectangle(
+				codeX * z.Width, codeY * z.Height,
+				z.Width - 1, z.Height - 1);
+
+			// extract this symbols as a tiny bitmap, old style
+			PixelFormat format = useBitmapFont.PixelFormat;
+			var singleTileImage = useBitmapFont.Clone(cloneRect, format);
+
+			//// extract this symbols as a tiny bitmap, new style
+			//// bit blurry though...
+			//Bitmap singleTileImage = new Bitmap(z.Width, z.Height);
+			//using (var g = Graphics.FromImage(singleTileImage))
+			//{
+			//	g.InterpolationMode = InterpolationMode.Default;
+			//	var singleTileRect = new Rectangle(0, 0, z.Width, z.Height);
+			//	g.DrawImage(useBitmapFont, singleTileRect, cloneRect, GraphicsUnit.Pixel);
+			//}
+
+			// change color
+			singleTileImage = ColorTint(singleTileImage, useColour);
+
+			// we cache these bitmaps
+			TileBitmapCache.Add(key, singleTileImage);
+			return singleTileImage;
 		}
 
 		public Bitmap ColorTint(Bitmap source, Color col)
