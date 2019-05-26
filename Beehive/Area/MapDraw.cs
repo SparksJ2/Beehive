@@ -331,13 +331,12 @@ namespace Beehive
 			gChar.Flush();
 
 			gChar = Graphics.FromImage(bmp);
-			gChar.SmoothingMode = SmoothingMode.HighQuality;
-			gChar.InterpolationMode = InterpolationMode.HighQualityBicubic;
-			gChar.PixelOffsetMode = PixelOffsetMode.HighQuality;
-			gChar.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-				//TextRenderingHint.ClearTypeGridFit;
-
-			Font style;
+			//gChar.SmoothingMode = SmoothingMode.HighQuality;
+			//gChar.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			//gChar.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			//gChar.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+		
+			Font style;		 
 			if ((chr == "♂") || (chr == "☿") || (chr == "⛤") || (nectarChars.Contains(chr)))
 			{
 				style = new Font("Symbola", pts);
@@ -359,7 +358,44 @@ namespace Beehive
 			gChar.DrawString(chr, style, brush, rect, stringFormat);
 
 			gChar.Flush();
+
+			bmp = TileBgRestoreAlpha(bmp, bg);
 			return bmp;
+		}
+
+		public Bitmap TileBgRestoreAlpha(Bitmap source, Color bg)
+		{
+			BitmapData sourceData = source.LockBits(
+				new Rectangle(0, 0, source.Width, source.Height),
+				ImageLockMode.ReadOnly,
+				PixelFormat.Format32bppArgb);
+
+			byte[] buffer = new byte[sourceData.Stride * sourceData.Height];
+			Marshal.Copy(sourceData.Scan0, buffer, 0, buffer.Length);
+			source.UnlockBits(sourceData);
+
+			byte red = 0; byte green = 0; byte blue = 0;
+			for (int k = 0; k + 4 < buffer.Length; k += 4)
+			{
+				blue = buffer[k + 0];
+				green = buffer[k + 1];
+				red = buffer[k + 2];
+
+				if ((blue == bg.B) && (red == bg.R) && (green == bg.G))
+				{
+					buffer[k + 3] = 0; // set Alpha
+				}
+			}
+
+			Bitmap result = new Bitmap(source.Width, source.Height);
+
+			BitmapData resultData = result.LockBits(
+				new Rectangle(0, 0, result.Width, result.Height),
+				ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+			Marshal.Copy(buffer, 0, resultData.Scan0, buffer.Length);
+			result.UnlockBits(resultData);
+			return result;
 		}
 
 		//private Bitmap CreateTileBitmapFromSpriteSheet(string chr, Size sz, Color col, Color bg)
