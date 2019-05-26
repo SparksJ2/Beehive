@@ -33,6 +33,8 @@ namespace Beehive
 		private int edgeX = 10;
 		private int edgeY = 12;
 
+		public bool flipRenderMode = false;
+
 		private Size stdSize = new Size(12, 15);
 		private Size tripSize = new Size(12 * 3, 15 * 3);
 
@@ -115,14 +117,16 @@ namespace Beehive
 						string useNectarChar = nectarChars[sumAmt];
 						//if (sumAmt > 1) { useNectarChar = nectarCharLarge; }
 
-						gNectar.DrawImage(GetTileBitmap(useNectarChar, stdSize, nectarCol), x1, y1);
+						gNectar.DrawImage(
+							GetTileBitmap(useNectarChar, stdSize, nectarCol, t.backCol),
+							x1, y1);
 					}
 				}
 				// todo bigger blob for more nectar maybe?
 			}
 			else // it's not marked as clear, so draw the wall
 			{
-				Bitmap singleTileImage = GetTileBitmap(t.gly, stdSize, Color.Black);
+				Bitmap singleTileImage = GetTileBitmap(t.gly, stdSize, Color.Black, t.backCol);
 				using (var gChar = Graphics.FromImage(img))
 				{
 					gChar.DrawImage(singleTileImage, x1, y1);
@@ -213,7 +217,7 @@ namespace Beehive
 			{
 				using (var gBed = Graphics.FromImage(img))
 				{
-					Bitmap bedBitmap = GetTileBitmap("⛤", tripSize, Color.Black);
+					Bitmap bedBitmap = GetTileBitmap("⛤", tripSize, Color.Black, Color.Purple);
 
 					foreach (Loc pen in Refs.m.pents)
 					{
@@ -235,7 +239,7 @@ namespace Beehive
 			// begin foreground
 			if ((s == "♂" || s == "☿") && Refs.m.TileByLoc(m.loc).los)
 			{
-				Bitmap singleTileImage = GetTileBitmap(s, stdSize, m.myColor);
+				Bitmap singleTileImage = GetTileBitmap(s, stdSize, m.myColor, Refs.m.TileByLoc(m.loc).backCol);
 
 				// paste symbol onto map
 				using (var gChar = Graphics.FromImage(img))
@@ -250,63 +254,85 @@ namespace Beehive
 		[Serializable()]
 		private struct TileDesc // for TileBitmapCache only
 		{
-			private string s;
-			private Size z;
-			private Color c;
+			private string chr;
+			private Size sz;
+			private Color col;
+			private Color bg;
 
-			public TileDesc(string sIn, Size zIn, Color colIn)
+			public TileDesc(string sIn, Size zIn, Color colIn, Color bgIn)
 			{
-				s = sIn; z = zIn; c = colIn;
+				chr = sIn; sz = zIn; col = colIn; bg = bgIn;
 			}
 		}
 
 		[NonSerialized()] // don't include dictionary in save file
 		private Dictionary<TileDesc, Bitmap> TileBitmapCache;
 
-		private Bitmap GetTileBitmap(string s, Size sz, Color col)
+		public void FlushTileBitmapCache()
+		{
+			TileBitmapCache = null;
+		}
+
+		private Bitmap GetTileBitmap(string chr, Size sz, Color col, Color bg)
 		{
 			if (TileBitmapCache == null)
 			{
 				TileBitmapCache = new Dictionary<TileDesc, Bitmap>();
 			}
 
-			var key = new TileDesc(s, sz, col);
+			var key = new TileDesc(chr, sz, col, bg);
 
 			if (!TileBitmapCache.ContainsKey(key))
 			{
 				// create and cache bitmap
-				TileBitmapCache.Add(key, CreateTileBitmapFromSpriteSheet(s, sz, col));
-				return TileBitmapCache[key];
+				if (!flipRenderMode)
+				{
+					TileBitmapCache.Add(key, CreateTileBitmapFromSpriteSheet(chr, sz, col, bg));
+				}
+				else
+				{
+					TileBitmapCache.Add(key, CreateTileBitmapFromNewMethod(chr, sz, col, bg));
+				}
 			}
 
 			return TileBitmapCache[key];
 		}
 
-		private Bitmap CreateTileBitmapFromSpriteSheet(string s, Size z, Color c)
+		private Bitmap CreateTileBitmapFromNewMethod(string chr, Size sz, Color col, Color bg)
+		{
+			// todo proper version
+			Bitmap bmp = new Bitmap(sz.Width - 1, sz.Height - 1);
+			Graphics g = Graphics.FromImage(bmp);
+			g.Clear(Color.Magenta); // test pattern
+			g.Flush();
+			return bmp;
+		}
+
+		private Bitmap CreateTileBitmapFromSpriteSheet(string chr, Size sz, Color col, Color bg)
 		{
 			// because symbola gets nicer planet symbols
 			Bitmap useBitmapFont = SansSerifBitmapFont;
 			Color useColour = Color.White;
 
-			if (s == "♂")
+			if (chr == "♂")
 			{
 				useBitmapFont = SymbolaBitmapFont;
-				useColour = c;
+				useColour = col;
 			}
-			if (nectarChars.Contains(s))
+			if (nectarChars.Contains(chr))
 			{
 				useBitmapFont = SansSerifBitmapFont;
-				useColour = c;
+				useColour = col;
 			}
 
-			if (s == "☿" || nectarChars.Contains(s))
+			if (chr == "☿" || nectarChars.Contains(chr))
 			{
 				useBitmapFont = SymbolaBitmapFont;
-				useColour = c;
+				useColour = col;
 			}
 
 			int FontCodePointOffset = 0;
-			if (s == "⛤")
+			if (chr == "⛤")
 			{
 				useBitmapFont = SymbolaBitmapFontMiscSyms;
 				useColour = Color.Purple;
@@ -314,14 +340,14 @@ namespace Beehive
 			}
 
 			// find our symbol in this tileset
-			int codePoint = s[0] - FontCodePointOffset;
+			int codePoint = chr[0] - FontCodePointOffset;
 			int codeX = codePoint % 64;
 			int codeY = codePoint / 64;
 
 			// we'll cut from this rectangle
 			Rectangle cloneRect = new Rectangle(
-				codeX * z.Width, codeY * z.Height,
-				z.Width - 1, z.Height - 1);
+				codeX * sz.Width, codeY * sz.Height,
+				sz.Width - 1, sz.Height - 1);
 
 			// extract this symbols as a tiny bitmap, old style
 			PixelFormat format = useBitmapFont.PixelFormat;

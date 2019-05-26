@@ -87,6 +87,12 @@ namespace Beehive
 			if (e.KeyCode == Keys.D3) { viewFlow = 3; return 0; }
 			if (e.KeyCode == Keys.D4) { viewFlow = 4; return 0; }
 
+			if (e.KeyCode == Keys.D5)
+			{
+				Refs.m.flipRenderMode = !Refs.m.flipRenderMode;
+				Refs.m.FlushTileBitmapCache();
+			}
+
 			int timepass = 1;
 			if (e.KeyCode == Keys.Space)
 			{
