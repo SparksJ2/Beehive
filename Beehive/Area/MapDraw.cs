@@ -263,26 +263,26 @@ namespace Beehive
 		[NonSerialized()] // don't include dictionary in save file
 		private Dictionary<TileDesc, Bitmap> TileBitmapCache;
 
-		private Bitmap GetTileBitmap(string s, Size z, Color c)
+		private Bitmap GetTileBitmap(string s, Size sz, Color col)
 		{
 			if (TileBitmapCache == null)
 			{
 				TileBitmapCache = new Dictionary<TileDesc, Bitmap>();
 			}
 
-			var key = new TileDesc(s, z, c);
+			var key = new TileDesc(s, sz, col);
 
-			if (TileBitmapCache.ContainsKey(key))
+			if (!TileBitmapCache.ContainsKey(key))
 			{
+				// create and cache bitmap
+				TileBitmapCache.Add(key, CreateTileBitmapFromSpriteSheet(s, sz, col));
 				return TileBitmapCache[key];
 			}
-			else
-			{
-				return CreateTileBitmapFromSpriteSheet(s, z, c, key);
-			}
+
+			return TileBitmapCache[key];
 		}
 
-		private Bitmap CreateTileBitmapFromSpriteSheet(string s, Size z, Color c, TileDesc key)
+		private Bitmap CreateTileBitmapFromSpriteSheet(string s, Size z, Color c)
 		{
 			// because symbola gets nicer planet symbols
 			Bitmap useBitmapFont = SansSerifBitmapFont;
@@ -340,8 +340,6 @@ namespace Beehive
 			// change color
 			singleTileImage = ColorTint(singleTileImage, useColour);
 
-			// we cache these bitmaps
-			TileBitmapCache.Add(key, singleTileImage);
 			return singleTileImage;
 		}
 
