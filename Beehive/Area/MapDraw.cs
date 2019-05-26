@@ -122,7 +122,7 @@ namespace Beehive
 			}
 			else // it's not marked as clear, so draw the wall
 			{
-				Bitmap singleTileImage = GetTileBitmapOld(t.gly, stdSize);
+				Bitmap singleTileImage = GetTileBitmap(t.gly, stdSize, Color.Black);
 				using (var gChar = Graphics.FromImage(img))
 				{
 					gChar.DrawImage(singleTileImage, x1, y1);
@@ -213,7 +213,7 @@ namespace Beehive
 			{
 				using (var gBed = Graphics.FromImage(img))
 				{
-					Bitmap bedBitmap = GetTileBitmapOld("⛤", tripSize);
+					Bitmap bedBitmap = GetTileBitmap("⛤", tripSize, Color.Black);
 
 					foreach (Loc pen in Refs.m.pents)
 					{
@@ -262,12 +262,6 @@ namespace Beehive
 
 		[NonSerialized()] // don't include dictionary in save file
 		private Dictionary<TileDesc, Bitmap> TileBitmapCache;
-
-		private Bitmap GetTileBitmapOld(string s, Size z)
-		{
-			// todo legacy version for generically colored things
-			return GetTileBitmap(s, z, Color.Black);
-		}
 
 		private Bitmap GetTileBitmap(string s, Size z, Color c)
 		{
