@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -126,7 +128,7 @@ namespace Beehive
 			}
 			else // it's not marked as clear, so draw the wall
 			{
-				Bitmap singleTileImage = GetTileBitmap(t.gly, stdSize, Color.Black, t.backCol);
+				Bitmap singleTileImage = GetTileBitmap(t.gly, stdSize, Color.White, t.backCol);
 				using (var gChar = Graphics.FromImage(img))
 				{
 					gChar.DrawImage(singleTileImage, x1, y1);
@@ -217,7 +219,7 @@ namespace Beehive
 			{
 				using (var gBed = Graphics.FromImage(img))
 				{
-					Bitmap bedBitmap = GetTileBitmap("⛤", tripSize, Color.Black, Color.Purple);
+					Bitmap bedBitmap = GetTileBitmap("⛤", tripSize, Color.Purple, Color.Black);
 
 					foreach (Loc pen in Refs.m.pents)
 					{
@@ -285,14 +287,14 @@ namespace Beehive
 			if (!TileBitmapCache.ContainsKey(key))
 			{
 				// create and cache bitmap
-				if (!flipRenderMode)
-				{
-					TileBitmapCache.Add(key, CreateTileBitmapFromSpriteSheet(chr, sz, col, bg));
-				}
-				else
-				{
-					TileBitmapCache.Add(key, CreateTileBitmapFromNewMethod(chr, sz, col, bg));
-				}
+				//if (!flipRenderMode)
+				//{
+				//	TileBitmapCache.Add(key, CreateTileBitmapFromSpriteSheet(chr, sz, col, bg));
+				//}
+				//else
+				//{
+				TileBitmapCache.Add(key, CreateTileBitmapFromNewMethod(chr, sz, col, bg));
+				//}
 			}
 
 			return TileBitmapCache[key];
@@ -300,74 +302,126 @@ namespace Beehive
 
 		private Bitmap CreateTileBitmapFromNewMethod(string chr, Size sz, Color col, Color bg)
 		{
-			// todo proper version
-			Bitmap bmp = new Bitmap(sz.Width - 1, sz.Height - 1);
-			Graphics g = Graphics.FromImage(bmp);
-			g.Clear(Color.Magenta); // test pattern
-			g.Flush();
+			Bitmap bmp;
+			Rectangle rect;
+			int pts = 11;
+
+			if (sz == stdSize)
+			{
+				bmp = new Bitmap(stdSize.Width, stdSize.Height);
+				rect = new Rectangle(0, 0, sz.Width, sz.Height);
+				pts = 11;
+			}
+			else if (sz == tripSize)
+			{
+				bmp = new Bitmap(tripSize.Width, tripSize.Height);
+				rect = new Rectangle(0, 0, tripSize.Width, tripSize.Height);
+				pts = 28;
+			}
+			else
+			{
+				Console.WriteLine("CreateTileBitmapFromNewMethod Unknown sz = " + sz.ToString());
+				bmp = new Bitmap(stdSize.Width, stdSize.Height); // default to this
+				rect = new Rectangle(0, 0, sz.Width, sz.Height);
+			}
+
+			Graphics gChar = Graphics.FromImage(bmp);
+			Color Abg = Color.FromArgb(255, bg); // seting bg color affects aliasing later
+			gChar.Clear(Abg);
+			gChar.Flush();
+
+			gChar = Graphics.FromImage(bmp);
+			gChar.SmoothingMode = SmoothingMode.HighQuality;
+			gChar.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			gChar.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			gChar.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+				//TextRenderingHint.ClearTypeGridFit;
+
+			Font style;
+			if ((chr == "♂") || (chr == "☿") || (chr == "⛤") || (nectarChars.Contains(chr)))
+			{
+				style = new Font("Symbola", pts);
+			}
+			else
+			{
+				style = new Font("Microsoft Sans Serif", pts);
+			}
+
+			// try to center the character in the rectangle
+			StringFormat stringFormat = new StringFormat
+			{
+				Alignment = StringAlignment.Center,
+				LineAlignment = StringAlignment.Center
+			};
+
+			Brush brush = new SolidBrush(col);
+
+			gChar.DrawString(chr, style, brush, rect, stringFormat);
+
+			gChar.Flush();
 			return bmp;
 		}
 
-		private Bitmap CreateTileBitmapFromSpriteSheet(string chr, Size sz, Color col, Color bg)
-		{
-			// because symbola gets nicer planet symbols
-			Bitmap useBitmapFont = SansSerifBitmapFont;
-			Color useColour = Color.White;
+		//private Bitmap CreateTileBitmapFromSpriteSheet(string chr, Size sz, Color col, Color bg)
+		//{
+		//	// because symbola gets nicer planet symbols
+		//	Bitmap useBitmapFont = SansSerifBitmapFont;
+		//	Color useColour = Color.White;
 
-			if (chr == "♂")
-			{
-				useBitmapFont = SymbolaBitmapFont;
-				useColour = col;
-			}
-			if (nectarChars.Contains(chr))
-			{
-				useBitmapFont = SansSerifBitmapFont;
-				useColour = col;
-			}
+		//	if (chr == "♂")
+		//	{
+		//		useBitmapFont = SymbolaBitmapFont;
+		//		useColour = col;
+		//	}
+		//	if (nectarChars.Contains(chr))
+		//	{
+		//		useBitmapFont = SansSerifBitmapFont;
+		//		useColour = col;
+		//	}
 
-			if (chr == "☿" || nectarChars.Contains(chr))
-			{
-				useBitmapFont = SymbolaBitmapFont;
-				useColour = col;
-			}
+		//	if (chr == "☿" || nectarChars.Contains(chr))
+		//	{
+		//		useBitmapFont = SymbolaBitmapFont;
+		//		useColour = col;
+		//	}
 
-			int FontCodePointOffset = 0;
-			if (chr == "⛤")
-			{
-				useBitmapFont = SymbolaBitmapFontMiscSyms;
-				useColour = Color.Purple;
-				FontCodePointOffset = 0x2600;
-			}
+		//	int FontCodePointOffset = 0;
+		//	if (chr == "⛤")
+		//	{
+		//		useBitmapFont = SymbolaBitmapFontMiscSyms;
+		//		useColour = Color.Purple;
+		//		FontCodePointOffset = 0x2600;
+		//	}
 
-			// find our symbol in this tileset
-			int codePoint = chr[0] - FontCodePointOffset;
-			int codeX = codePoint % 64;
-			int codeY = codePoint / 64;
+		//	// find our symbol in this tileset
+		//	int codePoint = chr[0] - FontCodePointOffset;
+		//	int codeX = codePoint % 64;
+		//	int codeY = codePoint / 64;
 
-			// we'll cut from this rectangle
-			Rectangle cloneRect = new Rectangle(
-				codeX * sz.Width, codeY * sz.Height,
-				sz.Width - 1, sz.Height - 1);
+		//	// we'll cut from this rectangle
+		//	Rectangle cloneRect = new Rectangle(
+		//		codeX * sz.Width, codeY * sz.Height,
+		//		sz.Width - 1, sz.Height - 1);
 
-			// extract this symbols as a tiny bitmap, old style
-			PixelFormat format = useBitmapFont.PixelFormat;
-			var singleTileImage = useBitmapFont.Clone(cloneRect, format);
+		//	// extract this symbols as a tiny bitmap, old style
+		//	PixelFormat format = useBitmapFont.PixelFormat;
+		//	var singleTileImage = useBitmapFont.Clone(cloneRect, format);
 
-			//// extract this symbols as a tiny bitmap, new style
-			//// bit blurry though...
-			//Bitmap singleTileImage = new Bitmap(z.Width, z.Height);
-			//using (var g = Graphics.FromImage(singleTileImage))
-			//{
-			//	g.InterpolationMode = InterpolationMode.Default;
-			//	var singleTileRect = new Rectangle(0, 0, z.Width, z.Height);
-			//	g.DrawImage(useBitmapFont, singleTileRect, cloneRect, GraphicsUnit.Pixel);
-			//}
+		//	//// extract this symbols as a tiny bitmap, new style
+		//	//// bit blurry though...
+		//	//Bitmap singleTileImage = new Bitmap(z.Width, z.Height);
+		//	//using (var g = Graphics.FromImage(singleTileImage))
+		//	//{
+		//	//	g.InterpolationMode = InterpolationMode.Default;
+		//	//	var singleTileRect = new Rectangle(0, 0, z.Width, z.Height);
+		//	//	g.DrawImage(useBitmapFont, singleTileRect, cloneRect, GraphicsUnit.Pixel);
+		//	//}
 
-			// change color
-			singleTileImage = ColorTint(singleTileImage, useColour);
+		//	// change color
+		//	singleTileImage = ColorTint(singleTileImage, useColour);
 
-			return singleTileImage;
-		}
+		//	return singleTileImage;
+		//}
 
 		public Bitmap ColorTint(Bitmap source, Color col)
 		{
