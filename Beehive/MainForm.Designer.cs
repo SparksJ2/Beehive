@@ -111,19 +111,20 @@
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
 			this.saveToolStripMenuItem.Text = "Quicksave";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.MenuSaveEvent);
 			// 
 			// quickloadToolStripMenuItem
 			// 
 			this.quickloadToolStripMenuItem.Name = "quickloadToolStripMenuItem";
-			this.quickloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.quickloadToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
 			this.quickloadToolStripMenuItem.Text = "Quickload";
 			this.quickloadToolStripMenuItem.Click += new System.EventHandler(this.MenuLoadEvent);
 			// 
 			// helpToolStripMenuItem
 			// 
+			this.helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.controlsToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -134,14 +135,14 @@
 			// 
 			this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
 			this.controlsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.controlsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.controlsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.controlsToolStripMenuItem.Text = "Controls";
 			this.controlsToolStripMenuItem.Click += new System.EventHandler(this.HelpPopupEvent);
 			// 
 			// MainForm
 			// 
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(828, 602);
+			this.ClientSize = new System.Drawing.Size(828, 613);
 			this.Controls.Add(this.miniInventory);
 			this.Controls.Add(this.inventoryLabel);
 			this.Controls.Add(this.feedbackBox);
