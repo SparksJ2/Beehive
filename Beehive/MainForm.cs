@@ -67,7 +67,13 @@ namespace Beehive
 			Refs.p.UpdateInventory();
 		}
 
-		public static void HelpPopup()
+		private void HelpPopupEvent(object sender, EventArgs e) => HelpPopup();
+
+		private void MenuSaveEvent(object sender, EventArgs e) => LoadAndSave.SaveGame();
+
+		private void MenuLoadEvent(object sender, EventArgs e) => LoadAndSave.LoadGame();
+
+		private void HelpPopup()
 		{
 			MessageBox.Show(
 				"In your vast bed, tucked deep in a dreamworld, far outside time and space,\n" +

@@ -97,6 +97,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Characters\Cubi.cs" />
+    <Compile Include="Utility\LoadAndSave.cs" />
     <Compile Include="Utility\Refs.cs" />
     <Compile Include="Utility\RichTextBoxExtensions.cs" />
     <EmbeddedResource Include="MainForm.resx">
