@@ -6,11 +6,14 @@ issues:
 todo list:
 ```````````
 
-cheat: clear all nectar.
+clear up load/save hotkeys
 
+cheat: add cheat menu
+cheat: clear all nectar.
 cheat: override FOV to see all map.
 
 gfx: better interpolation? of color x on y background
+gfx: now we have better anti-aliasing add coloured halo using AA tweaked background colour?
 
 bug report: arrow keys can lose main window focus?
 	``Interesting. Somehow hitting ← got me into one of the display-text-boxes, and now I can't control the interface anymore``
@@ -18,18 +21,21 @@ bug report: arrow keys can lose main window focus?
 	misfeature: do something with ctrl/shift key chording?
 
 random chase questions:
-	can BE detect pet via any 6th sense?
-	can pet be tracked around corners by her glow?
-	can pet dynamic entry if she gets excited enough?
+	can BE detect pet via any 6th sense? Probably
+	can pet be tracked around corners by her glow? Yes
+	can pet dynamic entry if she gets excited enough? Not sure what gameplay implications would be here.
 
 fix dodgy animation coding
 	(throwing has glitches when going over holding pens,
 	also needs to redraw player char after throw release)
+	needs work/overhaul overall
 
 other comments
 	'...though she has the tendency to blunder back in and be caught again.' - 'yeah, that needs an 'oops' message.'
 
 	'it should be possible to pillow-spank her into the bed' - 'I agree, added to todos list.
+	add one-space displace when pillowspanked?
+	todo: unbugger throw/hit code
 
 display stuff
 	interface
