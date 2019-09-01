@@ -38,6 +38,9 @@
 			this.quickloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.controlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cheatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearNectarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.topOffEnergynotUsedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.MainBitmap)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -92,7 +95,8 @@
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.cheatsToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(828, 24);
@@ -112,7 +116,7 @@
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
 			this.saveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.saveToolStripMenuItem.Text = "Quicksave";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.MenuSaveEvent);
 			// 
@@ -120,7 +124,7 @@
 			// 
 			this.quickloadToolStripMenuItem.Name = "quickloadToolStripMenuItem";
 			this.quickloadToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
-			this.quickloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.quickloadToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.quickloadToolStripMenuItem.Text = "Quickload";
 			this.quickloadToolStripMenuItem.Click += new System.EventHandler(this.MenuLoadEvent);
 			// 
@@ -140,6 +144,31 @@
 			this.controlsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.controlsToolStripMenuItem.Text = "Controls";
 			this.controlsToolStripMenuItem.Click += new System.EventHandler(this.HelpPopupEvent);
+			// 
+			// cheatsToolStripMenuItem
+			// 
+			this.cheatsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearNectarToolStripMenuItem,
+            this.topOffEnergynotUsedToolStripMenuItem});
+			this.cheatsToolStripMenuItem.Name = "cheatsToolStripMenuItem";
+			this.cheatsToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+			this.cheatsToolStripMenuItem.Text = "Cheats";
+			// 
+			// clearNectarToolStripMenuItem
+			// 
+			this.clearNectarToolStripMenuItem.Name = "clearNectarToolStripMenuItem";
+			this.clearNectarToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+			this.clearNectarToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+			this.clearNectarToolStripMenuItem.Text = "Clear Nectar";
+			this.clearNectarToolStripMenuItem.Click += new System.EventHandler(this.MenuClearNectarEvent);
+			// 
+			// topOffEnergynotUsedToolStripMenuItem
+			// 
+			this.topOffEnergynotUsedToolStripMenuItem.Name = "topOffEnergynotUsedToolStripMenuItem";
+			this.topOffEnergynotUsedToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+			this.topOffEnergynotUsedToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+			this.topOffEnergynotUsedToolStripMenuItem.Text = "Top off Energy (not used)";
+			this.topOffEnergynotUsedToolStripMenuItem.Click += new System.EventHandler(this.MenuTopOffEnergyEvent);
 			// 
 			// MainForm
 			// 
@@ -173,6 +202,9 @@
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem quickloadToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem controlsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem cheatsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearNectarToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem topOffEnergynotUsedToolStripMenuItem;
 	}
 }
 

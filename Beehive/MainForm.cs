@@ -73,6 +73,10 @@ namespace Beehive
 
 		private void MenuLoadEvent(object sender, EventArgs e) => LoadAndSave.LoadGame();
 
+		private void MenuClearNectarEvent(object sender, EventArgs e) => Cheats.ClearNectar();
+
+		private void MenuTopOffEnergyEvent(object sender, EventArgs e) => Cheats.TopOffEnergy();
+
 		private void HelpPopup()
 		{
 			MessageBox.Show(

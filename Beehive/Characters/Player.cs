@@ -32,20 +32,6 @@ namespace Beehive
 			foreach (int i in here.nectarLevel) { Console.Write(i + ", "); }
 			Console.Write(".");
 
-			if (e.KeyCode == Keys.F2)
-			{
-				Refs.mf.Announce("Cheat: clearing nectar...", myAlign, myColor);
-				Refs.m.ClearNectar();
-				return 0;
-			}
-
-			if (e.KeyCode == Keys.F3)
-			{
-				Refs.mf.Announce("Cheat: topped off cubi jump energy...", myAlign, myColor);
-				Refs.h.MaxJumpEnergy();
-				return 0;
-			}
-
 			if (e.KeyCode == Keys.F && heldCubiId != 0)
 			{
 				return BoinkHeld();

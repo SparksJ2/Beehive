@@ -335,8 +335,8 @@ namespace Beehive
 			//gChar.InterpolationMode = InterpolationMode.HighQualityBicubic;
 			//gChar.PixelOffsetMode = PixelOffsetMode.HighQuality;
 			//gChar.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-		
-			Font style;		 
+
+			Font style;
 			if ((chr == "♂") || (chr == "☿") || (chr == "⛤") || (nectarChars.Contains(chr)))
 			{
 				style = new Font("Symbola", pts);
