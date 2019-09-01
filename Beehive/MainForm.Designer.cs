@@ -49,13 +49,14 @@ namespace Beehive
 			this.s2NavigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.s3NavigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.s4NagicatioonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.MainBitmap)).BeginInit();
 			this.menuStrip1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// MainBitmap
 			// 
-			this.MainBitmap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.MainBitmap.Location = new System.Drawing.Point(12, 42);
 			this.MainBitmap.Name = "MainBitmap";
 			this.MainBitmap.Size = new System.Drawing.Size(800, 400);
@@ -65,13 +66,14 @@ namespace Beehive
 			// feedbackBox
 			// 
 			this.feedbackBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.feedbackBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.feedbackBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.feedbackBox.ForeColor = System.Drawing.Color.White;
+			this.feedbackBox.ForeColor = System.Drawing.Color.Orchid;
 			this.feedbackBox.Location = new System.Drawing.Point(12, 448);
 			this.feedbackBox.Name = "feedbackBox";
 			this.feedbackBox.ReadOnly = true;
 			this.feedbackBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-			this.feedbackBox.Size = new System.Drawing.Size(693, 151);
+			this.feedbackBox.Size = new System.Drawing.Size(680, 178);
 			this.feedbackBox.TabIndex = 2;
 			this.feedbackBox.TabStop = false;
 			this.feedbackBox.Text = "derp feedback box not initialized.";
@@ -80,8 +82,8 @@ namespace Beehive
 			// 
 			this.inventoryLabel.AutoSize = true;
 			this.inventoryLabel.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.inventoryLabel.ForeColor = System.Drawing.Color.DarkOrchid;
-			this.inventoryLabel.Location = new System.Drawing.Point(711, 448);
+			this.inventoryLabel.ForeColor = System.Drawing.Color.MediumOrchid;
+			this.inventoryLabel.Location = new System.Drawing.Point(710, 448);
 			this.inventoryLabel.Name = "inventoryLabel";
 			this.inventoryLabel.Size = new System.Drawing.Size(71, 16);
 			this.inventoryLabel.TabIndex = 4;
@@ -91,13 +93,14 @@ namespace Beehive
 			// miniInventory
 			// 
 			this.miniInventory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.miniInventory.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.miniInventory.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.miniInventory.ForeColor = System.Drawing.Color.White;
-			this.miniInventory.Location = new System.Drawing.Point(714, 467);
+			this.miniInventory.ForeColor = System.Drawing.Color.Orchid;
+			this.miniInventory.Location = new System.Drawing.Point(710, 467);
 			this.miniInventory.Name = "miniInventory";
 			this.miniInventory.ReadOnly = true;
 			this.miniInventory.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-			this.miniInventory.Size = new System.Drawing.Size(98, 132);
+			this.miniInventory.Size = new System.Drawing.Size(102, 159);
 			this.miniInventory.TabIndex = 5;
 			this.miniInventory.TabStop = false;
 			this.miniInventory.Text = "derp mini inventory not set";
@@ -211,7 +214,7 @@ namespace Beehive
 			this.playerViewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
 			this.playerViewToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.playerViewToolStripMenuItem.Name = "playerViewToolStripMenuItem";
-			this.playerViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.playerViewToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.playerViewToolStripMenuItem.Text = "Player View        0";
 			this.playerViewToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIPlayer);
 			// 
@@ -220,7 +223,7 @@ namespace Beehive
 			this.s1NavigationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
 			this.s1NavigationToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.s1NavigationToolStripMenuItem.Name = "s1NavigationToolStripMenuItem";
-			this.s1NavigationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.s1NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.s1NavigationToolStripMenuItem.Text = "S1 Navigation   1";
 			this.s1NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIOne);
 			// 
@@ -229,7 +232,7 @@ namespace Beehive
 			this.s2NavigationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
 			this.s2NavigationToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.s2NavigationToolStripMenuItem.Name = "s2NavigationToolStripMenuItem";
-			this.s2NavigationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.s2NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.s2NavigationToolStripMenuItem.Text = "S2 Navigation   2";
 			this.s2NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAITwo);
 			// 
@@ -238,7 +241,7 @@ namespace Beehive
 			this.s3NavigationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
 			this.s3NavigationToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.s3NavigationToolStripMenuItem.Name = "s3NavigationToolStripMenuItem";
-			this.s3NavigationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.s3NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.s3NavigationToolStripMenuItem.Text = "S3 Navigation   3";
 			this.s3NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIThree);
 			// 
@@ -247,14 +250,25 @@ namespace Beehive
 			this.s4NagicatioonToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
 			this.s4NagicatioonToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.s4NagicatioonToolStripMenuItem.Name = "s4NagicatioonToolStripMenuItem";
-			this.s4NagicatioonToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.s4NagicatioonToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.s4NagicatioonToolStripMenuItem.Text = "S4 Navigation   4";
 			this.s4NagicatioonToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIFour);
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.BackgroundImage = global::Beehive.Properties.Resources.Orchid;
+			this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.pictureBox1.Location = new System.Drawing.Point(698, 448);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(6, 178);
+			this.pictureBox1.TabIndex = 7;
+			this.pictureBox1.TabStop = false;
 			// 
 			// MainForm
 			// 
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
-			this.ClientSize = new System.Drawing.Size(828, 613);
+			this.ClientSize = new System.Drawing.Size(828, 638);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.miniInventory);
 			this.Controls.Add(this.inventoryLabel);
 			this.Controls.Add(this.feedbackBox);
@@ -270,6 +284,7 @@ namespace Beehive
 			((System.ComponentModel.ISupportInitialize)(this.MainBitmap)).EndInit();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -295,6 +310,7 @@ namespace Beehive
 		private System.Windows.Forms.ToolStripMenuItem s2NavigationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem s3NavigationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem s4NagicatioonToolStripMenuItem;
+		private System.Windows.Forms.PictureBox pictureBox1;
 	}
 }
 

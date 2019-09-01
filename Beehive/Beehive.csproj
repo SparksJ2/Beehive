@@ -140,6 +140,7 @@
     <Content Include="Notes\workspace.txt" />
     <Content Include="Notes\zodiac.txt" />
     <Content Include="Notes\references.txt" />
+    <None Include="Resources\Orchid.png" />
     <None Include="Resources\032-000-032BG.png" />
     <None Include="Resources\MenuBG.bmp" />
     <None Include="Resources\MicrosoftSansSerif-11pt-12x15px.png" />
