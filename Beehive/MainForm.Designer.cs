@@ -1,4 +1,6 @@
-﻿namespace Beehive
+﻿using System.Drawing;
+
+namespace Beehive
 {
 	partial class MainForm
 	{
@@ -53,6 +55,7 @@
 			// 
 			// MainBitmap
 			// 
+			this.MainBitmap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.MainBitmap.Location = new System.Drawing.Point(12, 42);
 			this.MainBitmap.Name = "MainBitmap";
 			this.MainBitmap.Size = new System.Drawing.Size(800, 400);
@@ -62,7 +65,7 @@
 			// feedbackBox
 			// 
 			this.feedbackBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
-			this.feedbackBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.feedbackBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.feedbackBox.ForeColor = System.Drawing.Color.White;
 			this.feedbackBox.Location = new System.Drawing.Point(12, 448);
 			this.feedbackBox.Name = "feedbackBox";
@@ -76,17 +79,19 @@
 			// inventoryLabel
 			// 
 			this.inventoryLabel.AutoSize = true;
-			this.inventoryLabel.ForeColor = System.Drawing.Color.White;
-			this.inventoryLabel.Location = new System.Drawing.Point(711, 450);
+			this.inventoryLabel.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.inventoryLabel.ForeColor = System.Drawing.Color.DarkOrchid;
+			this.inventoryLabel.Location = new System.Drawing.Point(711, 448);
 			this.inventoryLabel.Name = "inventoryLabel";
-			this.inventoryLabel.Size = new System.Drawing.Size(91, 13);
+			this.inventoryLabel.Size = new System.Drawing.Size(71, 16);
 			this.inventoryLabel.TabIndex = 4;
-			this.inventoryLabel.Text = "Currently carrying:";
+			this.inventoryLabel.Text = "Carrying:";
+			this.inventoryLabel.Click += new System.EventHandler(this.inventoryLabel_Click);
 			// 
 			// miniInventory
 			// 
 			this.miniInventory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
-			this.miniInventory.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.miniInventory.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.miniInventory.ForeColor = System.Drawing.Color.White;
 			this.miniInventory.Location = new System.Drawing.Point(714, 467);
 			this.miniInventory.Name = "miniInventory";
@@ -99,6 +104,8 @@
 			// 
 			// menuStrip1
 			// 
+			this.menuStrip1.BackgroundImage = global::Beehive.Properties.Resources._032_000_032BG;
+			this.menuStrip1.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem,
@@ -121,6 +128,8 @@
 			// 
 			// saveToolStripMenuItem
 			// 
+			this.saveToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
 			this.saveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
 			this.saveToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
@@ -129,6 +138,8 @@
 			// 
 			// quickloadToolStripMenuItem
 			// 
+			this.quickloadToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.quickloadToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.quickloadToolStripMenuItem.Name = "quickloadToolStripMenuItem";
 			this.quickloadToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
 			this.quickloadToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
@@ -146,9 +157,11 @@
 			// 
 			// controlsToolStripMenuItem
 			// 
+			this.controlsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.controlsToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
 			this.controlsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.controlsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.controlsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.controlsToolStripMenuItem.Text = "Controls";
 			this.controlsToolStripMenuItem.Click += new System.EventHandler(this.HelpPopupEvent);
 			// 
@@ -163,6 +176,8 @@
 			// 
 			// clearNectarToolStripMenuItem
 			// 
+			this.clearNectarToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.clearNectarToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.clearNectarToolStripMenuItem.Name = "clearNectarToolStripMenuItem";
 			this.clearNectarToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
 			this.clearNectarToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
@@ -171,6 +186,8 @@
 			// 
 			// topOffEnergynotUsedToolStripMenuItem
 			// 
+			this.topOffEnergynotUsedToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.topOffEnergynotUsedToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.topOffEnergynotUsedToolStripMenuItem.Name = "topOffEnergynotUsedToolStripMenuItem";
 			this.topOffEnergynotUsedToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
 			this.topOffEnergynotUsedToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
@@ -191,36 +208,46 @@
 			// 
 			// playerViewToolStripMenuItem
 			// 
+			this.playerViewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.playerViewToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.playerViewToolStripMenuItem.Name = "playerViewToolStripMenuItem";
-			this.playerViewToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.playerViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.playerViewToolStripMenuItem.Text = "Player View        0";
 			this.playerViewToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIPlayer);
 			// 
 			// s1NavigationToolStripMenuItem
 			// 
+			this.s1NavigationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.s1NavigationToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.s1NavigationToolStripMenuItem.Name = "s1NavigationToolStripMenuItem";
-			this.s1NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.s1NavigationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.s1NavigationToolStripMenuItem.Text = "S1 Navigation   1";
 			this.s1NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIOne);
 			// 
 			// s2NavigationToolStripMenuItem
 			// 
+			this.s2NavigationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.s2NavigationToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.s2NavigationToolStripMenuItem.Name = "s2NavigationToolStripMenuItem";
-			this.s2NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.s2NavigationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.s2NavigationToolStripMenuItem.Text = "S2 Navigation   2";
 			this.s2NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAITwo);
 			// 
 			// s3NavigationToolStripMenuItem
 			// 
+			this.s3NavigationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.s3NavigationToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.s3NavigationToolStripMenuItem.Name = "s3NavigationToolStripMenuItem";
-			this.s3NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.s3NavigationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.s3NavigationToolStripMenuItem.Text = "S3 Navigation   3";
 			this.s3NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIThree);
 			// 
 			// s4NagicatioonToolStripMenuItem
 			// 
+			this.s4NagicatioonToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
+			this.s4NagicatioonToolStripMenuItem.ForeColor = System.Drawing.Color.MediumOrchid;
 			this.s4NagicatioonToolStripMenuItem.Name = "s4NagicatioonToolStripMenuItem";
-			this.s4NagicatioonToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.s4NagicatioonToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.s4NagicatioonToolStripMenuItem.Text = "S4 Navigation   4";
 			this.s4NagicatioonToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIFour);
 			// 
@@ -233,8 +260,10 @@
 			this.Controls.Add(this.feedbackBox);
 			this.Controls.Add(this.MainBitmap);
 			this.Controls.Add(this.menuStrip1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.menuStrip1;
+			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "Beehive The Game";
 			this.Shown += new System.EventHandler(this.MainForm_Shown);

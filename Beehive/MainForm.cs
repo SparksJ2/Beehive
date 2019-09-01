@@ -218,5 +218,10 @@ namespace Beehive
 					" with message " + ex.Message);
 			}
 		}
+
+		private void inventoryLabel_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

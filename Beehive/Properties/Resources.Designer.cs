@@ -61,6 +61,16 @@ namespace Beehive.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _032_000_032BG {
+            get {
+                object obj = ResourceManager.GetObject("_032_000_032BG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to And they happily forever after, at least for the afternoon..
         /// </summary>
         internal static string finished {
