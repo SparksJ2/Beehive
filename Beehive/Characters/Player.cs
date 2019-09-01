@@ -25,6 +25,7 @@ namespace Beehive
 		// returns number of round passed, 0 for free actions, 1 for normal moves.
 		public int HandlePlayerInput(PreviewKeyDownEventArgs e)
 		{
+			// for convenience
 			MapTile here = Refs.m.TileByLoc(loc);
 
 			// debugging nectar report
@@ -108,10 +109,11 @@ namespace Beehive
 				}
 			}
 
-			Loc newpos = loc;
-			lastMove = Loc.SubPts(newpos, lastPos);
+			// save our current location for next turn
+			lastMove = Loc.SubPts(loc, lastPos);
 
-			for (int nLoop = 1; nLoop < here.nectarLevel.Length; nLoop++) // actually skip player nectar
+			// starting at 1 skips player nectar processing for now
+			for (int nLoop = 1; nLoop < here.nectarLevel.Length; nLoop++)
 			{
 				if (here.nectarLevel[nLoop] > 0)
 				{
@@ -130,7 +132,8 @@ namespace Beehive
 
 			if (!victory)
 			{
-				// todo we're duplicating this location scanning code a lot...
+				// we're duplicating this location scanning code a lot...
+				// but this will be useful if we ever move jails so I'll leave it
 
 				// get list of capture tiles
 				MapTileSet jails = new MapTileSet();
@@ -143,6 +146,7 @@ namespace Beehive
 				// IntersectWith to get occupied jails
 				jails.IntersectWith(breaker);
 
+				// if jails filled = total jails, we won!
 				if (jails.Count == Refs.m.pents.Count)
 				{
 					victory = true;
