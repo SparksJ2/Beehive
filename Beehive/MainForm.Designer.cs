@@ -30,6 +30,7 @@ namespace Beehive
 		/// </summary>
 		public void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.MainBitmap = new System.Windows.Forms.PictureBox();
 			this.feedbackBox = new System.Windows.Forms.RichTextBox();
 			this.inventoryLabel = new System.Windows.Forms.Label();
@@ -275,6 +276,7 @@ namespace Beehive
 			this.Controls.Add(this.MainBitmap);
 			this.Controls.Add(this.menuStrip1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.menuStrip1;
 			this.MaximizeBox = false;
