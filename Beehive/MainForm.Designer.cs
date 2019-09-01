@@ -41,6 +41,12 @@
 			this.cheatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearNectarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.topOffEnergynotUsedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aIVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.playerViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.s1NavigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.s2NavigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.s3NavigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.s4NagicatioonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.MainBitmap)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -55,7 +61,7 @@
 			// 
 			// feedbackBox
 			// 
-			this.feedbackBox.BackColor = System.Drawing.Color.Black;
+			this.feedbackBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
 			this.feedbackBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.feedbackBox.ForeColor = System.Drawing.Color.White;
 			this.feedbackBox.Location = new System.Drawing.Point(12, 448);
@@ -79,7 +85,7 @@
 			// 
 			// miniInventory
 			// 
-			this.miniInventory.BackColor = System.Drawing.Color.Black;
+			this.miniInventory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
 			this.miniInventory.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.miniInventory.ForeColor = System.Drawing.Color.White;
 			this.miniInventory.Location = new System.Drawing.Point(714, 467);
@@ -96,7 +102,8 @@
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem,
-            this.cheatsToolStripMenuItem});
+            this.cheatsToolStripMenuItem,
+            this.aIVisualizerToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(828, 24);
@@ -141,7 +148,7 @@
 			// 
 			this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
 			this.controlsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.controlsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.controlsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.controlsToolStripMenuItem.Text = "Controls";
 			this.controlsToolStripMenuItem.Click += new System.EventHandler(this.HelpPopupEvent);
 			// 
@@ -170,9 +177,56 @@
 			this.topOffEnergynotUsedToolStripMenuItem.Text = "Top off Energy (not used)";
 			this.topOffEnergynotUsedToolStripMenuItem.Click += new System.EventHandler(this.MenuTopOffEnergyEvent);
 			// 
+			// aIVisualizerToolStripMenuItem
+			// 
+			this.aIVisualizerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playerViewToolStripMenuItem,
+            this.s1NavigationToolStripMenuItem,
+            this.s2NavigationToolStripMenuItem,
+            this.s3NavigationToolStripMenuItem,
+            this.s4NagicatioonToolStripMenuItem});
+			this.aIVisualizerToolStripMenuItem.Name = "aIVisualizerToolStripMenuItem";
+			this.aIVisualizerToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+			this.aIVisualizerToolStripMenuItem.Text = "AI Visualizer";
+			// 
+			// playerViewToolStripMenuItem
+			// 
+			this.playerViewToolStripMenuItem.Name = "playerViewToolStripMenuItem";
+			this.playerViewToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.playerViewToolStripMenuItem.Text = "Player View        0";
+			this.playerViewToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIPlayer);
+			// 
+			// s1NavigationToolStripMenuItem
+			// 
+			this.s1NavigationToolStripMenuItem.Name = "s1NavigationToolStripMenuItem";
+			this.s1NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.s1NavigationToolStripMenuItem.Text = "S1 Navigation   1";
+			this.s1NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIOne);
+			// 
+			// s2NavigationToolStripMenuItem
+			// 
+			this.s2NavigationToolStripMenuItem.Name = "s2NavigationToolStripMenuItem";
+			this.s2NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.s2NavigationToolStripMenuItem.Text = "S2 Navigation   2";
+			this.s2NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAITwo);
+			// 
+			// s3NavigationToolStripMenuItem
+			// 
+			this.s3NavigationToolStripMenuItem.Name = "s3NavigationToolStripMenuItem";
+			this.s3NavigationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.s3NavigationToolStripMenuItem.Text = "S3 Navigation   3";
+			this.s3NavigationToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIThree);
+			// 
+			// s4NagicatioonToolStripMenuItem
+			// 
+			this.s4NagicatioonToolStripMenuItem.Name = "s4NagicatioonToolStripMenuItem";
+			this.s4NagicatioonToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.s4NagicatioonToolStripMenuItem.Text = "S4 Navigation   4";
+			this.s4NagicatioonToolStripMenuItem.Click += new System.EventHandler(this.MenuVisAIFour);
+			// 
 			// MainForm
 			// 
-			this.BackColor = System.Drawing.Color.Black;
+			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
 			this.ClientSize = new System.Drawing.Size(828, 613);
 			this.Controls.Add(this.miniInventory);
 			this.Controls.Add(this.inventoryLabel);
@@ -182,6 +236,7 @@
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
+			this.Text = "Beehive The Game";
 			this.Shown += new System.EventHandler(this.MainForm_Shown);
 			((System.ComponentModel.ISupportInitialize)(this.MainBitmap)).EndInit();
 			this.menuStrip1.ResumeLayout(false);
@@ -205,6 +260,12 @@
 		private System.Windows.Forms.ToolStripMenuItem cheatsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem clearNectarToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem topOffEnergynotUsedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem aIVisualizerToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem playerViewToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem s1NavigationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem s2NavigationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem s3NavigationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem s4NagicatioonToolStripMenuItem;
 	}
 }
 

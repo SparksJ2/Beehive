@@ -44,7 +44,7 @@ namespace Beehive
 			}
 
 			Loc lastPos = loc;
-			// visualise flows
+			// visualise flows. hotkeys are just pretend this is where we really do it
 			if (e.KeyCode == Keys.D0) { viewFlow = 0; return 0; }
 			if (e.KeyCode == Keys.D1) { viewFlow = 1; return 0; }
 			if (e.KeyCode == Keys.D2) { viewFlow = 2; return 0; }

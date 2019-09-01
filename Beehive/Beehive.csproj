@@ -102,6 +102,7 @@
     <Compile Include="Utility\LoadAndSave.cs" />
     <Compile Include="Utility\Refs.cs" />
     <Compile Include="Utility\RichTextBoxExtensions.cs" />
+    <Compile Include="Utility\VisAI.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

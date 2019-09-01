@@ -77,6 +77,17 @@ namespace Beehive
 
 		private void MenuTopOffEnergyEvent(object sender, EventArgs e) => Cheats.TopOffEnergy();
 
+		// inelegant but there will always be 4 only, so...
+		private void MenuVisAIPlayer(object sender, EventArgs e) => VisAI.VisFlowFromMenuBar(0);
+
+		private void MenuVisAIOne(object sender, EventArgs e) => VisAI.VisFlowFromMenuBar(1);
+
+		private void MenuVisAITwo(object sender, EventArgs e) => VisAI.VisFlowFromMenuBar(2);
+
+		private void MenuVisAIThree(object sender, EventArgs e) => VisAI.VisFlowFromMenuBar(3);
+
+		private void MenuVisAIFour(object sender, EventArgs e) => VisAI.VisFlowFromMenuBar(4);
+
 		private void HelpPopup()
 		{
 			MessageBox.Show(
