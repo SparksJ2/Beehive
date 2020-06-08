@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Beehive
 {
@@ -58,18 +60,39 @@ namespace Beehive
 			Bitmap bmp;
 			Rectangle rect;
 
+			// test fonts
+
+			TestFont("Segoe UI Symbol");
+			TestFont("Lucida Console");
+			TestFont("Courier New");
+			TestFont("Lucida Console");
+			TestFont("Lucida Sans Unicode");
+
+			// wip font choice
 			// default
 			int usePts = 11;
-			Font useFont = new Font("Symbola", usePts);
+			Font useFont = new Font("Segoe UI Symbol", usePts);
 
 			if (sz == stdSize)
 			{
 				usePts = 11;
+				useFont = new Font("Segoe UI Symbol", usePts);
 
-				if ((chr == "♂") || (chr == "☿") || (chr == "⛤") || (nectarChars.Contains(chr)))
-				{ useFont = new Font("Symbola", usePts); }
-				else
-				{ useFont = new Font("Microsoft Sans Serif", usePts); }
+				if ((chr == "♂") || (chr == "☿") || (chr == "⛤"))
+				{
+					// default
+				}
+				else if (nectarChars.Contains(chr)) // nectar dots
+				{
+					// todo needs work
+					usePts = 5;
+					useFont = new Font("Segoe UI Symbol", usePts);
+				}
+				else // wall char?
+				{
+					usePts = 12;
+					useFont = new Font("Lucida Sans Unicode", usePts);
+				}
 
 				bmp = new Bitmap(stdSize.Width, stdSize.Height);
 				rect = new Rectangle(0, 0, sz.Width, sz.Height);
@@ -78,8 +101,9 @@ namespace Beehive
 			{
 				bmp = new Bitmap(tripSize.Width, tripSize.Height);
 				rect = new Rectangle(0, 0, tripSize.Width, tripSize.Height);
+
 				usePts = 28;
-				useFont = new Font("Symbola", usePts);
+				useFont = new Font("Segoe UI Symbol", usePts);
 			}
 			else
 			{
@@ -112,6 +136,13 @@ namespace Beehive
 
 			bmp = SpriteRestoreAlpha(bmp, bg);
 			return bmp;
+		}
+
+		private static void TestFont(string fontName)
+		{
+			Font testFont = new Font(fontName, 12);
+			if (testFont.Name != fontName)
+			{ MessageBox.Show(fontName + " not loaded"); }
 		}
 
 		public static Bitmap SpriteRestoreAlpha(Bitmap source, Color bg)

@@ -166,9 +166,5 @@ namespace Beehive
 				}
 			}
 		}
-
-		
-
-	
 	}
 }
