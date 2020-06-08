@@ -66,6 +66,8 @@
     <Compile Include="Area\Maps\BaseMap.cs" />
     <Compile Include="Area\Maps\MainMapLos.cs" />
     <Compile Include="Area\Render\ColourUtils.cs" />
+    <Compile Include="Area\Render\FrameData.cs" />
+    <Compile Include="Area\Render\SpriteManager.cs" />
     <Compile Include="Area\Render\TileDraw.cs" />
     <Compile Include="Area\Tiles\BaseTile.cs" />
     <Compile Include="Area\Tiles\ConvertTiles.cs" />
