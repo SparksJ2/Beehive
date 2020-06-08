@@ -59,8 +59,9 @@ namespace Beehive
 				Refs.h = (Harem)deserializer.Deserialize(TestFileStream);
 				TestFileStream.Close();
 			}
-			Refs.m.LoadBitmapFonts();
+
 			Refs.p.UpdateInventory();
+
 			Refs.mf.Announce("Loaded game at " + Refs.p.turnCounter + " turns in.", Refs.p.myAlign, Refs.p.myColor);
 		}
 	}

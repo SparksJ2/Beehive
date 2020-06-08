@@ -65,12 +65,19 @@
     <Compile Include="Actions\ThrowPillow.cs" />
     <Compile Include="Area\Maps\BaseMap.cs" />
     <Compile Include="Area\Maps\MainMapLos.cs" />
+    <Compile Include="Area\Render\ColourUtils.cs" />
+    <Compile Include="Area\Render\TileDraw.cs" />
     <Compile Include="Area\Tiles\BaseTile.cs" />
     <Compile Include="Area\Tiles\ConvertTiles.cs" />
     <Compile Include="Area\Tiles\FlowTileSet.cs" />
     <Compile Include="Area\Tiles\MapTileSet.cs" />
     <Compile Include="Actions\Place.cs" />
     <Compile Include="Actions\Throw.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Cheats.cs" />
     <Compile Include="Utility\Grimoire.cs" />
     <Compile Include="Utility\AnnounceStruct.cs" />
@@ -118,11 +125,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -133,6 +135,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Area\Render\unused.txt" />
     <Content Include="Notes\nectar.txt" />
     <Content Include="Notes\personality.txt" />
     <Content Include="Notes\notes.txt" />
@@ -143,9 +146,6 @@
     <None Include="Resources\Orchid.png" />
     <None Include="Resources\032-000-032BG.png" />
     <None Include="Resources\MenuBG.bmp" />
-    <None Include="Resources\MicrosoftSansSerif-11pt-12x15px.png" />
-    <None Include="Resources\Symbola-11pt-12x15px.png" />
-    <None Include="Resources\Symbola-28pt-36x45px-MiscSyms.png" />
     <Content Include="Notes\todo.txt" />
   </ItemGroup>
   <ItemGroup />

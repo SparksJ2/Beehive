@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Diagnostics;
 
 namespace Beehive
 {
@@ -98,5 +99,24 @@ namespace Beehive
 		public MapTileSet GetClearTilesCache() => clearCache;
 
 		public void DoneWithClearTileCache() => clearCache = null;
+
+		public void ConsoleDump()
+		{
+			Debug.WriteLine("+--------------------+");
+			for (int y = 0; y < yLen; y++)
+			{
+				var rowofchars = "";
+				for (int x = 0; x < xLen; x++)
+				{
+					MapTile t = tiles[x, y];
+					if (t.clear)
+						rowofchars += " ";
+					else
+						rowofchars += t.gly;
+				}
+				Debug.WriteLine("|" + rowofchars + "|");
+			}
+			Debug.WriteLine("+--------------------+");
+		}
 	}
 }

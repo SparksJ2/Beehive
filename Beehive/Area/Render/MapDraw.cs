@@ -10,22 +10,9 @@ using System.Runtime.InteropServices;
 
 namespace Beehive
 {
-	public partial class MainMap : IDisposable
+	public partial class MainMap
 	{
 		/// turns map data into a bitmap. complicated.
-
-		// don't include fonts in save file
-		[NonSerialized()]
-		private Bitmap SansSerifBitmapFont;
-
-		[NonSerialized()]
-		private Bitmap SymbolaBitmapFont;
-
-		[NonSerialized()]
-		private Bitmap SymbolaBitmapFontMiscSyms;
-
-		//private string nectarCharMed = "・"; // katakana middle dot
-		//private string nectarCharLarge = "•"; // list bullet point
 
 		private string[] nectarChars =
 			{" ","⠂", "⡂", "⡡", "⢕", "⢝", "⣝", "⣟", "⣿" };
@@ -39,13 +26,6 @@ namespace Beehive
 
 		private Size stdSize = new Size(12, 15);
 		private Size tripSize = new Size(12 * 3, 15 * 3);
-
-		public void LoadBitmapFonts()
-		{
-			SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
-			SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
-			SymbolaBitmapFontMiscSyms = new Bitmap(Properties.Resources.Symbola_28pt_36x45px_MiscSyms);
-		}
 
 		public Bitmap AsBitmap()
 		{
@@ -529,43 +509,6 @@ namespace Beehive
 					gFlow.FillRectangle(flowBrush, tileRect);
 				}
 			}
-		}
-
-		public void ConsoleDump()
-		{
-			Debug.WriteLine("+--------------------+");
-			for (int y = 0; y < yLen; y++)
-			{
-				var rowofchars = "";
-				for (int x = 0; x < xLen; x++)
-				{
-					MapTile t = tiles[x, y];
-					if (t.clear)
-						rowofchars += " ";
-					else
-						rowofchars += t.gly;
-				}
-				Debug.WriteLine("|" + rowofchars + "|");
-			}
-			Debug.WriteLine("+--------------------+");
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				// dispose managed resources here
-				SansSerifBitmapFont.Dispose();
-				SymbolaBitmapFont.Dispose();
-				SymbolaBitmapFontMiscSyms.Dispose();
-			}
-			// free native resources
 		}
 	}
 }

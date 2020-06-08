@@ -1,0 +1,128 @@
+﻿
+		//public void LoadBitmapFonts()
+		//{
+		//	SansSerifBitmapFont = new Bitmap(Properties.Resources.MicrosoftSansSerif_11pt_12x15px);
+		//	SymbolaBitmapFont = new Bitmap(Properties.Resources.Symbola_11pt_12x15px);
+		//	SymbolaBitmapFontMiscSyms = new Bitmap(Properties.Resources.Symbola_28pt_36x45px_MiscSyms);
+		//}
+
+	public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// dispose managed resources here
+				SansSerifBitmapFont.Dispose();
+				SymbolaBitmapFont.Dispose();
+				SymbolaBitmapFontMiscSyms.Dispose();
+			}
+			// free native resources
+		}
+
+		//private Bitmap CreateTileBitmapFromSpriteSheet(string chr, Size sz, Color col, Color bg)
+		//{
+		//	// because symbola gets nicer planet symbols
+		//	Bitmap useBitmapFont = SansSerifBitmapFont;
+		//	Color useColour = Color.White;
+
+		//	if (chr == "♂")
+		//	{
+		//		useBitmapFont = SymbolaBitmapFont;
+		//		useColour = col;
+		//	}
+		//	if (nectarChars.Contains(chr))
+		//	{
+		//		useBitmapFont = SansSerifBitmapFont;
+		//		useColour = col;
+		//	}
+
+		//	if (chr == "☿" || nectarChars.Contains(chr))
+		//	{
+		//		useBitmapFont = SymbolaBitmapFont;
+		//		useColour = col;
+		//	}
+
+		//	int FontCodePointOffset = 0;
+		//	if (chr == "⛤")
+		//	{
+		//		useBitmapFont = SymbolaBitmapFontMiscSyms;
+		//		useColour = Color.Purple;
+		//		FontCodePointOffset = 0x2600;
+		//	}
+
+		//	// find our symbol in this tileset
+		//	int codePoint = chr[0] - FontCodePointOffset;
+		//	int codeX = codePoint % 64;
+		//	int codeY = codePoint / 64;
+
+		//	// we'll cut from this rectangle
+		//	Rectangle cloneRect = new Rectangle(
+		//		codeX * sz.Width, codeY * sz.Height,
+		//		sz.Width - 1, sz.Height - 1);
+
+		//	// extract this symbols as a tiny bitmap, old style
+		//	PixelFormat format = useBitmapFont.PixelFormat;
+		//	var singleTileImage = useBitmapFont.Clone(cloneRect, format);
+
+		//	//// extract this symbols as a tiny bitmap, new style
+		//	//// bit blurry though...
+		//	//Bitmap singleTileImage = new Bitmap(z.Width, z.Height);
+		//	//using (var g = Graphics.FromImage(singleTileImage))
+		//	//{
+		//	//	g.InterpolationMode = InterpolationMode.Default;
+		//	//	var singleTileRect = new Rectangle(0, 0, z.Width, z.Height);
+		//	//	g.DrawImage(useBitmapFont, singleTileRect, cloneRect, GraphicsUnit.Pixel);
+		//	//}
+
+		//	// change color
+		//	singleTileImage = ColorTint(singleTileImage, useColour);
+
+		//	return singleTileImage;
+		//}
+
+		//public Bitmap ColorTint(Bitmap source, Color col)
+		//{
+		//	double colBlue = col.B / 256.0;
+		//	double colGreen = col.G / 256.0;
+		//	double colRed = col.R / 256.0;
+
+		//	BitmapData sourceData = source.LockBits(
+		//		new Rectangle(0, 0, source.Width, source.Height),
+		//		ImageLockMode.ReadOnly,
+		//		PixelFormat.Format32bppArgb);
+
+		//	byte[] buffer = new byte[sourceData.Stride * sourceData.Height];
+		//	Marshal.Copy(sourceData.Scan0, buffer, 0, buffer.Length);
+		//	source.UnlockBits(sourceData);
+
+		//	double red = 0; double green = 0; double blue = 0;
+		//	for (int k = 0; k + 4 < buffer.Length; k += 4)
+		//	{
+		//		blue = buffer[k + 0] * colBlue;
+		//		green = buffer[k + 1] * colGreen;
+		//		red = buffer[k + 2] * colRed;
+
+		//		if (blue < 0) { blue = 0; }
+		//		if (green < 0) { green = 0; }
+		//		if (red < 0) { red = 0; }
+
+		//		buffer[k + 0] = (byte)blue;
+		//		buffer[k + 1] = (byte)green;
+		//		buffer[k + 2] = (byte)red;
+		//	}
+
+		//	Bitmap result = new Bitmap(source.Width, source.Height);
+
+		//	BitmapData resultData = result.LockBits(
+		//		new Rectangle(0, 0, result.Width, result.Height),
+		//		ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+		//	Marshal.Copy(buffer, 0, resultData.Scan0, buffer.Length);
+		//	result.UnlockBits(resultData);
+		//	return result;
+		//}

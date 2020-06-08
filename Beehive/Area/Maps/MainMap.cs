@@ -33,8 +33,6 @@ namespace Beehive
 			pents = new List<Loc>();
 
 			FlowMap.Init(ref flows, xLen, yLen);
-
-			LoadBitmapFonts();
 		}
 
 		// list of all tiles, never changes.
