@@ -35,57 +35,55 @@ namespace Beehive
 		[NonSerialized()] // don't include dictionary in save file
 		private static Dictionary<TileDesc, Bitmap> TileBitmapCache;
 
-		public void FlushTileBitmapCache()
+		public void FlushSpriteCache()
 		{
 			TileBitmapCache = null;
 		}
 
-		public static Bitmap GetTileBitmap(string chr, Size sz, Color col, Color bg)
+		public static Bitmap GetSprite(string chr, Size sz, Color col, Color bg)
 		{
 			if (TileBitmapCache == null)
-			{
-				TileBitmapCache = new Dictionary<TileDesc, Bitmap>();
-			}
+			{ TileBitmapCache = new Dictionary<TileDesc, Bitmap>(); }
 
 			var key = new TileDesc(chr, sz, col, bg);
 
 			if (!TileBitmapCache.ContainsKey(key))
-			{
-				// create and cache bitmap
-				//if (!flipRenderMode)
-				//{
-				//	TileBitmapCache.Add(key, CreateTileBitmapFromSpriteSheet(chr, sz, col, bg));
-				//}
-				//else
-				//{
-				TileBitmapCache.Add(key, CreateTileBitmapFromNewMethod(chr, sz, col, bg));
-				//}
-			}
+			{ TileBitmapCache.Add(key, NewSprite(chr, sz, col, bg)); }
 
 			return TileBitmapCache[key];
 		}
 
-		private static Bitmap CreateTileBitmapFromNewMethod(string chr, Size sz, Color col, Color bg)
+		private static Bitmap NewSprite(string chr, Size sz, Color col, Color bg)
 		{
 			Bitmap bmp;
 			Rectangle rect;
-			int pts = 11;
+
+			// default
+			int usePts = 11;
+			Font useFont = new Font("Symbola", usePts);
 
 			if (sz == stdSize)
 			{
+				usePts = 11;
+
+				if ((chr == "♂") || (chr == "☿") || (chr == "⛤") || (nectarChars.Contains(chr)))
+				{ useFont = new Font("Symbola", usePts); }
+				else
+				{ useFont = new Font("Microsoft Sans Serif", usePts); }
+
 				bmp = new Bitmap(stdSize.Width, stdSize.Height);
 				rect = new Rectangle(0, 0, sz.Width, sz.Height);
-				pts = 11;
 			}
 			else if (sz == tripSize)
 			{
 				bmp = new Bitmap(tripSize.Width, tripSize.Height);
 				rect = new Rectangle(0, 0, tripSize.Width, tripSize.Height);
-				pts = 28;
+				usePts = 28;
+				useFont = new Font("Symbola", usePts);
 			}
 			else
 			{
-				Console.WriteLine("CreateTileBitmapFromNewMethod Unknown sz = " + sz.ToString());
+				Console.WriteLine("NewSprite Unknown sz = " + sz.ToString());
 				bmp = new Bitmap(stdSize.Width, stdSize.Height); // default to this
 				rect = new Rectangle(0, 0, sz.Width, sz.Height);
 			}
@@ -101,16 +99,6 @@ namespace Beehive
 			//gChar.PixelOffsetMode = PixelOffsetMode.HighQuality;
 			//gChar.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-			Font style;
-			if ((chr == "♂") || (chr == "☿") || (chr == "⛤") || (nectarChars.Contains(chr)))
-			{
-				style = new Font("Symbola", pts);
-			}
-			else
-			{
-				style = new Font("Microsoft Sans Serif", pts);
-			}
-
 			// try to center the character in the rectangle
 			StringFormat stringFormat = new StringFormat
 			{
@@ -119,16 +107,14 @@ namespace Beehive
 			};
 
 			Brush brush = new SolidBrush(col);
-
-			gChar.DrawString(chr, style, brush, rect, stringFormat);
-
+			gChar.DrawString(chr, useFont, brush, rect, stringFormat);
 			gChar.Flush();
 
-			bmp = TileBgRestoreAlpha(bmp, bg);
+			bmp = SpriteRestoreAlpha(bmp, bg);
 			return bmp;
 		}
 
-		public static Bitmap TileBgRestoreAlpha(Bitmap source, Color bg)
+		public static Bitmap SpriteRestoreAlpha(Bitmap source, Color bg)
 		{
 			BitmapData sourceData = source.LockBits(
 				new Rectangle(0, 0, source.Width, source.Height),

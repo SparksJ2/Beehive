@@ -53,7 +53,7 @@ namespace Beehive
 						//if (sumAmt > 1) { useNectarChar = nectarCharLarge; }
 
 						gNectar.DrawImage(
-							SpriteManager.GetTileBitmap(useNectarChar, Refs.m.stdSize, nectarCol, t.backCol),
+							SpriteManager.GetSprite(useNectarChar, Refs.m.stdSize, nectarCol, t.backCol),
 							x1, y1);
 					}
 				}
@@ -61,7 +61,7 @@ namespace Beehive
 			}
 			else // it's not marked as clear, so draw the wall
 			{
-				Bitmap singleTileImage = SpriteManager.GetTileBitmap(t.gly, Refs.m.stdSize, Color.White, t.backCol);
+				Bitmap singleTileImage = SpriteManager.GetSprite(t.gly, Refs.m.stdSize, Color.White, t.backCol);
 				using (var gChar = Graphics.FromImage(img))
 				{
 					gChar.DrawImage(singleTileImage, x1, y1);
@@ -133,7 +133,7 @@ namespace Beehive
 			{
 				using (var gBed = Graphics.FromImage(img))
 				{
-					Bitmap bedBitmap = SpriteManager.GetTileBitmap("⛤", Refs.m.tripSize, Color.Purple, Color.Black);
+					Bitmap bedBitmap = SpriteManager.GetSprite("⛤", Refs.m.tripSize, Color.Purple, Color.Black);
 
 					foreach (Loc pen in Refs.m.pents)
 					{
@@ -155,7 +155,7 @@ namespace Beehive
 			// begin foreground
 			if ((s == "♂" || s == "☿") && Refs.m.TileByLoc(m.loc).los)
 			{
-				Bitmap singleTileImage = SpriteManager.GetTileBitmap(s, Refs.m.stdSize, m.myColor, Refs.m.TileByLoc(m.loc).backCol);
+				Bitmap singleTileImage = SpriteManager.GetSprite(s, Refs.m.stdSize, m.myColor, Refs.m.TileByLoc(m.loc).backCol);
 
 				// paste symbol onto map
 				using (var gChar = Graphics.FromImage(img))
