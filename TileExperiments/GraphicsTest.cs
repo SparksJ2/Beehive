@@ -47,7 +47,6 @@ namespace TileExperiments
 
 			// todo paste into locations
 
-
 			PictureBoxExperimental.Image = bmp;
 		}
 

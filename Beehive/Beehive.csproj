@@ -63,8 +63,8 @@
     <Compile Include="Actions\Cane.cs" />
     <Compile Include="Actions\ThrowCubi.cs" />
     <Compile Include="Actions\ThrowPillow.cs" />
-    <Compile Include="Area\Boards\BaseMap.cs" />
-    <Compile Include="Area\Boards\MainMapLos.cs" />
+    <Compile Include="Area\Maps\BaseMap.cs" />
+    <Compile Include="Area\Maps\MainMapLos.cs" />
     <Compile Include="Area\Tiles\BaseTile.cs" />
     <Compile Include="Area\Tiles\ConvertTiles.cs" />
     <Compile Include="Area\Tiles\FlowTileSet.cs" />
@@ -77,15 +77,15 @@
     <Compile Include="Area\Tiles\FlowTile.cs" />
     <Compile Include="Area\Tiles\FlowTileComp.cs" />
     <Compile Include="Characters\CubiAi.cs" />
-    <Compile Include="Area\Boards\FlowMap.cs" />
-    <Compile Include="Area\Loc.cs" />
-    <Compile Include="Area\Boards\MainMap.cs" />
-    <Compile Include="Area\MapDraw.cs" />
+    <Compile Include="Area\Maps\FlowMap.cs" />
+    <Compile Include="Area\Tiles\Loc.cs" />
+    <Compile Include="Area\Maps\MainMap.cs" />
+    <Compile Include="Area\Render\MapDraw.cs" />
     <Compile Include="Area\Tiles\MapTile.cs" />
     <Compile Include="Area\Tiles\MapTileComp.cs" />
     <Compile Include="Characters\Harem.cs" />
     <Compile Include="Characters\Mobile.cs" />
-    <Compile Include="Area\Dir.cs" />
+    <Compile Include="Area\Tiles\Dir.cs" />
     <Compile Include="Utility\HashSetExt.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -93,9 +93,9 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Area\MapGenerator.cs" />
+    <Compile Include="Area\Generate\MapGenerator.cs" />
     <Compile Include="Characters\Player.cs" />
-    <Compile Include="Area\MapGenUtils.cs" />
+    <Compile Include="Area\Generate\MapGenUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Characters\Cubi.cs" />
@@ -136,7 +136,7 @@
     <Content Include="Notes\nectar.txt" />
     <Content Include="Notes\personality.txt" />
     <Content Include="Notes\notes.txt" />
-    <Content Include="Area\walls.txt" />
+    <Content Include="Notes\walls.txt" />
     <Content Include="Notes\workspace.txt" />
     <Content Include="Notes\zodiac.txt" />
     <Content Include="Notes\references.txt" />
